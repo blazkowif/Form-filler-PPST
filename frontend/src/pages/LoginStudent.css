@@ -1,0 +1,255 @@
+/* =============================================================
+   LoginStudent.css — Student Portal Login
+   Theme: UMS Navy + Crimson, Inter font
+   ============================================================= */
+
+.ls-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f6fa;
+}
+
+/* ── Left Branding Panel ── */
+.ls-brand {
+  flex: 0 0 42%;
+  background: linear-gradient(160deg, #00205b 0%, #003087 55%, #004aad 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ls-brand::before {
+  content: "";
+  position: absolute;
+  top: -100px; right: -80px;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  border: 55px solid rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.ls-brand::after {
+  content: "";
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  border: 45px solid rgba(200,16,46,0.1);
+  pointer-events: none;
+}
+
+.ls-brand-content { position: relative; z-index: 1; }
+
+.ls-crest {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 800; letter-spacing: 0.06em;
+  margin-bottom: 1.25rem;
+}
+
+.ls-uni-name {
+  font-size: 1.55rem; font-weight: 700; line-height: 1.25;
+  margin: 0 0 0.65rem;
+}
+
+.ls-divider {
+  width: 40px; height: 3px;
+  background: linear-gradient(90deg, #c8102e, #f0a500);
+  border-radius: 2px; margin-bottom: 0.65rem;
+}
+
+.ls-centre-name {
+  font-size: 0.88rem; font-weight: 600;
+  color: rgba(255,255,255,0.9); margin: 0 0 0.2rem;
+}
+.ls-centre-sub {
+  font-size: 0.74rem; color: rgba(255,255,255,0.5);
+  font-style: italic; margin: 0 0 1.5rem;
+}
+
+.ls-portal-tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(200,16,46,0.18);
+  border: 1px solid rgba(200,16,46,0.35);
+  border-radius: 20px; padding: 0.3rem 0.85rem;
+  font-size: 0.72rem; font-weight: 600;
+  color: rgba(255,255,255,0.85); margin-bottom: 1.75rem;
+}
+.ls-portal-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #f0a500; flex-shrink: 0;
+}
+
+.ls-features {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  list-style: none; padding: 0; margin: 0;
+}
+.ls-features li {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.82rem; color: rgba(255,255,255,0.75);
+}
+.ls-feat-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #f0a500; flex-shrink: 0;
+}
+
+.ls-brand-footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1rem;
+}
+.ls-brand-footer p {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.38);
+  font-family: "JetBrains Mono", monospace;
+  margin: 0.12rem 0;
+}
+
+/* ── Right Form Panel ── */
+.ls-form-panel {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2.5rem 2rem; gap: 1.25rem;
+  overflow-y: auto;
+}
+
+/* Card */
+.ls-card {
+  width: 100%; max-width: 400px;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(0,48,135,0.07);
+  padding: 2.25rem 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0,32,91,0.06),
+              0 16px 40px -8px rgba(0,32,91,0.11);
+}
+
+.ls-card-head { text-align: center; margin-bottom: 1.75rem; }
+
+.ls-icon-wrap {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, #003087, #004aad);
+  font-size: 1.4rem; margin-bottom: 1rem;
+  box-shadow: 0 6px 18px rgba(0,48,135,0.24);
+}
+
+.ls-card-title {
+  font-size: 1.3rem; font-weight: 700; color: #1a2340; margin: 0 0 0.3rem;
+}
+.ls-card-sub { font-size: 0.78rem; color: #8a93a8; margin: 0; }
+
+/* Error */
+.ls-error {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  background: #fff5f5; border: 1px solid #fecaca;
+  border-left: 3px solid #c8102e;
+  border-radius: 8px; padding: 0.65rem 0.85rem;
+  margin-bottom: 1.1rem;
+  color: #c0152a; font-size: 0.8rem; font-weight: 500;
+  animation: slideDown 0.2s ease;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ls-error-link { color: #003087; font-weight: 700; white-space: nowrap; }
+.ls-error-link:hover { text-decoration: underline; }
+
+/* Form */
+.ls-form { display: flex; flex-direction: column; gap: 1rem; }
+
+.ls-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.ls-label { font-size: 0.78rem; font-weight: 600; color: #1a2340; }
+
+.ls-input-wrap { position: relative; display: flex; align-items: center; }
+.ls-input-icon {
+  position: absolute; left: 0.8rem;
+  color: #b8bfcc; display: flex; pointer-events: none;
+}
+.ls-input {
+  width: 100%; padding: 0.68rem 2.5rem 0.68rem 2.5rem;
+  border: 1.5px solid #e8eaf0; border-radius: 9px;
+  font-family: inherit; font-size: 0.875rem; color: #1a2340;
+  background: #fafbff; outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.ls-input::placeholder { color: #c5ccdc; font-size: 0.82rem; }
+.ls-input:focus {
+  border-color: #003087; background: #fff;
+  box-shadow: 0 0 0 3px rgba(0,48,135,0.07);
+}
+.ls-input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.ls-toggle-pass {
+  position: absolute; right: 0.8rem;
+  background: none; border: none; cursor: pointer;
+  color: #b8bfcc; display: flex; align-items: center;
+  padding: 0.2rem; border-radius: 4px;
+  transition: color 0.15s;
+}
+.ls-toggle-pass:hover { color: #003087; }
+
+/* Submit */
+.ls-submit {
+  display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+  width: 100%; padding: 0.78rem 1.5rem; margin-top: 0.3rem;
+  background: linear-gradient(135deg, #003087, #004aad);
+  color: #fff; border: none; border-radius: 9px;
+  font-family: inherit; font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; letter-spacing: 0.01em;
+  box-shadow: 0 4px 14px rgba(0,48,135,0.28);
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+.ls-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,48,135,0.38);
+}
+.ls-submit:disabled, .ls-submit.loading { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+.ls-spinner {
+  width: 15px; height: 15px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Footer links */
+.ls-help {
+  font-size: 0.75rem; color: #8a93a8;
+  text-align: center; margin-top: 1rem;
+}
+.ls-staff-link {
+  color: #003087; font-weight: 600;
+  transition: color 0.15s;
+}
+.ls-staff-link:hover { color: #004aad; text-decoration: underline; }
+
+/* Info chip */
+.ls-info-chip {
+  font-size: 0.72rem; color: #4a5578;
+  background: white; border: 1px solid #e8eaf0;
+  border-radius: 20px; padding: 0.4rem 1rem;
+  max-width: 400px; text-align: center;
+}
+
+.ls-copyright {
+  font-size: 0.68rem; color: #b8bfcc; text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ls-page { flex-direction: column; }
+  .ls-brand { flex: 0 0 auto; padding: 2rem 1.5rem 1.5rem; }
+  .ls-features, .ls-brand-footer { display: none; }
+  .ls-uni-name { font-size: 1.2rem; }
+  .ls-form-panel { padding: 1.5rem 1rem; }
+}

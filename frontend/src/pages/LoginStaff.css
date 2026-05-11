@@ -1,0 +1,288 @@
+/* =============================================================
+   LoginStaff.css — Staff Portal Login
+   Theme: Deep charcoal / slate — distinguished from student
+   ============================================================= */
+
+.lsf-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f6fa;
+}
+
+/* ── Left Branding Panel ── */
+.lsf-brand {
+  flex: 0 0 42%;
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 55%, #334155 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.lsf-brand::before {
+  content: "";
+  position: absolute;
+  top: -80px; right: -60px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  border: 50px solid rgba(255,255,255,0.03);
+  pointer-events: none;
+}
+.lsf-brand::after {
+  content: "";
+  position: absolute;
+  bottom: -50px; left: -50px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  border: 40px solid rgba(99,102,241,0.08);
+  pointer-events: none;
+}
+
+.lsf-brand-content { position: relative; z-index: 1; }
+
+.lsf-crest {
+  width: 64px; height: 64px; border-radius: 14px;
+  background: rgba(255,255,255,0.07);
+  border: 2px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 800; letter-spacing: 0.06em;
+  margin-bottom: 1.25rem; border-radius: 14px;
+}
+
+.lsf-uni-name {
+  font-size: 1.55rem; font-weight: 700; line-height: 1.25;
+  margin: 0 0 0.65rem;
+}
+
+.lsf-divider {
+  width: 40px; height: 3px;
+  background: linear-gradient(90deg, #6366f1, #a78bfa);
+  border-radius: 2px; margin-bottom: 0.65rem;
+}
+
+.lsf-centre-name {
+  font-size: 0.88rem; font-weight: 600;
+  color: rgba(255,255,255,0.85); margin: 0 0 0.2rem;
+}
+.lsf-centre-sub {
+  font-size: 0.74rem; color: rgba(255,255,255,0.4);
+  font-style: italic; margin: 0 0 1.5rem;
+}
+
+.lsf-portal-tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(99,102,241,0.15);
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 20px; padding: 0.3rem 0.85rem;
+  font-size: 0.72rem; font-weight: 600;
+  color: rgba(255,255,255,0.8); margin-bottom: 1.75rem;
+}
+.lsf-portal-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #a78bfa; flex-shrink: 0;
+}
+
+/* Role cards */
+.lsf-role-cards {
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+
+.lsf-role-card {
+  display: flex; align-items: center; gap: 0.85rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 0.7rem 0.9rem;
+}
+
+.lsf-rc-icon { font-size: 1.2rem; }
+
+.lsf-role-card > div {
+  display: flex; flex-direction: column; gap: 0.05rem;
+}
+.lsf-rc-label {
+  font-size: 0.82rem; font-weight: 600;
+  color: rgba(255,255,255,0.9);
+}
+.lsf-rc-desc {
+  font-size: 0.68rem; color: rgba(255,255,255,0.4);
+}
+
+.lsf-brand-footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 1rem;
+}
+.lsf-brand-footer p {
+  font-size: 0.68rem; color: rgba(255,255,255,0.3);
+  font-family: "JetBrains Mono", monospace; margin: 0.12rem 0;
+}
+
+/* ── Right Form Panel ── */
+.lsf-form-panel {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2.5rem 2rem; gap: 1.25rem;
+  overflow-y: auto;
+}
+
+/* Card */
+.lsf-card {
+  width: 100%; max-width: 400px;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(15,23,42,0.08);
+  padding: 2.25rem 2rem;
+  box-shadow: 0 4px 6px -1px rgba(15,23,42,0.06),
+              0 16px 40px -8px rgba(15,23,42,0.12);
+}
+
+.lsf-card-head { text-align: center; margin-bottom: 1.75rem; }
+
+.lsf-icon-wrap {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px; border-radius: 14px;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  font-size: 1.4rem; margin-bottom: 1rem;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.2);
+}
+
+.lsf-card-title {
+  font-size: 1.3rem; font-weight: 700; color: #1a2340; margin: 0 0 0.3rem;
+}
+.lsf-card-sub { font-size: 0.78rem; color: #8a93a8; margin: 0; line-height: 1.5; }
+
+/* Role detected banner */
+.lsf-role-banner {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-left: 3px solid #16a34a;
+  border-radius: 8px; padding: 0.75rem 0.9rem;
+  margin-bottom: 1.1rem;
+  animation: slideDown 0.2s ease;
+}
+.lsf-rb-icon { font-size: 1.3rem; }
+.lsf-rb-title { display: block; font-size: 0.82rem; font-weight: 700; color: #065f46; }
+.lsf-rb-sub   { display: block; font-size: 0.72rem; color: #6b7280; }
+.lsf-rb-spinner {
+  margin-left: auto; flex-shrink: 0;
+  width: 16px; height: 16px;
+  border: 2px solid #a7f3d0; border-top-color: #059669;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+
+/* Error */
+.lsf-error {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  background: #fff5f5; border: 1px solid #fecaca;
+  border-left: 3px solid #c8102e;
+  border-radius: 8px; padding: 0.65rem 0.85rem;
+  margin-bottom: 1.1rem;
+  color: #c0152a; font-size: 0.8rem; font-weight: 500;
+  animation: slideDown 0.2s ease;
+}
+.lsf-error-link {
+  color: #1e293b; font-weight: 700; white-space: nowrap;
+}
+.lsf-error-link:hover { text-decoration: underline; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Form */
+.lsf-form { display: flex; flex-direction: column; gap: 1rem; }
+
+.lsf-field { display: flex; flex-direction: column; gap: 0.35rem; }
+.lsf-label { font-size: 0.78rem; font-weight: 600; color: #1a2340; }
+
+.lsf-input-wrap { position: relative; display: flex; align-items: center; }
+.lsf-input-icon {
+  position: absolute; left: 0.8rem;
+  color: #b8bfcc; display: flex; pointer-events: none;
+}
+.lsf-input {
+  width: 100%; padding: 0.68rem 2.5rem 0.68rem 2.5rem;
+  border: 1.5px solid #e8eaf0; border-radius: 9px;
+  font-family: inherit; font-size: 0.875rem; color: #1a2340;
+  background: #fafbff; outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.lsf-input::placeholder { color: #c5ccdc; font-size: 0.78rem; }
+.lsf-input:focus {
+  border-color: #334155; background: #fff;
+  box-shadow: 0 0 0 3px rgba(51,65,85,0.07);
+}
+.lsf-input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.lsf-toggle-pass {
+  position: absolute; right: 0.8rem;
+  background: none; border: none; cursor: pointer;
+  color: #b8bfcc; display: flex; align-items: center;
+  padding: 0.2rem; border-radius: 4px; transition: color 0.15s;
+}
+.lsf-toggle-pass:hover { color: #334155; }
+
+/* Submit */
+.lsf-submit {
+  display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+  width: 100%; padding: 0.78rem 1.5rem; margin-top: 0.3rem;
+  background: linear-gradient(135deg, #1e293b, #334155);
+  color: #fff; border: none; border-radius: 9px;
+  font-family: inherit; font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; letter-spacing: 0.01em;
+  box-shadow: 0 4px 14px rgba(15,23,42,0.22);
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+.lsf-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15,23,42,0.32);
+}
+.lsf-submit:disabled, .lsf-submit.loading {
+  opacity: 0.7; cursor: not-allowed; transform: none;
+}
+
+.lsf-spinner {
+  width: 15px; height: 15px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Footer links */
+.lsf-help {
+  font-size: 0.75rem; color: #8a93a8;
+  text-align: center; margin-top: 1rem;
+}
+.lsf-student-link {
+  color: #003087; font-weight: 600; transition: color 0.15s;
+}
+.lsf-student-link:hover { color: #004aad; text-decoration: underline; }
+
+/* Info chip */
+.lsf-info-chip {
+  font-size: 0.72rem; color: #4a5578;
+  background: white; border: 1px solid #e8eaf0;
+  border-radius: 12px; padding: 0.6rem 1rem;
+  max-width: 400px; text-align: center;
+  line-height: 1.6;
+}
+
+.lsf-copyright {
+  font-size: 0.68rem; color: #b8bfcc; text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .lsf-page { flex-direction: column; }
+  .lsf-brand { flex: 0 0 auto; padding: 2rem 1.5rem 1.5rem; }
+  .lsf-role-cards, .lsf-brand-footer { display: none; }
+  .lsf-uni-name { font-size: 1.2rem; }
+  .lsf-form-panel { padding: 1.5rem 1rem; }
+}

@@ -1,0 +1,332 @@
+/* =============================================================
+   FormWrapper.css — Shared Form Page Styles
+   ============================================================= */
+
+.form-page {
+  padding: 2rem 2.5rem;
+  max-width: 800px;
+  font-family: "Inter", sans-serif;
+}
+
+/* Back Button */
+.back-btn {
+  background: none;
+  border: none;
+  color: #8a93a8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  padding: 0;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.15s;
+}
+.back-btn:hover { color: #003087; }
+
+/* Form Page Header */
+.form-page-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-page-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.form-page-code {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: "JetBrains Mono", monospace;
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.form-page-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.45rem;
+  color: #1a2340;
+  margin: 0 0 0.2rem;
+}
+
+.form-page-subtitle {
+  font-size: 0.78rem;
+  color: #8a93a8;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Form Card */
+.form-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e8eaf0;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 32, 91, 0.05);
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 1.75rem;
+}
+
+.form-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a93a8;
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f0f2f8;
+}
+
+.form-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Form Row (2-col) */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+
+/* Field Group */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1a2340;
+}
+
+.required-star {
+  color: #c8102e;
+  margin-left: 0.2rem;
+}
+
+.field-hint {
+  font-size: 0.72rem;
+  color: #8a93a8;
+  margin: 0;
+}
+
+.field-error-msg {
+  font-size: 0.72rem;
+  color: #c8102e;
+  margin: 0;
+}
+
+.field-error .form-control {
+  border-color: #fca5a5;
+  background: #fff5f5;
+}
+
+/* Form Controls */
+.form-control {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid #e8eaf0;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  color: #1a2340;
+  background: #fafbff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.form-control:focus {
+  border-color: #003087;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0, 48, 135, 0.07);
+}
+
+.form-control:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-textarea { resize: vertical; min-height: 100px; }
+
+/* File Upload */
+.file-input { display: none; }
+
+.file-upload-area {
+  border: 2px dashed #e8eaf0;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.file-upload-area:hover { border-color: #003087; }
+
+.file-upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.file-icon { font-size: 1.4rem; }
+
+.file-placeholder {
+  font-size: 0.8rem;
+  color: #8a93a8;
+  line-height: 1.5;
+}
+
+.file-placeholder small { font-size: 0.7rem; }
+
+.file-name {
+  font-size: 0.82rem;
+  color: #003087;
+  font-weight: 600;
+}
+
+/* Submit Section */
+.submit-section {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f0f2f8;
+}
+
+.submit-error {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #991b1b;
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+}
+
+.submit-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.submit-note {
+  font-size: 0.72rem;
+  color: #8a93a8;
+  text-align: center;
+  margin: 0.75rem 0 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1.5px solid transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #003087, #004aad);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 48, 135, 0.25);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 6px 16px rgba(0, 48, 135, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled { opacity: 0.65; cursor: not-allowed; }
+
+.btn-outline {
+  background: white;
+  color: #4a5578;
+  border-color: #e8eaf0;
+}
+
+.btn-outline:hover:not(:disabled) { background: #f5f6fa; }
+.btn-outline:disabled { opacity: 0.65; cursor: not-allowed; }
+
+.btn-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Success card */
+.form-success-card {
+  max-width: 480px;
+  margin: 4rem auto;
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  border: 1px solid #e8eaf0;
+  box-shadow: 0 8px 30px rgba(0, 32, 91, 0.08);
+}
+
+.success-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+.form-success-card h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  color: #1a2340;
+  margin-bottom: 0.75rem;
+}
+
+.form-success-card p {
+  font-size: 0.875rem;
+  color: #4a5578;
+  line-height: 1.6;
+}
+
+.success-id {
+  background: #eef2fb;
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  font-size: 0.82rem;
+  color: #003087;
+  margin: 1rem 0;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
