@@ -93,38 +93,38 @@ COORDS = {
         "pages": 1,
         "fields": [
             # ── BAHAGIAN A: MAKLUMAT PEMOHON ──────────────────────────
-            {"key": "student_name",  "x": 0, "y": 0, "fs": FS_NORMAL, "color": INK_BLUE},
-            {"key": "student_no",    "x": 0, "y": 0, "fs": FS_NORMAL, "color": INK_BLUE},
-            {"key": "programme",     "x": 0, "y": 0, "fs": FS_NORMAL, "color": INK_BLUE},
-            {"key": "phone_no",      "x": 0, "y": 0, "fs": FS_NORMAL, "color": INK_BLUE},
-            {"key": "address",       "x": 0, "y": 0, "fs": FS_SMALL,  "color": INK_BLUE},
+            {"key": "student_name",  "x": 208, "y": 656, "fs": FS_NORMAL, "color": INK_BLUE},
+            {"key": "student_no",    "x": 480, "y": 656, "fs": FS_NORMAL, "color": INK_BLUE},
+            {"key": "programme",     "x": 195, "y": 636, "fs": FS_NORMAL, "color": INK_BLUE},
+            {"key": "phone_no",      "x": 492, "y": 634, "fs": FS_NORMAL, "color": INK_BLUE},
+            {"key": "address",       "x": 157, "y": 617, "fs": FS_SMALL,  "color": INK_BLUE},
 
             # ── BUTIRAN PERMOHONAN: reason ticks ──────────────────────
             # Tick for "Mendapat tawaran pekerjaan"
             {"key": "tick_job_offer",
-             "x": 0, "y": 0, "fs": FS_TICK, "color": INK_TICK,
+             "x": 104, "y": 540, "fs": FS_TICK, "color": INK_TICK,
              "conditional": "withdrawal_reason", "match_value": "job_offer",
              "text_override": "/"},
 
             # Tick for "Melanjutkan pengajian di institusi lain"
             {"key": "tick_transfer",
-             "x": 0, "y": 0, "fs": FS_TICK, "color": INK_TICK,
+             "x": 104, "y": 520, "fs": FS_TICK, "color": INK_TICK,
              "conditional": "withdrawal_reason", "match_value": "transfer",
              "text_override": "/"},
 
             # Institution name (only when transfer)
             {"key": "institution_name",
-             "x": 0, "y": 0, "fs": FS_NORMAL, "color": INK_BLUE,
+             "x": 325, "y": 526, "fs": FS_NORMAL, "color": INK_BLUE,
              "conditional": "withdrawal_reason", "match_value": "transfer"},
 
             # Tick for "Masalah peribadi"
             {"key": "tick_personal",
-             "x": 0, "y": 0, "fs": FS_TICK, "color": INK_TICK,
+             "x": 104, "y": 494, "fs": FS_TICK, "color": INK_TICK,
              "conditional": "withdrawal_reason", "match_value": "personal",
              "text_override": "/"},
 
             # ── STUDENT SIGNATURE DATE ────────────────────────────────
-            {"key": "student_date",  "x": 0, "y": 0, "fs": FS_NORMAL, "color": INK_BLUE},
+            {"key": "student_date",  "x": 424, "y": 273, "fs": FS_NORMAL, "color": INK_BLUE},
 
             # ── UNTUK KEGUNAAN PEJABAT (Official use) ─────────────────
             # Director's comments text
@@ -132,18 +132,18 @@ COORDS = {
 
             # Approved tick
             {"key": "director_approved_tick",
-             "x": 0, "y": 0, "fs": FS_TICK, "color": INK_TICK,
+             "x": 156, "y": 152, "fs": FS_TICK, "color": INK_TICK,
              "conditional": "approval_status", "match_value": "fully_approved",
              "text_override": "/"},
 
             # Not approved tick
             {"key": "director_not_approved_tick",
-             "x": 0, "y": 0, "fs": FS_TICK, "color": INK_TICK,
+             "x": 156, "y": 126, "fs": FS_TICK, "color": INK_TICK,
              "conditional": "approval_status", "match_value": "rejected",
              "text_override": "/"},
 
             # Director date
-            {"key": "director_date",  "x": 0, "y": 0, "fs": FS_NORMAL, "color": INK_RED},
+            {"key": "director_date",  "x": 408, "y": 81, "fs": FS_NORMAL, "color": INK_RED},
         ],
     },
 
