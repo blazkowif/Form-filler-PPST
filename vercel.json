@@ -8,18 +8,17 @@
       }
     },
     {
-      "src": "backend/server.js",
-      "dest": "/"
+      "src": "backend/server.js"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api"
+      "dest": "/backend/server.js"
     },
     {
       "src": "/uploads/(.*)",
-      "dest": "/api"
+      "dest": "/backend/server.js"
     },
     {
       "src": "/(.*)",
