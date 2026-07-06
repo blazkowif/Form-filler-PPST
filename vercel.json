@@ -8,7 +8,8 @@
       }
     },
     {
-      "src": "backend/server.js"
+      "src": "backend/server.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
