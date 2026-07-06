@@ -1,0 +1,11 @@
+{
+  "name": "ppst-eportal",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,22 +1,21 @@
 // =============================================================
 // routes/pdfFillRoutes.js
-// Calls backend/pdf_filler.py (ReportLab + pypdf) to overlay
+// Calls pdf_filler.js (Node.js + pdf-lib) to overlay
 // student data onto the original AKD-XX.pdf template and
 // stream the filled PDF back to the browser.
 // =============================================================
-const express         = require("express");
-const path            = require("path");
-const { spawn }       = require("child_process");
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
 const FormApplication = require("../models/FormApplication");
-const { protect }     = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
+const { fillPdf } = require("../pdf_filler");
 
 const router = express.Router();
 router.use(protect);
 
-const SCRIPT = path.join(__dirname, "..", "pdf_filler.py");
-
 // ─────────────────────────────────────────────────────────────
-// Helper — build a flat JSON payload for the Python script
+// Helper — build a flat JSON payload for the PDF filler
 // ─────────────────────────────────────────────────────────────
 const buildPayload = (app, user) => {
   const fmt = (d) =>
@@ -43,7 +42,6 @@ const buildPayload = (app, user) => {
     semester:          app.appeal_review_data?.semester || app.semester || "",
     session:           app.appeal_review_data?.session  || "",
     exam_reason:       app.exam_reason || "",
-    course_row_1_no:   "1",
     course_row_1_code: app.appeal_review_data?.course_code || app.course_code || "",
     course_row_1_name: app.appeal_review_data?.course_name || app.course_name || "",
     course_row_1_exam_dt: fmt(app.exam_date),
@@ -61,7 +59,8 @@ const buildPayload = (app, user) => {
     // ── AKD-04 Absence Justification ─────────────────────────
     reason_text:              app.reason    || "",
     date_of_absence:          fmt(app.start_date),
-    course_row_1_class_type:  app.class_type || "",
+    course_row_1_code:        app.course_code || "",
+    course_row_1_name:        app.course_name || "",
 
     // ── AKD-05 Room Booking ───────────────────────────────────
     applicant_name: user?.name || "",
@@ -106,67 +105,32 @@ router.get("/:appId", async (req, res) => {
       return res.status(403).json({ success: false, message: "Forbidden." });
     }
 
-    const payload  = buildPayload(app, app.user_id);
-    const jsonData = JSON.stringify(payload);
-
-    // Determine form_type key for the Python script
+    const payload = buildPayload(app, app.user_id);
     const formType = app.form_type;
-    const filename  = `PPST_${formType}_${app.user_id?.matric_staff_id || "form"}.pdf`;
+    const filename = `PPST_${formType}_${app.user_id?.matric_staff_id || "form"}.pdf`;
 
-    // Spawn Python filler
-    const py = spawn("python3", [SCRIPT, formType]);
+    const pdfBytes = await fillPdf(formType, payload);
 
-    // Send JSON data to Python via stdin
-    py.stdin.write(jsonData);
-    py.stdin.end();
-
-    // Collect stderr for error reporting
-    let stderr = "";
-    py.stderr.on("data", (chunk) => { stderr += chunk.toString(); });
-
-    // Stream stdout (PDF bytes) to response
-    const chunks = [];
-    py.stdout.on("data", (chunk) => chunks.push(chunk));
-
-    py.on("close", (code) => {
-      if (code !== 0) {
-        console.error("❌ pdf_filler.py exited", code, ":", stderr);
-
-        // Exit code 2 = template PDF missing
-        if (code === 2) {
-          return res.status(404).json({
-            success: false,
-            message: "PDF template not found in backend/assets/forms/. Please upload the original form PDFs.",
-          });
-        }
-        return res.status(500).json({
-          success: false,
-          message: "PDF generation failed.",
-          detail: stderr.slice(-400),
-        });
-      }
-
-      const pdfBuffer = Buffer.concat(chunks);
-      res.setHeader("Content-Type", "application/pdf");
-      res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-      res.setHeader("Content-Length", pdfBuffer.length);
-      res.end(pdfBuffer);
-    });
-
-    py.on("error", (err) => {
-      console.error("❌ Failed to start python3:", err.message);
-      if (!res.headersSent) {
-        res.status(500).json({
-          success: false,
-          message: "Could not start PDF generator. Make sure Python 3 is installed.",
-        });
-      }
-    });
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    res.setHeader("Content-Length", pdfBytes.length);
+    res.end(pdfBytes);
 
   } catch (err) {
-    console.error("❌ pdfFillRoute:", err);
+    console.error("❌ pdfFillRoute:", err.message);
     if (!res.headersSent) {
-      res.status(500).json({ success: false, message: "Server error." });
+      // Error code 2 = template missing
+      if (err.message.includes("Template not found")) {
+        return res.status(404).json({
+          success: false,
+          message: "PDF template not found in backend/assets/forms/. Please upload the original form PDFs.",
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: "PDF generation failed.",
+        detail: process.env.NODE_ENV === "development" ? err.message : undefined,
+      });
     }
   }
 });
