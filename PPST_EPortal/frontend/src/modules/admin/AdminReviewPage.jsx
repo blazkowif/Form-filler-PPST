@@ -58,8 +58,8 @@ const AdminReviewPage = () => {
   };
 
   const handleDownloadPDF = () => {
-    const token = localStorage.getItem("ppst_token");
-    fetch(`/api/pdf/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+      const token = sessionStorage.getItem("ppst_token");
+      fetch(`/api/pdf/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       .then(async (res) => {
         if (!res.ok) {
           const data = await res.json().catch(() => ({}));
