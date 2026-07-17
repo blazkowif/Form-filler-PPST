@@ -1,0 +1,25 @@
+{
+  "name": "ppst-eportal-frontend",
+  "version": "1.0.0",
+  "description": "PPST E-Portal React Frontend — Universiti Malaysia Sabah",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.2",
+    "eslint": "^9.11.1",
+    "vite": "^5.4.8"
+  }
+}

@@ -1,0 +1,26 @@
+✅ MongoDB Connected: ac-qnnofor-shard-00-01.nwsezkh.mongodb.net
+=======================================================
+🚀 PPST E-Portal Server | Port: 3001
+   Database: MongoDB Atlas
+   Frontend: http://localhost:5000
+=======================================================
+[0mGET / [33m404[0m 1.767 ms - 46[0m
+[0mGET /favicon.ico [33m404[0m 0.633 ms - 57[0m
+[0mPOST /api/auth/login [32m200[0m 422.165 ms - 714[0m
+[0mGET /api/pengarah/applications?status=pending_pengarah [32m200[0m 74.114 ms - 98[0m
+[0mGET /api/pdf/ [33m404[0m 0.828 ms - 54[0m
+[0mPOST /api/auth/login [32m200[0m 398.565 ms - 714[0m
+[0mGET /api/pengarah/applications?status=pending_pengarah [32m200[0m 70.625 ms - 98[0m
+[0mPOST /api/auth/login [32m200[0m 392.514 ms - 714[0m
+[0mGET /api/pdf/69e1edbb33d76d3ea435e00d [32m200[0m 369.049 ms - 229974[0m
+[0mPOST /api/auth/login [32m200[0m 394.999 ms - 842[0m
+[0mGET /api/student/dashboard [32m200[0m 69.250 ms - 461[0m
+[0mGET /api/student/dashboard [36m304[0m 67.340 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 66.718 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 66.927 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 67.141 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 67.391 ms - -[0m
+[0mGET /api/auth/me [32m200[0m 70.965 ms - 464[0m
+[0mGET /api/auth/me [36m304[0m 70.345 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 475.550 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 65.923 ms - -[0m

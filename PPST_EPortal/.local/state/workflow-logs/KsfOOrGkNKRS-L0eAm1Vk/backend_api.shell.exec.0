@@ -1,0 +1,57 @@
+✅ MongoDB Connected: ac-qnnofor-shard-00-00.nwsezkh.mongodb.net
+=======================================================
+🚀 PPST E-Portal Server | Port: 3001
+   Database: MongoDB Atlas
+   Frontend: http://localhost:5000
+=======================================================
+[0mPOST /api/auth/login [33m400[0m 1.760 ms - 72[0m
+[0mPOST /api/auth/login [33m400[0m 0.313 ms - 72[0m
+[0mPOST /api/auth/login [33m400[0m 0.303 ms - 72[0m
+[0mGET /api/pengarah/applications?status=pending_pengarah [33m401[0m 0.636 ms - 65[0m
+[0mPOST /api/auth/login [33m400[0m 0.261 ms - 72[0m
+[0mPOST /api/auth/login [32m200[0m 495.575 ms - 714[0m
+[0mGET /api/pengarah/applications?status=pending_pengarah [32m200[0m 580.353 ms - 2834[0m
+[0mGET /api/pengarah/applications?status=pending_pengarah [32m200[0m 133.521 ms - 2834[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [32m200[0m 137.121 ms - 1525[0m
+[0mGET /api/health [32m200[0m 0.754 ms - 94[0m
+[0mGET /api/auth/me [32m200[0m 65.939 ms - 311[0m
+[0mGET /api/auth/me [36m304[0m 65.666 ms - -[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=fully_approved&form_type=sick_leave [32m200[0m 66.107 ms - 98[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=fully_approved&form_type=sick_leave [36m304[0m 72.811 ms - -[0m
+[0mGET /api/pengarah/analytics [32m200[0m 68.343 ms - 221[0m
+[0mGET /api/pengarah/analytics [32m200[0m 66.613 ms - 221[0m
+[0mGET /api/pengarah/dashboard [32m200[0m 552.844 ms - 791[0m
+[0mGET /api/pengarah/dashboard [36m304[0m 127.884 ms - -[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [32m200[0m 125.713 ms - 2834[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [36m304[0m 127.045 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [32m200[0m 134.259 ms - 1525[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 131.651 ms - -[0m
+[0mPATCH /api/pengarah/applications/69e1edbb33d76d3ea435e00d/approve [32m200[0m 147.781 ms - 142[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [32m200[0m 133.062 ms - 1832[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [32m200[0m 131.496 ms - 1499[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [36m304[0m 126.872 ms - -[0m
+[0mGET /api/pengarah/applications/69e994065a140c7e754e7672 [32m200[0m 131.078 ms - 1592[0m
+[0mGET /api/pengarah/applications/69e994065a140c7e754e7672 [36m304[0m 130.724 ms - -[0m
+[0mPATCH /api/pengarah/applications/69e994065a140c7e754e7672/approve [32m200[0m 137.849 ms - 142[0m
+[0mGET /api/pengarah/applications/69e994065a140c7e754e7672 [32m200[0m 131.846 ms - 1898[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=fully_approved [32m200[0m 132.140 ms - 3233[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=fully_approved [36m304[0m 132.099 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 130.211 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 131.871 ms - -[0m
+[0mGET /api/pdf/69e1edbb33d76d3ea435e00d [33m401[0m 0.406 ms - 65[0m
+[0mGET /api/auth/me [36m304[0m 66.096 ms - -[0m
+[0mGET /api/auth/me [36m304[0m 66.210 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 129.984 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 130.978 ms - -[0m
+[0mGET /api/auth/me [36m304[0m 66.764 ms - -[0m
+[0mGET /api/auth/me [36m304[0m 65.835 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 132.242 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 131.941 ms - -[0m
+[0mGET /api/auth/me [36m304[0m 74.900 ms - -[0m
+[0mGET /api/auth/me [36m304[0m 66.104 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 138.172 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 138.540 ms - -[0m
+[0mGET /api/auth/me [36m304[0m 68.729 ms - -[0m
+[0mGET /api/auth/me [36m304[0m 69.145 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 134.377 ms - -[0m
+[0mGET /api/pengarah/applications/69e1edbb33d76d3ea435e00d [36m304[0m 138.067 ms - -[0m

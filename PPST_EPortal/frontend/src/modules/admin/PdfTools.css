@@ -1,0 +1,104 @@
+/* PdfTools.css */
+
+.pt-page { padding: 2rem 2.5rem; max-width: 1100px; font-family: "Inter", sans-serif; }
+
+/* Header */
+.pt-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem; margin-bottom: 1.75rem;
+}
+.pt-title    { font-family: "Playfair Display", serif; font-size: 1.6rem; color: #1a2340; margin: 0 0 0.25rem; }
+.pt-subtitle { font-size: 0.85rem; color: #6b7280; margin: 0; max-width: 540px; line-height: 1.5; }
+.pt-subtitle code { background: #f3f4f6; border-radius: 4px; padding: 0 4px; font-size: 0.8rem; }
+
+.pt-zip-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: #003087; color: white; border: none; border-radius: 10px;
+  font-size: 0.85rem; font-weight: 700; padding: 0.6rem 1.4rem;
+  cursor: pointer; font-family: "Inter", sans-serif;
+  white-space: nowrap; transition: background 0.15s;
+}
+.pt-zip-btn:hover  { background: #001f5b; }
+.pt-zip-btn.loading{ opacity: 0.7; cursor: default; }
+
+/* Guide */
+.pt-guide {
+  background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px;
+  padding: 1.25rem 1.5rem; margin-bottom: 1.75rem;
+}
+.pt-guide-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #92400e; margin: 0 0 0.75rem; }
+.pt-guide-steps { margin: 0; padding-left: 1.25rem; }
+.pt-guide-steps li { font-size: 0.84rem; color: #78350f; line-height: 1.7; }
+.pt-guide-steps code { background: #fef3c7; border-radius: 3px; padding: 1px 4px; font-size: 0.78rem; }
+
+/* Cards grid */
+.pt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+
+.pt-card {
+  background: white; border-radius: 14px; border: 1.5px solid #e8eaf0;
+  padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,32,91,0.04);
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.pt-card.missing { border-color: #fca5a5; background: #fff5f5; }
+
+.pt-card-top { display: flex; align-items: center; justify-content: space-between; }
+.pt-form-key { font-family: "JetBrains Mono", monospace; font-size: 0.78rem; font-weight: 700;
+  color: #003087; background: #eef2fb; border-radius: 6px; padding: 2px 8px; }
+
+.pt-badge { font-size: 0.7rem; font-weight: 700; border-radius: 10px; padding: 2px 8px; }
+.pt-badge.ready   { background: #d1fae5; color: #065f46; }
+.pt-badge.missing { background: #fee2e2; color: #991b1b; }
+
+.pt-form-label { font-size: 0.88rem; font-weight: 600; color: #1a2340; margin: 0; }
+
+.pt-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.pt-dl-btn {
+  display: inline-flex; align-items: center; gap: 0.35rem; justify-content: center;
+  border: none; border-radius: 8px; font-size: 0.8rem; font-weight: 600;
+  padding: 0.5rem 0.9rem; cursor: pointer; font-family: "Inter", sans-serif;
+  transition: all 0.15s; width: 100%;
+}
+.pt-dl-btn.calibrate         { background: #ede9fe; color: #5b21b6; }
+.pt-dl-btn.calibrate:hover   { background: #ddd6fe; }
+.pt-dl-btn.calibrate.loading { opacity: 0.7; cursor: default; }
+.pt-dl-btn.calibrate.done    { background: #d1fae5; color: #065f46; }
+.pt-dl-btn.calibrate.error   { background: #fee2e2; color: #991b1b; }
+.pt-dl-btn:disabled          { opacity: 0.5; cursor: not-allowed; }
+
+.pt-hint { font-size: 0.72rem; color: #9ca3af; margin: 0; }
+.pt-hint code { font-size: 0.7rem; }
+
+/* State */
+.pt-state { display: flex; align-items: center; justify-content: center;
+  min-height: 200px; font-size: 0.9rem; color: #6b7280; gap: 0.6rem; }
+.pt-state.error { color: #dc2626; }
+
+/* Spinner */
+.btn-spinner {
+  display: inline-block; width: 12px; height: 12px;
+  border: 2px solid currentColor; border-top-color: transparent;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Field reference table */
+.pt-ref { margin-top: 0.5rem; }
+.pt-ref-title { font-size: 0.82rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #8a93a8; margin: 0 0 0.75rem; }
+.pt-ref-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.pt-ref-table th {
+  background: #f8f9fc; font-weight: 700; color: #1a2340; padding: 0.55rem 0.75rem;
+  text-align: left; border-bottom: 2px solid #e8eaf0; white-space: nowrap;
+}
+.pt-ref-table td {
+  padding: 0.55rem 0.75rem; border-bottom: 1px solid #f0f2f8;
+  color: #374151; line-height: 1.55; vertical-align: top;
+}
+.pt-ref-table tr:last-child td { border-bottom: none; }
+.pt-ref-table tr:hover td { background: #f8f9fc; }
+.pt-ref-table td:first-child {
+  font-family: "JetBrains Mono", monospace; font-weight: 700;
+  color: #003087; white-space: nowrap;
+}

@@ -1,0 +1,16 @@
+/* LecturerLayout.css */
+.lecturer-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+  font-family: "Inter", sans-serif;
+}
+.lecturer-main {
+  flex: 1;
+  margin-left: 250px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+@media (max-width: 768px) {
+  .lecturer-main { margin-left: 0; }
+}

@@ -1,0 +1,26 @@
+/* StatusBadge.css */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.badge-icon { font-size: 0.7rem; }
+
+.badge--pending-admin    { background: #fef3c7; color: #92400e; }
+.badge--pending-pengarah { background: #dbeafe; color: #1e40af; }
+.badge--approved         { background: #d1fae5; color: #065f46; }
+.badge--rejected         { background: #fee2e2; color: #991b1b; }
+.badge--default          { background: #f3f4f6; color: #374151; }
+
+.form-type-label {
+  font-size: 0.8rem;
+  color: #4a5578;
+  font-weight: 500;
+}

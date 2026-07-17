@@ -1,0 +1,70 @@
+✅ MongoDB Connected: ac-qnnofor-shard-00-01.nwsezkh.mongodb.net
+=======================================================
+🚀 PPST E-Portal Server | Port: 3001
+   Database: MongoDB Atlas
+   Frontend: http://localhost:5000
+=======================================================
+ValidationError: The 'X-Forwarded-For' header is set but the Express 'trust proxy' setting is false (default). This could indicate a misconfiguration which would prevent express-rate-limit from accurately identifying users. See https://express-rate-limit.github.io/ERR_ERL_UNEXPECTED_X_FORWARDED_FOR/ for more information.
+    at Object.xForwardedForHeader [90m(/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:185:13[90m)[39m
+    at wrappedValidations.<computed> [as xForwardedForHeader] [90m(/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:397:22[90m)[39m
+    at Object.keyGenerator [90m(/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:658:20[90m)[39m
+    at [90m/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:710:32
+    at async [90m/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:691:5 {
+  code: [32m'ERR_ERL_UNEXPECTED_X_FORWARDED_FOR'[39m,
+  help: [32m'https://express-rate-limit.github.io/ERR_ERL_UNEXPECTED_X_FORWARDED_FOR/'[39m
+}
+ValidationError: The 'X-Forwarded-For' header is set but the Express 'trust proxy' setting is false (default). This could indicate a misconfiguration which would prevent express-rate-limit from accurately identifying users. See https://express-rate-limit.github.io/ERR_ERL_UNEXPECTED_X_FORWARDED_FOR/ for more information.
+    at Object.xForwardedForHeader [90m(/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:185:13[90m)[39m
+    at wrappedValidations.<computed> [as xForwardedForHeader] [90m(/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:397:22[90m)[39m
+    at Object.keyGenerator [90m(/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:658:20[90m)[39m
+    at [90m/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:710:32
+    at async [90m/home/runner/workspace/backend/[39mnode_modules/[4mexpress-rate-limit[24m/dist/index.cjs:691:5 {
+  code: [32m'ERR_ERL_UNEXPECTED_X_FORWARDED_FOR'[39m,
+  help: [32m'https://express-rate-limit.github.io/ERR_ERL_UNEXPECTED_X_FORWARDED_FOR/'[39m
+}
+[0mPOST /api/auth/login [32m200[0m 409.426 ms - 842[0m
+[0mGET /api/student/dashboard [32m200[0m 73.610 ms - 465[0m
+[0mGET /api/student/dashboard [36m304[0m 65.986 ms - -[0m
+[0mGET /api/student/applications [32m200[0m 136.093 ms - 1017[0m
+[0mGET /api/student/applications [36m304[0m 131.052 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 65.820 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 66.106 ms - -[0m
+[0mGET /api/auth/me [32m200[0m 66.134 ms - 464[0m
+[0mGET /api/auth/me [36m304[0m 65.219 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 65.768 ms - -[0m
+[0mGET /api/student/dashboard [36m304[0m 65.749 ms - -[0m
+[0mPOST /api/auth/login [32m200[0m 397.656 ms - 714[0m
+[0mGET /api/pengarah/analytics [32m200[0m 523.683 ms - 215[0m
+[0mGET /api/pengarah/dashboard [32m200[0m 524.503 ms - 2218[0m
+[0mGET /api/pengarah/analytics [36m304[0m 65.766 ms - -[0m
+[0mGET /api/pengarah/dashboard [36m304[0m 532.703 ms - -[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [32m200[0m 127.329 ms - 2155[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [36m304[0m 125.680 ms - -[0m
+[0mGET /api/pengarah/applications/undefined [31m500[0m 1.740 ms - 43[0m
+[0mGET /api/pengarah/applications/undefined [31m500[0m 1.039 ms - 43[0m
+[0mPOST /api/auth/login [32m200[0m 430.849 ms - 671[0m
+[0mPOST /api/auth/login [32m200[0m 394.302 ms - 671[0m
+[0mGET /api/lecturer/stats [32m200[0m 64.087 ms - 38[0m
+[0mGET /api/lecturer/dashboard [32m200[0m 187.711 ms - 1143[0m
+[0mGET /api/lecturer/stats [36m304[0m 62.721 ms - -[0m
+[0mGET /api/lecturer/dashboard [36m304[0m 189.770 ms - -[0m
+[0mGET /api/lecturer/roster [32m200[0m 126.407 ms - 548[0m
+[0mGET /api/lecturer/dashboard [36m304[0m 187.264 ms - -[0m
+[0mGET /api/lecturer/roster [36m304[0m 125.757 ms - -[0m
+[0mGET /api/lecturer/dashboard [36m304[0m 189.177 ms - -[0m
+[0mGET /api/lecturer/attendance?page=1&limit=20 [32m200[0m 128.186 ms - 1121[0m
+[0mGET /api/lecturer/dashboard [36m304[0m 187.483 ms - -[0m
+[0mGET /api/lecturer/attendance?page=1&limit=20 [36m304[0m 129.341 ms - -[0m
+[0mGET /api/lecturer/dashboard [36m304[0m 190.025 ms - -[0m
+[0mPOST /api/auth/login [32m200[0m 411.162 ms - 714[0m
+[0mGET /api/pengarah/analytics [36m304[0m 64.202 ms - -[0m
+[0mGET /api/pengarah/dashboard [36m304[0m 132.600 ms - -[0m
+[0mGET /api/pengarah/analytics [36m304[0m 67.292 ms - -[0m
+[0mGET /api/pengarah/dashboard [36m304[0m 129.340 ms - -[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [36m304[0m 125.560 ms - -[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=pending_pengarah [36m304[0m 127.915 ms - -[0m
+[0mGET /api/pengarah/applications/undefined [31m500[0m 1.000 ms - 43[0m
+[0mGET /api/pengarah/applications/undefined [31m500[0m 0.915 ms - 43[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=fully_approved [32m200[0m 65.391 ms - 98[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=fully_approved [36m304[0m 64.741 ms - -[0m
+[0mGET /api/pengarah/applications?page=1&limit=15&status=fully_approved&form_type=sick_leave [32m200[0m 65.168 ms - 98[0m

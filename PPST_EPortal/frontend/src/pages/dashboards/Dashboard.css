@@ -1,0 +1,85 @@
+/* Dashboard.css — Placeholder styles for role dashboards */
+
+.dashboard-placeholder {
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background: #f5f6fa;
+}
+
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid #e8eaf0;
+  box-shadow: 0 2px 8px rgba(0, 32, 91, 0.06);
+}
+
+.dash-role-badge {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #003087;
+  padding: 0.4rem 1rem;
+  background: #eef2fb;
+  border-radius: 20px;
+}
+
+.dashboard-placeholder.admin .dash-role-badge { color: #b45309; background: #fef3c7; }
+.dashboard-placeholder.lecturer .dash-role-badge { color: #065f46; background: #d1fae5; }
+.dashboard-placeholder.pengarah .dash-role-badge { color: #5b21b6; background: #ede9fe; }
+
+.logout-btn {
+  padding: 0.4rem 1rem;
+  background: white;
+  border: 1.5px solid #e8eaf0;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #c8102e;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.logout-btn:hover { background: #fff5f5; border-color: #fecaca; }
+
+.dash-content {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.dash-content h1 {
+  font-size: 1.8rem;
+  color: #1a2340;
+  margin-bottom: 0.5rem;
+}
+
+.dash-content p {
+  color: #4a5578;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.dash-coming-soon {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  border: 2px dashed #e8eaf0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dash-coming-soon span {
+  font-size: 2.5rem;
+}
+
+.dash-coming-soon p {
+  color: #8a93a8;
+  font-size: 0.875rem;
+  font-weight: 500;
+}

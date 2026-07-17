@@ -1,0 +1,61 @@
+/* PengarahApprovalList.css */
+
+.pal-page { padding: 2rem 2.5rem; max-width: 1200px; font-family: "Inter", sans-serif; }
+.pal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+.pal-title { font-family: "Playfair Display", serif; font-size: 1.65rem; color: #1a2340; margin: 0 0 0.25rem; }
+.pal-subtitle { font-size: 0.8rem; color: #8a93a8; margin: 0; }
+
+.pal-filters { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+.pal-select {
+  padding: 0.6rem 0.85rem; border: 1.5px solid #e8eaf0; border-radius: 8px;
+  font-family: "Inter", sans-serif; font-size: 0.82rem; color: #1a2340;
+  background: white; outline: none; cursor: pointer;
+}
+.pal-select:focus { border-color: #7c3aed; }
+.pal-search {
+  flex: 1; min-width: 200px; padding: 0.6rem 0.9rem;
+  border: 1.5px solid #e8eaf0; border-radius: 8px;
+  font-family: "Inter", sans-serif; font-size: 0.85rem; color: #1a2340; background: white; outline: none;
+}
+.pal-search:focus { border-color: #7c3aed; }
+.pal-clear { padding: 0.55rem 0.9rem; background: #fee2e2; border: 1.5px solid #fecaca; border-radius: 8px; font-size: 0.78rem; font-weight: 600; color: #991b1b; cursor: pointer; font-family: "Inter", sans-serif; }
+
+.pal-table-wrap { background: white; border-radius: 14px; border: 1px solid #e8eaf0; overflow: hidden; box-shadow: 0 2px 10px rgba(0,32,91,0.04); overflow-x: auto; }
+.pal-table { width: 100%; border-collapse: collapse; font-size: 0.81rem; }
+.pal-table th { background: #f8f9fc; padding: 0.65rem 0.9rem; text-align: left; font-size: 0.65rem; font-weight: 700; color: #8a93a8; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e8eaf0; white-space: nowrap; }
+.pal-table td { padding: 0.8rem 0.9rem; border-bottom: 1px solid #f0f2f8; vertical-align: middle; }
+.pal-table tr:last-child td { border-bottom: none; }
+.pal-table tr:hover td { background: #faf8ff; }
+.pal-row-urgent { border-left: 3px solid #7c3aed; }
+
+.pal-id { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; color: #b8bfcc; white-space: nowrap; }
+.pal-student { display: flex; flex-direction: column; gap: 0.1rem; }
+.pal-sname  { font-size: 0.82rem; font-weight: 600; color: #1a2340; }
+.pal-smatric { font-size: 0.68rem; color: #8a93a8; font-family: "JetBrains Mono", monospace; }
+.pal-prog   { font-size: 0.76rem; color: #4a5578; }
+.pal-ftype  { font-size: 0.78rem; font-weight: 600; }
+.pal-date   { font-size: 0.75rem; color: #4a5578; white-space: nowrap; }
+.pal-admin-by { font-size: 0.65rem; color: #b8bfcc; }
+.pal-comment { font-size: 0.75rem; color: #4a5578; max-width: 180px; }
+.pal-nil    { color: #d1d5db; }
+
+.pal-action-btn { padding: 0.35rem 0.85rem; border-radius: 6px; font-size: 0.78rem; font-weight: 600; cursor: pointer; font-family: "Inter", sans-serif; transition: all 0.15s; white-space: nowrap; }
+.pal-action-btn.primary { background: linear-gradient(135deg, #5b21b6, #7c3aed); color: white; border: none; box-shadow: 0 2px 8px rgba(91,33,182,0.22); }
+.pal-action-btn.primary:hover { box-shadow: 0 4px 12px rgba(91,33,182,0.32); transform: translateY(-1px); }
+.pal-action-btn.secondary { background: white; color: #4a5578; border: 1.5px solid #e8eaf0; }
+.pal-action-btn.secondary:hover { background: #f5f6fa; }
+
+.pal-pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.25rem; }
+.pag-btn { padding: 0.5rem 1rem; background: white; border: 1.5px solid #e8eaf0; border-radius: 8px; font-size: 0.82rem; font-weight: 600; color: #7c3aed; cursor: pointer; font-family: "Inter", sans-serif; transition: all 0.15s; }
+.pag-btn:hover:not(:disabled) { background: #f5f3ff; border-color: #7c3aed; }
+.pag-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pag-info { font-size: 0.8rem; color: #8a93a8; }
+
+.pal-state { display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.75rem; min-height: 250px; font-size: 0.875rem; color: #8a93a8; }
+.pal-state.error { color: #991b1b; background: #fee2e2; border-radius: 12px; padding: 2rem; }
+.pal-state.empty span { font-size: 2rem; }
+
+.loading-spinner { width: 24px; height: 24px; border: 3px solid #e8eaf0; border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 900px) { .pal-page { padding: 1.25rem; } }

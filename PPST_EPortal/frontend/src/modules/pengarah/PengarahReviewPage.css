@@ -1,0 +1,137 @@
+/* PengarahReviewPage.css */
+
+.prp-page { padding: 2rem 2.5rem; max-width: 1100px; font-family: "Inter", sans-serif; }
+
+.prp-back {
+  background: none; border: none; color: #8a93a8; font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; font-family: "Inter", sans-serif; padding: 0; margin-bottom: 1.25rem;
+  display: inline-flex; align-items: center; gap: 0.3rem; transition: color 0.15s;
+}
+.prp-back:hover { color: #5b21b6; }
+
+/* Header */
+.prp-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.75rem; flex-wrap: wrap; gap: 0.75rem; }
+.prp-app-id { display: block; font-size: 0.72rem; font-family: "JetBrains Mono", monospace; color: #8a93a8; margin-bottom: 0.2rem; }
+.prp-title  { font-family: "Playfair Display", serif; font-size: 1.5rem; color: #1a2340; margin: 0; }
+.prp-header-right { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.prp-done-chip { background: #ede9fe; color: #5b21b6; font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 12px; }
+.prp-pdf-btn {
+  background: #003087; color: white; border: none; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 600; padding: 0.45rem 1rem;
+  cursor: pointer; font-family: "Inter", sans-serif; transition: background 0.15s;
+}
+.prp-pdf-btn:hover { background: #001f5b; }
+
+/* Body */
+.prp-body { display: grid; grid-template-columns: 1fr 360px; gap: 1.25rem; align-items: start; }
+
+/* Cards */
+.prp-card { background: white; border-radius: 14px; border: 1px solid #e8eaf0; padding: 1.4rem; margin-bottom: 1.25rem; box-shadow: 0 2px 10px rgba(0,32,91,0.04); }
+.prp-card:last-child { margin-bottom: 0; }
+.prp-card-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #8a93a8; margin: 0 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid #f0f2f8; }
+
+/* Detail grid */
+.prp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+.prp-dr { display: flex; flex-direction: column; gap: 0.15rem; }
+.prp-dr.full { grid-column: 1 / -1; }
+.prp-dr-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #b8bfcc; }
+.prp-dr-value { font-size: 0.85rem; color: #1a2340; line-height: 1.5; }
+
+/* Attachment */
+.prp-attachment { margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid #f0f2f8; }
+.prp-file-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 600; color: #5b21b6; text-decoration: none; padding: 0.45rem 0.85rem; border: 1.5px solid #ddd6fe; border-radius: 8px; background: #f5f3ff; transition: all 0.15s; }
+.prp-file-link:hover { background: #ede9fe; }
+
+/* Admin row */
+.prp-admin-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.prp-admin-name { font-size: 0.85rem; color: #065f46; }
+.prp-admin-date { font-size: 0.72rem; color: #8a93a8; font-family: "JetBrains Mono", monospace; }
+.prp-comment-box { background: #f8f9fc; border-radius: 8px; border-left: 3px solid #e8eaf0; padding: 0.6rem 0.85rem; font-size: 0.8rem; color: #4a5578; font-style: italic; margin-top: 0.5rem; }
+
+/* Signature display */
+.prp-sig-display { padding: 0.75rem 0; text-align: center; }
+.prp-sig-img { max-width: 100%; border: 2px solid #e8eaf0; border-radius: 8px; background: #fafbff; }
+
+/* ===== RIGHT PANEL ===== */
+.prp-right { position: sticky; top: 1.5rem; }
+
+.prp-action-panel { background: white; border-radius: 14px; border: 2px solid #5b21b6; padding: 1.4rem; margin-bottom: 1.25rem; box-shadow: 0 4px 20px rgba(91,33,182,0.12); }
+.prp-action-panel.read-only { border-color: #e8eaf0; box-shadow: 0 2px 10px rgba(0,32,91,0.04); }
+.prp-action-title { font-size: 0.95rem; font-weight: 700; color: #1a2340; margin: 0 0 0.5rem; }
+.prp-action-hint  { font-size: 0.78rem; color: #8a93a8; line-height: 1.5; margin: 0 0 1.25rem; }
+
+.prp-action-btns { display: flex; flex-direction: column; gap: 0.65rem; }
+
+.prp-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  padding: 0.7rem 1rem; border-radius: 8px; font-family: "Inter", sans-serif;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  border: 2px solid transparent;
+}
+.prp-btn.approve { background: linear-gradient(135deg, #5b21b6, #7c3aed); color: white; box-shadow: 0 4px 14px rgba(91,33,182,0.28); }
+.prp-btn.approve:hover:not(:disabled) { box-shadow: 0 6px 18px rgba(91,33,182,0.38); transform: translateY(-1px); }
+.prp-btn.reject  { background: white; color: #c8102e; border-color: #fecaca; }
+.prp-btn.reject:hover:not(:disabled)  { background: #fff5f5; border-color: #f87171; }
+.prp-btn.cancel  { background: white; color: #4a5578; border-color: #e8eaf0; flex: 1; }
+.prp-btn.cancel:hover:not(:disabled)  { background: #f5f6fa; }
+.prp-btn.confirm.approve { background: linear-gradient(135deg, #5b21b6, #7c3aed); color: white; border: none; flex: 1; box-shadow: 0 4px 12px rgba(91,33,182,0.25); }
+.prp-btn.confirm.reject  { background: linear-gradient(135deg, #9b1c1c, #c8102e); color: white; border: none; flex: 1; }
+.prp-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; }
+
+/* Signature Canvas */
+.sig-wrap { margin-bottom: 0.85rem; }
+.sig-label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; }
+.sig-label { font-size: 0.75rem; font-weight: 600; color: #4a5578; }
+.sig-clear-btn { background: none; border: 1px solid #e8eaf0; border-radius: 6px; padding: 0.2rem 0.6rem; font-size: 0.72rem; color: #8a93a8; cursor: pointer; font-family: "Inter", sans-serif; transition: all 0.15s; }
+.sig-clear-btn:hover { border-color: #c8102e; color: #c8102e; background: #fff5f5; }
+
+.sig-canvas {
+  width: 100%; height: 130px; display: block;
+  border: 2px dashed #ddd6fe; border-radius: 10px;
+  background: #fdfcff; cursor: crosshair;
+  touch-action: none;
+}
+.sig-canvas.disabled { cursor: default; background: #f5f3ff; border-style: solid; }
+.sig-hint { font-size: 0.68rem; color: #b8bfcc; margin: 0.35rem 0 0; line-height: 1.4; }
+
+/* Confirm Panel */
+.prp-confirm-panel { border-radius: 10px; padding: 1rem; margin-top: 0.5rem; }
+.prp-confirm-panel.approve { background: #f5f3ff; border: 1.5px solid #ddd6fe; }
+.prp-confirm-panel.reject  { background: #fff5f5; border: 1.5px solid #fecaca; }
+.prp-confirm-header { font-size: 0.85rem; font-weight: 700; color: #1a2340; margin-bottom: 0.85rem; }
+.prp-comment-label { display: block; font-size: 0.75rem; font-weight: 600; color: #4a5578; margin-bottom: 0.35rem; }
+.prp-comment-textarea { width: 100%; padding: 0.6rem 0.75rem; border: 1.5px solid #e8eaf0; border-radius: 8px; font-family: "Inter", sans-serif; font-size: 0.82rem; color: #1a2340; resize: vertical; outline: none; transition: border-color 0.15s; }
+.prp-comment-textarea:focus { border-color: #5b21b6; }
+.prp-action-error { background: #fee2e2; border: 1px solid #fecaca; border-radius: 6px; padding: 0.55rem 0.75rem; font-size: 0.78rem; color: #991b1b; margin: 0.65rem 0; }
+.prp-confirm-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.prp-sig-required { font-size: 0.72rem; color: #b45309; margin: 0.4rem 0 0; text-align: center; }
+.prp-comment-field { margin-top: 0.75rem; }
+
+/* Read-only */
+.prp-readonly-status { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem; }
+.prp-readonly-msg { font-size: 0.8rem; color: #4a5578; line-height: 1.6; margin: 0; }
+
+/* Student card */
+.prp-student-card { background: #f8f9fc; border-radius: 12px; border: 1px solid #e8eaf0; padding: 1rem; display: flex; align-items: center; gap: 0.85rem; }
+.prp-sc-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #5b21b6, #7c3aed); color: white; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; flex-shrink: 0; }
+.prp-sc-info { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.prp-sc-name   { font-size: 0.82rem; font-weight: 600; color: #1a2340; }
+.prp-sc-matric { font-size: 0.7rem; color: #8a93a8; font-family: "JetBrains Mono", monospace; }
+.prp-sc-prog   { font-size: 0.7rem; color: #4a5578; }
+
+/* Spinner */
+.btn-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.35); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* States */
+.prp-state { display: flex; align-items: center; justify-content: center; gap: 0.75rem; min-height: 300px; font-size: 0.875rem; color: #8a93a8; }
+.prp-state.error { color: #991b1b; background: #fee2e2; border-radius: 12px; margin: 2rem; padding: 2rem; }
+.loading-spinner { width: 24px; height: 24px; border: 3px solid #e8eaf0; border-top-color: #7c3aed; border-radius: 50%; animation: spin 0.8s linear infinite; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .prp-body { grid-template-columns: 1fr; }
+  .prp-right { position: static; }
+  .prp-page  { padding: 1.25rem; }
+  .prp-grid  { grid-template-columns: 1fr; }
+}
