@@ -30,8 +30,10 @@ app.set("trust proxy", 1);
 
 // Security
 app.use(helmet());
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5000";
+
 app.use(cors({
-  origin:         true,
+  origin: FRONTEND_URL,
   methods:        ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"],
   credentials:    true,
