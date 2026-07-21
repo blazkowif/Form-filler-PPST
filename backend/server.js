@@ -31,9 +31,16 @@ app.set("trust proxy", 1);
 // Security
 app.use(helmet());
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5000";
+// Allow the deployed frontend origin and local dev origin for convenience.
+const ALLOWED_ORIGINS = [FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"];
 
 app.use(cors({
-  origin: FRONTEND_URL,
+  origin: (origin, callback) => {
+    // Allow non-browser requests like curl/postman (origin is undefined)
+    if (!origin) return callback(null, true);
+    if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    return callback(new Error(`CORS policy: origin ${origin} not allowed`));
+  },
   methods:        ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"],
   credentials:    true,
