@@ -32,7 +32,7 @@ app.set("trust proxy", 1);
 app.use(helmet());
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5000";
 // Allow the deployed frontend origin and local dev origin for convenience.
-const ALLOWED_ORIGINS = [FRONTEND_URL, "http://localhost:5173", "http://localhost:3000"];
+const ALLOWED_ORIGINS = [FRONTEND_URL, "http://localhost:5173", "https://form-filler-ppst-frontend.vercel.app"];
 
 app.use(cors({
   origin: (origin, callback) => {
