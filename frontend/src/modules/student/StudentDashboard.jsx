@@ -9,44 +9,8 @@ import api from "../../services/api";
 import StatusBadge, { FORM_LABELS } from "../../components/StatusBadge";
 import "./StudentDashboard.css";
 
-// --- The 6 form cards ---
+// --- The 6 form cards in AKD-01 to AKD-06 order ---
 const FORMS = [
-  {
-    key:         "sick_leave",
-    code:        "PPST/AKD-06",
-    title:       "Sick Leave",
-    subtitle:    "Borang Permohonan Cuti Sakit",
-    description: "Apply for sick leave with a medical certificate from a registered doctor or hospital.",
-    icon:        "🏥",
-    color:       "#dc2626",
-    bg:          "#fff5f5",
-    border:      "#fecaca",
-    route:       "/student/apply/sick_leave",
-  },
-  {
-    key:         "non_sick_leave",
-    code:        "PPST/AKD-07",
-    title:       "Non-Sick Leave",
-    subtitle:    "Borang Tunjuk Sebab Tidak Hadir",
-    description: "Justify absence from lectures, tutorials, or practicals for non-medical reasons.",
-    icon:        "📅",
-    color:       "#d97706",
-    bg:          "#fffbeb",
-    border:      "#fde68a",
-    route:       "/student/apply/non_sick_leave",
-  },
-  {
-    key:         "appeal_review",
-    code:        "PPST/AKD-03",
-    title:       "Appeal Exam Review",
-    subtitle:    "Rayuan Semakan Semula Keputusan Peperiksaan",
-    description: "Appeal to review your examination results. RM100 payment receipt required per course.",
-    icon:        "📝",
-    color:       "#2563eb",
-    bg:          "#eff6ff",
-    border:      "#bfdbfe",
-    route:       "/student/apply/appeal_review",
-  },
   {
     key:         "withdrawal",
     code:        "PPST/AKD-01",
@@ -72,6 +36,30 @@ const FORMS = [
     route:       "/student/apply/exam_replacement",
   },
   {
+    key:         "appeal_review",
+    code:        "PPST/AKD-03",
+    title:       "Appeal Exam Review",
+    subtitle:    "Rayuan Semakan Semula Keputusan Peperiksaan",
+    description: "Appeal to review your examination results. RM100 payment receipt required per course.",
+    icon:        "📝",
+    color:       "#2563eb",
+    bg:          "#eff6ff",
+    border:      "#bfdbfe",
+    route:       "/student/apply/appeal_review",
+  },
+  {
+    key:         "non_sick_leave",
+    code:        "PPST/AKD-04",
+    title:       "Absence Justification",
+    subtitle:    "Borang Tunjuk Sebab Tidak Hadir",
+    description: "Justify absence from lectures, tutorials, or practicals for non-medical reasons.",
+    icon:        "📅",
+    color:       "#d97706",
+    bg:          "#fffbeb",
+    border:      "#fde68a",
+    route:       "/student/apply/non_sick_leave",
+  },
+  {
     key:         "room_booking",
     code:        "PPST/AKD-05",
     title:       "Room Booking",
@@ -82,6 +70,18 @@ const FORMS = [
     bg:          "#ecfeff",
     border:      "#a5f3fc",
     route:       "/student/apply/room_booking",
+  },
+  {
+    key:         "sick_leave",
+    code:        "PPST/AKD-06",
+    title:       "Sick Leave",
+    subtitle:    "Borang Permohonan Cuti Sakit",
+    description: "Apply for sick leave with a medical certificate from a registered doctor or hospital.",
+    icon:        "🏥",
+    color:       "#dc2626",
+    bg:          "#fff5f5",
+    border:      "#fecaca",
+    route:       "/student/apply/sick_leave",
   },
 ];
 

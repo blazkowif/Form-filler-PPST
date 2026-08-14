@@ -1,17 +1,18 @@
 // =============================================================
 // src/forms/SickLeaveForm.jsx — PPST/AKD-06
 // =============================================================
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import {
   FormWrapper, FormSection, FormField, FormInput,
   FormTextarea, FormSelect, FormRow, FileUploadField, SubmitSection,
+  EditableProfileSection,
 } from "./FormWrapper";
 
 const SickLeaveForm = () => {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -23,12 +24,62 @@ const SickLeaveForm = () => {
   });
   const [mcFile,       setMcFile]       = useState(null);
   const [isLoading,    setIsLoading]    = useState(false);
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSubmitted,  setIsSubmitted]  = useState(false);
   const [applicationId, setApplicationId] = useState(null);
   const [submitError,  setSubmitError]  = useState("");
+  const [profileError, setProfileError] = useState("");
+  const [profile, setProfile] = useState({
+    phone: user?.phone || "",
+    ic_number: user?.ic_number || "",
+    program: user?.profile?.program || "",
+    lecture_group: user?.profile?.lecture_group || "",
+    tutorial_group: user?.profile?.tutorial_group || "",
+    practical_group: user?.profile?.practical_group || "",
+    address: user?.profile?.address || "",
+  });
+
+  useEffect(() => {
+    setProfile({
+      phone: user?.phone || "",
+      ic_number: user?.ic_number || "",
+      program: user?.profile?.program || "",
+      lecture_group: user?.profile?.lecture_group || "",
+      tutorial_group: user?.profile?.tutorial_group || "",
+      practical_group: user?.profile?.practical_group || "",
+      address: user?.profile?.address || "",
+    });
+  }, [user]);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleProfileChange = (e) => {
+    const { name, value } = e.target;
+    setProfile((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSaveProfile = async () => {
+    setProfileError("");
+    setIsSavingProfile(true);
+    try {
+      await updateProfile({
+        phone: profile.phone,
+        ic_number: profile.ic_number,
+        profile: {
+          program: profile.program,
+          lecture_group: profile.lecture_group,
+          tutorial_group: profile.tutorial_group,
+          practical_group: profile.practical_group,
+          address: profile.address,
+        },
+      });
+    } catch (err) {
+      setProfileError(err.response?.data?.message || "Failed to save profile.");
+    } finally {
+      setIsSavingProfile(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -74,32 +125,14 @@ const SickLeaveForm = () => {
     >
       <form onSubmit={handleSubmit}>
         {/* Applicant Info (read-only) */}
-        <FormSection title="Applicant Information">
-          <FormRow>
-            <FormField label="Student Name">
-              <FormInput value={user?.name || ""} disabled />
-            </FormField>
-            <FormField label="Matric Number">
-              <FormInput value={user?.matric_staff_id || ""} disabled />
-            </FormField>
-          </FormRow>
-          <FormRow>
-            <FormField label="Programme">
-              <FormInput value={user?.profile?.program || ""} disabled />
-            </FormField>
-            <FormField label="IC Number">
-              <FormInput value={user?.ic_number || ""} disabled />
-            </FormField>
-          </FormRow>
-          <FormRow>
-            <FormField label="Lecture Group">
-              <FormInput value={user?.profile?.lecture_group || ""} disabled />
-            </FormField>
-            <FormField label="Tutorial Group">
-              <FormInput value={user?.profile?.tutorial_group || ""} disabled />
-            </FormField>
-          </FormRow>
-        </FormSection>
+        <EditableProfileSection
+          user={user}
+          profile={profile}
+          onChange={handleProfileChange}
+          onSave={handleSaveProfile}
+          isSaving={isSavingProfile}
+          saveError={profileError}
+        />
 
         {/* Leave Details */}
         <FormSection title="Leave Details">

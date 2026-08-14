@@ -80,6 +80,19 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // ==========================================================
+  // updateProfile()
+  // ==========================================================
+  const updateProfile = useCallback(async (payload) => {
+    const response = await authAPI.updateMe(payload);
+    const updatedUser = response.data.user;
+
+    sessionStorage.setItem(USER_KEY, JSON.stringify(updatedUser));
+    setUser(updatedUser);
+
+    return updatedUser;
+  }, []);
+
+  // ==========================================================
   // logout()
   // ==========================================================
   const logout = useCallback(() => {
@@ -96,6 +109,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!user,
     login,
     logout,
+    updateProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

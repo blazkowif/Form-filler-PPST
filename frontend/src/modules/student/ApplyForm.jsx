@@ -17,26 +17,26 @@ import "./ApplyForm.css";
 
 const FORM_REGISTRY = {
   sick_leave:       <SickLeaveForm />,
-  non_sick_leave:   <NonSickLeaveForm />,
-  appeal_review:    <AppealReviewForm />,
   withdrawal:       <WithdrawalForm />,
   exam_replacement: <ExamReplacementForm />,
+  appeal_review:    <AppealReviewForm />,
+  non_sick_leave:   <NonSickLeaveForm />,
   room_booking:     <RoomBookingForm />,
 };
 
 const FORM_CARDS = [
-  { key:"sick_leave",       code:"PPST/AKD-06", icon:"🏥", title:"Sick Leave",                color:"#dc2626", bg:"#fff5f5",
-    desc:"Absent due to illness. Attach MC." },
-  { key:"non_sick_leave",   code:"PPST/AKD-07", icon:"📅", title:"Non-Sick Leave",             color:"#d97706", bg:"#fffbeb",
-    desc:"Absent for non-medical reasons." },
-  { key:"appeal_review",    code:"PPST/AKD-03", icon:"📝", title:"Appeal Exam Review",         color:"#2563eb", bg:"#eff6ff",
-    desc:"Review your examination result. RM100/course." },
   { key:"withdrawal",       code:"PPST/AKD-01", icon:"🎓", title:"Withdrawal from Studies",    color:"#7c3aed", bg:"#f5f3ff",
     desc:"Apply to discontinue your studies." },
   { key:"exam_replacement", code:"PPST/AKD-02", icon:"✏️", title:"Replacement / Repeat Exam", color:"#059669", bg:"#ecfdf5",
     desc:"Missed exam? Apply within 48 hours." },
+  { key:"appeal_review",    code:"PPST/AKD-03", icon:"📝", title:"Appeal Exam Review",         color:"#2563eb", bg:"#eff6ff",
+    desc:"Review your examination result. RM100/course." },
+  { key:"non_sick_leave",   code:"PPST/AKD-04", icon:"📅", title:"Absence Justification",       color:"#d97706", bg:"#fffbeb",
+    desc:"Absent for non-medical reasons." },
   { key:"room_booking",     code:"PPST/AKD-05", icon:"🏛️", title:"Room Booking",              color:"#0891b2", bg:"#ecfeff",
     desc:"Book a lecture or tutorial room." },
+  { key:"sick_leave",       code:"PPST/AKD-06", icon:"🏥", title:"Sick Leave",                 color:"#dc2626", bg:"#fff5f5",
+    desc:"Submit a medical leave request." },
 ];
 
 const ApplyForm = () => {

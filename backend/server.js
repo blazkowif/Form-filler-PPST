@@ -62,6 +62,8 @@ app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "combined"));
 
 // Static uploads — served from /uploads
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Original blank AKD templates for PDF-backed form editors
+app.use("/api/forms/templates", express.static(path.join(__dirname, "assets", "forms")));
 
 // Routes
 app.use("/api/auth",     authRoutes);

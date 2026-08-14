@@ -122,6 +122,95 @@ export const FormSection = ({ title, children }) => (
   </div>
 );
 
+export const EditableProfileSection = ({
+  user,
+  profile,
+  onChange,
+  onSave,
+  isSaving,
+  saveError,
+  title = "Profile Information",
+}) => (
+  <FormSection title={title}>
+    <FormRow>
+      <FormField label="Student Name">
+        <FormInput value={user?.name || ""} disabled />
+      </FormField>
+      <FormField label="Matric Number">
+        <FormInput value={user?.matric_staff_id || ""} disabled />
+      </FormField>
+    </FormRow>
+    <FormRow>
+      <FormField label="Phone No.">
+        <FormInput
+          name="phone"
+          value={profile.phone}
+          onChange={onChange}
+          placeholder="Enter your phone number"
+        />
+      </FormField>
+      <FormField label="IC Number">
+        <FormInput
+          name="ic_number"
+          value={profile.ic_number}
+          onChange={onChange}
+          placeholder="Enter your IC number"
+        />
+      </FormField>
+    </FormRow>
+    <FormRow>
+      <FormField label="Programme">
+        <FormInput
+          name="program"
+          value={profile.program}
+          onChange={onChange}
+          placeholder="e.g. Asasi Sains"
+        />
+      </FormField>
+      <FormField label="Lecture Group">
+        <FormInput
+          name="lecture_group"
+          value={profile.lecture_group}
+          onChange={onChange}
+          placeholder="e.g. L1"
+        />
+      </FormField>
+    </FormRow>
+    <FormRow>
+      <FormField label="Tutorial Group">
+        <FormInput
+          name="tutorial_group"
+          value={profile.tutorial_group}
+          onChange={onChange}
+          placeholder="e.g. T1"
+        />
+      </FormField>
+      <FormField label="Practical Group">
+        <FormInput
+          name="practical_group"
+          value={profile.practical_group}
+          onChange={onChange}
+          placeholder="e.g. P1"
+        />
+      </FormField>
+    </FormRow>
+    <FormField label="Address">
+      <FormTextarea
+        name="address"
+        value={profile.address}
+        onChange={onChange}
+        placeholder="Enter your current address"
+      />
+    </FormField>
+    {saveError && <p className="field-error-msg">{saveError}</p>}
+    <div className="submit-actions" style={{ justifyContent: "flex-start" }}>
+      <button type="button" className="btn btn-outline" onClick={onSave} disabled={isSaving}>
+        {isSaving ? "Saving…" : "Save Profile"}
+      </button>
+    </div>
+  </FormSection>
+);
+
 export const FormRow = ({ children }) => (
   <div className="form-row">{children}</div>
 );

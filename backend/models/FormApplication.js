@@ -59,6 +59,12 @@ const formApplicationSchema = new mongoose.Schema({
   end_date:   Date,
   file_path:  String,
 
+  // Form-specific top-level fields used by the PDF filler
+  withdrawal_reason: String,
+  institution_name:   String,
+  room_choice:        String,
+  applicant_position: String,
+
   // Tier 1 — Admin
   admin_id:          { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   admin_comment:     String,
@@ -71,6 +77,8 @@ const formApplicationSchema = new mongoose.Schema({
   signature_path:       String,
 
   // Form-specific embedded data
+  withdrawal_data:   mongoose.Schema.Types.Mixed,
+  room_booking_data: mongoose.Schema.Types.Mixed,
   sick_leave_data:    sickLeaveSchema,
   appeal_review_data: appealReviewSchema,
 

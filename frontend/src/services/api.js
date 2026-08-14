@@ -42,6 +42,7 @@ export const authAPI = {
   login:  (matric_staff_id, password) =>
     api.post("/auth/login", { matric_staff_id, password }),
   getMe: () => api.get("/auth/me"),
+  updateMe: (payload) => api.patch("/auth/me", payload),
 };
 
 export default api;

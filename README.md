@@ -41,14 +41,14 @@ USE ppst_eportal;
 
 ```bash
 cd backend
-node scripts/seed.js
+npm run seed:users
 ```
 
 **Test credentials after seeding:**
 
 | Role      | ID           | Password      |
 |-----------|--------------|---------------|
-| Student   | BS2024001    | student123    |
+| Student   | BS2024001    | Student123!   |
 | Admin     | ADMIN001     | admin123      |
 | Lecturer  | LEC001       | lecturer123   |
 | Pengarah  | PEN001       | pengarah123   |

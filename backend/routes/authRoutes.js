@@ -56,4 +56,35 @@ router.get("/me", protect, async (req, res) => {
   }
 });
 
+// PATCH /api/auth/me
+router.patch("/me", protect, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: "User not found." });
+
+    const { name, phone, ic_number, profile } = req.body;
+
+    if (typeof name === "string" && name.trim()) user.name = name.trim();
+    if (typeof phone === "string") user.phone = phone.trim();
+    if (typeof ic_number === "string") user.ic_number = ic_number.trim();
+    if (profile && typeof profile === "object") {
+      user.profile = {
+        ...(user.profile || {}),
+        ...profile,
+      };
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully.",
+      user: user.toSafeObject(),
+    });
+  } catch (err) {
+    console.error("❌ Update Profile Error:", err);
+    return res.status(500).json({ success: false, message: "Server error." });
+  }
+});
+
 module.exports = router;

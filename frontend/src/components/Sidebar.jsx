@@ -9,7 +9,6 @@ import "./Sidebar.css";
 const NAV_ITEMS = {
   student: [
     { to: "/student",             label: "Dashboard",        icon: "⊞", end: true },
-    { to: "/student/apply",       label: "Apply for Form",   icon: "📝" },
     { to: "/student/track",       label: "Track Applications",icon: "📊" },
   ],
   admin: [

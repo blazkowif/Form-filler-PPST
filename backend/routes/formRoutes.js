@@ -123,16 +123,34 @@ router.post("/submit/appeal_review", uploadSingle, async (req, res) => {
 // ── 4. Withdrawal from Studies (PPST/AKD-01) ─────────────────
 router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
   try {
-    const { reason } = req.body;
+    const {
+      reason,
+      withdrawal_reason,
+      institution_name,
+      confirm_hostel_key,
+      confirm_fees,
+      confirm_ppst_items,
+      confirm_library_books,
+    } = req.body;
 
     if (!reason || !reason.trim()) {
       return res.status(400).json({ success: false, message: "Reason for withdrawal is required." });
     }
 
+    const resolvedReason = withdrawal_reason || "personal";
+
     const app = await FormApplication.create({
       user_id:   req.user.id,
       form_type: "withdrawal",
       reason:    reason.trim(),
+      withdrawal_reason: resolvedReason,
+      institution_name: institution_name?.trim() || "",
+      withdrawal_data: {
+        confirm_hostel_key: confirm_hostel_key === "true" || confirm_hostel_key === true,
+        confirm_fees: confirm_fees === "true" || confirm_fees === true,
+        confirm_ppst_items: confirm_ppst_items === "true" || confirm_ppst_items === true,
+        confirm_library_books: confirm_library_books === "true" || confirm_library_books === true,
+      },
       file_path: buildPath(req.file, "attachments"),
     });
 
@@ -179,18 +197,22 @@ router.post("/submit/exam_replacement", uploadSingle, async (req, res) => {
 // ── 6. Room Booking (PPST/AKD-05) ────────────────────────────
 router.post("/submit/room_booking", async (req, res) => {
   try {
-    const { reason, start_date, end_date } = req.body;
+    const { reason, start_date, room_choice, room_type } = req.body;
 
     if (!reason || !start_date) {
       return res.status(400).json({ success: false, message: "Missing required fields: reason (purpose), start_date (booking date)." });
     }
 
     const app = await FormApplication.create({
-      user_id:    req.user.id,
-      form_type:  "room_booking",
-      reason:     reason.trim(),
-      start_date: new Date(start_date),
-      end_date:   end_date ? new Date(end_date) : null,
+      user_id:           req.user.id,
+      form_type:         "room_booking",
+      reason:            reason.trim(),
+      room_choice:       room_choice || "",
+      applicant_position: "Pelajar",
+      start_date:        new Date(start_date),
+      room_booking_data: {
+        room_type: room_type || "",
+      },
     });
 
     return res.status(201).json({

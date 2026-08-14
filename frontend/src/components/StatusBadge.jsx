@@ -28,7 +28,7 @@ const STATUS_CONFIG = {
 
 const FORM_LABELS = {
   sick_leave:       "Sick Leave (AKD-06)",
-  non_sick_leave:   "Non-Sick Leave (AKD-07)",
+  non_sick_leave:   "Non-Sick Leave (AKD-04)",
   appeal_review:    "Appeal Exam Review (AKD-03)",
   withdrawal:       "Withdrawal (AKD-01)",
   exam_replacement: "Replacement Exam (AKD-02)",

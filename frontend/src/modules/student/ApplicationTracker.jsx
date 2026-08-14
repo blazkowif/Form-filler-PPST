@@ -33,6 +33,11 @@ export const ApplicationList = () => {
 
   useEffect(() => { fetchApplications(); }, [filter]);
 
+  useEffect(() => {
+    const timer = setInterval(fetchApplications, 5000);
+    return () => clearInterval(timer);
+  }, [filter]);
+
   return (
     <div className="tracker-page">
       <div className="page-header">
@@ -152,6 +157,18 @@ export const ApplicationDetail = () => {
       }
     };
     fetchDetail();
+  }, [id]);
+
+  useEffect(() => {
+    const timer = setInterval(async () => {
+      try {
+        const res = await api.get(`/student/applications/${id}`);
+        setApp(res.data.data);
+      } catch {
+        // keep the current state if polling fails briefly
+      }
+    }, 5000);
+    return () => clearInterval(timer);
   }, [id]);
 
   if (loading) return <div className="tracker-loading">Loading…</div>;

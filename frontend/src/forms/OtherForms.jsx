@@ -1,26 +1,81 @@
 // =============================================================
-// src/forms/NonSickLeaveForm.jsx — PPST/AKD-07
+// src/forms/NonSickLeaveForm.jsx — PPST/AKD-04
 // =============================================================
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import {
   FormWrapper, FormSection, FormField, FormInput,
-  FormTextarea, FormRow, FileUploadField, SubmitSection,
+  FormTextarea, FormSelect, FormRow, FileUploadField, SubmitSection,
+  EditableProfileSection,
 } from "./FormWrapper";
 
+const buildProfile = (user) => ({
+  phone: user?.phone || "",
+  ic_number: user?.ic_number || "",
+  program: user?.profile?.program || "",
+  lecture_group: user?.profile?.lecture_group || "",
+  tutorial_group: user?.profile?.tutorial_group || "",
+  practical_group: user?.profile?.practical_group || "",
+  address: user?.profile?.address || "",
+});
+
+const useStudentProfile = (user) => {
+  const [profile, setProfile] = useState(() => buildProfile(user));
+  useEffect(() => {
+    setProfile(buildProfile(user));
+  }, [user]);
+  return [profile, setProfile];
+};
+
+const ProfileSection = ({ user, profile, setProfile, onSave, isSaving, error }) => (
+  <EditableProfileSection
+    user={user}
+    profile={profile}
+    onChange={(e) => setProfile((prev) => ({ ...prev, [e.target.name]: e.target.value }))}
+    onSave={onSave}
+    isSaving={isSaving}
+    saveError={error}
+  />
+);
+
 export const NonSickLeaveForm = () => {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm]           = useState({ reason: "", start_date: "", end_date: "" });
-  const [file, setFile]           = useState(null);
+  const [form, setForm] = useState({ reason: "", start_date: "", end_date: "" });
+  const [profile, setProfile] = useStudentProfile(user);
+  const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState(null);
-  const [submitError, setSubmitError]     = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [profileError, setProfileError] = useState("");
 
-  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSaveProfile = async () => {
+    setProfileError("");
+    setIsSavingProfile(true);
+    try {
+      await updateProfile({
+        phone: profile.phone,
+        ic_number: profile.ic_number,
+        profile: {
+          program: profile.program,
+          lecture_group: profile.lecture_group,
+          tutorial_group: profile.tutorial_group,
+          practical_group: profile.practical_group,
+          address: profile.address,
+        },
+      });
+    } catch (err) {
+      setProfileError(err.response?.data?.message || "Failed to save profile.");
+    } finally {
+      setIsSavingProfile(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +87,7 @@ export const NonSickLeaveForm = () => {
     setIsLoading(true);
     try {
       const payload = new FormData();
-      Object.entries(form).forEach(([k, v]) => payload.append(k, v));
+      Object.entries(form).forEach(([key, value]) => payload.append(key, value));
       if (file) payload.append("file", file);
       const res = await api.post("/forms/submit/non_sick_leave", payload, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -47,22 +102,12 @@ export const NonSickLeaveForm = () => {
   };
 
   return (
-    <FormWrapper code="PPST/AKD-07" title="Non-Sick Leave / Absence Justification"
+    <FormWrapper code="PPST/AKD-04" title="Absence Justification"
       subtitle="Borang Tunjuk Sebab Tidak Hadir Kuliah/Tutorial/Amali"
       icon="📅" color="#d97706" bg="#fffbeb"
       isSubmitted={isSubmitted} applicationId={applicationId}>
       <form onSubmit={handleSubmit}>
-        <FormSection title="Applicant Information">
-          <FormRow>
-            <FormField label="Student Name"><FormInput value={user?.name || ""} disabled /></FormField>
-            <FormField label="Matric Number"><FormInput value={user?.matric_staff_id || ""} disabled /></FormField>
-          </FormRow>
-          <FormRow>
-            <FormField label="Programme"><FormInput value={user?.profile?.program || ""} disabled /></FormField>
-            <FormField label="Phone No."><FormInput value={user?.phone || ""} disabled /></FormField>
-          </FormRow>
-        </FormSection>
-
+        <ProfileSection user={user} profile={profile} setProfile={setProfile} onSave={handleSaveProfile} isSaving={isSavingProfile} error={profileError} />
         <FormSection title="Absence Details">
           <FormRow>
             <FormField label="Date of Absence (From)" required>
@@ -72,8 +117,7 @@ export const NonSickLeaveForm = () => {
               <FormInput type="date" name="end_date" value={form.end_date} onChange={handleChange} min={form.start_date} />
             </FormField>
           </FormRow>
-          <FormField label="Reasons for Absence" required
-            hint="Describe your reason for absence. Include course code and class type (Lecture/Tutorial/Practical).">
+          <FormField label="Reasons for Absence" required hint="Describe your reason for absence. Include course code and class type (Lecture/Tutorial/Practical).">
             <FormTextarea name="reason" value={form.reason} onChange={handleChange}
               placeholder="e.g. I was unable to attend PHY1114 Lecture on 2 Jan 2025 due to a family emergency…" required />
           </FormField>
@@ -81,148 +125,152 @@ export const NonSickLeaveForm = () => {
             hint="Attach any supporting evidence (e.g. letter, receipt). Optional."
             onChange={(e) => setFile(e.target.files[0] || null)} currentFile={file} />
         </FormSection>
-
         <SubmitSection isLoading={isLoading} onCancel={() => navigate(-1)} error={submitError} />
       </form>
     </FormWrapper>
   );
 };
 
-// =============================================================
-// src/forms/AppealReviewForm.jsx — PPST/AKD-03
-// =============================================================
 export const AppealReviewForm = () => {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     reason: "", semester: "", session: "", course_code: "", course_name: "",
     grade: "", lecturer_name: "", receipt_no: "", amount_paid: "100",
   });
+  const [profile, setProfile] = useStudentProfile(user);
   const [file, setFile] = useState(null);
-  const [isLoading, setIsLoading]     = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState(null);
-  const [submitError, setSubmitError]     = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [profileError, setProfileError] = useState("");
 
-  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSaveProfile = async () => {
+    setProfileError("");
+    setIsSavingProfile(true);
+    try {
+      await updateProfile({
+        phone: profile.phone,
+        ic_number: profile.ic_number,
+        profile: {
+          program: profile.program,
+          lecture_group: profile.lecture_group,
+          tutorial_group: profile.tutorial_group,
+          practical_group: profile.practical_group,
+          address: profile.address,
+        },
+      });
+    } catch (err) {
+      setProfileError(err.response?.data?.message || "Failed to save profile.");
+    } finally {
+      setIsSavingProfile(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError("");
-    const required = ["reason","semester","session","course_code","course_name","grade","lecturer_name","receipt_no","amount_paid"];
-    const missing = required.filter((k) => !form[k]);
-    if (missing.length) { setSubmitError(`Missing required fields: ${missing.join(", ")}.`); return; }
+    const required = ["reason", "semester", "session", "course_code", "course_name", "grade", "lecturer_name", "receipt_no", "amount_paid"];
+    const missing = required.filter((key) => !form[key]);
+    if (missing.length) {
+      setSubmitError(`Missing required fields: ${missing.join(", ")}.`);
+      return;
+    }
     setIsLoading(true);
     try {
       const payload = new FormData();
-      Object.entries(form).forEach(([k, v]) => payload.append(k, v));
+      Object.entries(form).forEach(([key, value]) => payload.append(key, value));
       if (file) payload.append("file", file);
-      const res = await api.post("/forms/submit/appeal_review", payload, {
+      const res = await api.post("/forms/submit/exam_replacement", payload, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setApplicationId(res.data.data.application_id);
       setIsSubmitted(true);
     } catch (err) {
       setSubmitError(err.response?.data?.message || "Submission failed.");
-    } finally { setIsLoading(false); }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <FormWrapper code="PPST/AKD-03" title="Appeal for Review of Examination Results"
-      subtitle="Rayuan Semakan Semula Keputusan Peperiksaan"
+    <FormWrapper code="PPST/AKD-02" title="Replacement / Repeat Exam"
+      subtitle="Peperiksaan Gantian / Ulangan"
       icon="📝" color="#2563eb" bg="#eff6ff"
       isSubmitted={isSubmitted} applicationId={applicationId}>
       <form onSubmit={handleSubmit}>
-        <FormSection title="Applicant Information">
-          <FormRow>
-            <FormField label="Student Name"><FormInput value={user?.name || ""} disabled /></FormField>
-            <FormField label="Student ID"><FormInput value={user?.matric_staff_id || ""} disabled /></FormField>
-          </FormRow>
-          <FormRow>
-            <FormField label="Programme"><FormInput value={user?.profile?.program || ""} disabled /></FormField>
-            <FormField label="Phone No."><FormInput value={user?.phone || ""} disabled /></FormField>
-          </FormRow>
-        </FormSection>
-
+        <ProfileSection user={user} profile={profile} setProfile={setProfile} onSave={handleSaveProfile} isSaving={isSavingProfile} error={profileError} />
         <FormSection title="Payment Information">
           <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:"8px",padding:"0.75rem 1rem",marginBottom:"0.75rem",fontSize:"0.8rem",color:"#92400e"}}>
-            ⚠️ A fee of <strong>RM100.00</strong> is charged per course. Payment must be made at the Bursary Counter. Payment is not refundable.
+            A fee of <strong>RM100.00</strong> is charged per course. Payment must be made at the Bursary Counter. Payment is not refundable.
           </div>
           <FormRow>
             <FormField label="Payment Receipt / Reference No." required>
-              <FormInput type="text" name="receipt_no" value={form.receipt_no} onChange={handleChange}
-                placeholder="e.g. RCP-2025-00123" required />
+              <FormInput type="text" name="receipt_no" value={form.receipt_no} onChange={handleChange} placeholder="e.g. RCP-2025-00123" required />
             </FormField>
             <FormField label="Amount Paid (RM)" required>
-              <FormInput type="number" name="amount_paid" value={form.amount_paid} onChange={handleChange}
-                min="100" step="100" required />
+              <FormInput type="number" name="amount_paid" value={form.amount_paid} onChange={handleChange} min="100" step="100" required />
             </FormField>
           </FormRow>
-          <FileUploadField label="Payment Receipt (Original Copy)" name="file" required
-            hint="Please attach the original copy of your payment receipt from the Bursary."
-            onChange={(e) => setFile(e.target.files[0] || null)} currentFile={file} />
+          <FileUploadField label="Payment Receipt (Original Copy)" name="file" required hint="Please attach the original copy of your payment receipt from the Bursary." onChange={(e) => setFile(e.target.files[0] || null)} currentFile={file} />
         </FormSection>
-
         <FormSection title="Examination Details">
           <FormRow>
             <FormField label="Semester" required>
-              <FormInput type="number" name="semester" value={form.semester} onChange={handleChange}
-                min="1" max="3" placeholder="e.g. 1" required />
+              <FormInput type="number" name="semester" value={form.semester} onChange={handleChange} min="1" max="3" placeholder="e.g. 1" required />
             </FormField>
             <FormField label="Session" required>
-              <FormInput type="text" name="session" value={form.session} onChange={handleChange}
-                placeholder="e.g. 2024/2025" required />
+              <FormInput type="text" name="session" value={form.session} onChange={handleChange} placeholder="e.g. 2024/2025" required />
             </FormField>
           </FormRow>
           <FormRow>
             <FormField label="Course Code" required>
-              <FormInput type="text" name="course_code" value={form.course_code} onChange={handleChange}
-                placeholder="e.g. PHY1114" required />
+              <FormInput type="text" name="course_code" value={form.course_code} onChange={handleChange} placeholder="e.g. PHY1114" required />
             </FormField>
             <FormField label="Current Grade" required>
-              <FormInput type="text" name="grade" value={form.grade} onChange={handleChange}
-                placeholder="e.g. D, E, F" required />
+              <FormInput type="text" name="grade" value={form.grade} onChange={handleChange} placeholder="e.g. D, E, F" required />
             </FormField>
           </FormRow>
           <FormField label="Course Name" required>
-            <FormInput type="text" name="course_name" value={form.course_name} onChange={handleChange}
-              placeholder="e.g. Physics I" required />
+            <FormInput type="text" name="course_name" value={form.course_name} onChange={handleChange} placeholder="e.g. Physics I" required />
           </FormField>
           <FormField label="Lecturer's Name" required>
-            <FormInput type="text" name="lecturer_name" value={form.lecturer_name} onChange={handleChange}
-              placeholder="e.g. Dr. Ahmad bin Abdullah" required />
+            <FormInput type="text" name="lecturer_name" value={form.lecturer_name} onChange={handleChange} placeholder="e.g. Dr. Ahmad bin Abdullah" required />
           </FormField>
           <FormField label="Reason for Appeal" required>
             <FormTextarea name="reason" value={form.reason} onChange={handleChange}
               placeholder="Explain why you believe your examination result should be reviewed…" required />
           </FormField>
         </FormSection>
-
         <SubmitSection isLoading={isLoading} onCancel={() => navigate(-1)} error={submitError} />
       </form>
     </FormWrapper>
   );
 };
 
-// =============================================================
-// src/forms/WithdrawalForm.jsx — PPST/AKD-01
-// =============================================================
 export const WithdrawalForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm]           = useState({ reason: "", withdrawal_type: "" });
-  const [file, setFile]           = useState(null);
+  const [form, setForm] = useState({ reason: "", withdrawal_type: "" });
+  const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState(null);
-  const [submitError, setSubmitError]     = useState("");
+  const [submitError, setSubmitError] = useState("");
 
-  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError("");
-    if (!form.reason || !form.withdrawal_type) { setSubmitError("Please fill in all required fields."); return; }
+    if (!form.reason || !form.withdrawal_type) {
+      setSubmitError("Please fill in all required fields.");
+      return;
+    }
     setIsLoading(true);
     try {
       const payload = new FormData();
@@ -236,7 +284,9 @@ export const WithdrawalForm = () => {
       setIsSubmitted(true);
     } catch (err) {
       setSubmitError(err.response?.data?.message || "Submission failed.");
-    } finally { setIsLoading(false); }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -261,7 +311,7 @@ export const WithdrawalForm = () => {
 
         <FormSection title="Withdrawal Details">
           <div style={{background:"#fef3c7",border:"1px solid #fde68a",borderRadius:"8px",padding:"0.75rem 1rem",marginBottom:"0.75rem",fontSize:"0.8rem",color:"#92400e"}}>
-            ⚠️ <strong>This action is irreversible.</strong> Ensure you have settled all fees and returned all UMS property before submitting.
+            Ensure you have settled all fees and returned all UMS property before submitting.
           </div>
           <FormField label="Reason for Withdrawal" required>
             <FormSelect name="withdrawal_type" value={form.withdrawal_type} onChange={handleChange} required>
@@ -276,7 +326,7 @@ export const WithdrawalForm = () => {
           </FormField>
           <FormField label="Additional Details" required hint="Provide more details about your reason for withdrawal.">
             <FormTextarea name="reason" value={form.reason} onChange={handleChange}
-              placeholder="Please describe your reason in detail…" required />
+              placeholder="Please describe your reason in detail" required />
           </FormField>
           <FileUploadField label="Supporting Document" name="file"
             hint="Attach supporting document (e.g. job offer letter, letter from new institution)."
@@ -298,18 +348,19 @@ export const ExamReplacementForm = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ reason: "", start_date: "", end_date: "", exam_reason: "" });
   const [file, setFile] = useState(null);
-  const [isLoading, setIsLoading]     = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState(null);
-  const [submitError, setSubmitError]     = useState("");
+  const [submitError, setSubmitError] = useState("");
 
-  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError("");
     if (!form.reason || !form.start_date || !form.exam_reason) {
-      setSubmitError("Please fill in all required fields."); return;
+      setSubmitError("Please fill in all required fields.");
+      return;
     }
     setIsLoading(true);
     try {
@@ -325,13 +376,15 @@ export const ExamReplacementForm = () => {
       setIsSubmitted(true);
     } catch (err) {
       setSubmitError(err.response?.data?.message || "Submission failed.");
-    } finally { setIsLoading(false); }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <FormWrapper code="PPST/AKD-02" title="Replacement / Repeat Examination"
       subtitle="Permohonan Peperiksaan Gantian / Ulangan / Ulangan Khas"
-      icon="✏️" color="#059669" bg="#ecfdf5"
+      icon="📝" color="#059669" bg="#ecfdf5"
       isSubmitted={isSubmitted} applicationId={applicationId}>
       <form onSubmit={handleSubmit}>
         <FormSection title="Applicant Information">
@@ -347,13 +400,13 @@ export const ExamReplacementForm = () => {
 
         <FormSection title="Application Details">
           <div style={{background:"#ecfdf5",border:"1px solid #a7f3d0",borderRadius:"8px",padding:"0.75rem 1rem",marginBottom:"0.75rem",fontSize:"0.8rem",color:"#065f46"}}>
-            ⏰ Application must be submitted within <strong>48 hours</strong> after the examination date.
+            Application must be submitted within 48 hours after the examination date.
           </div>
           <FormField label="Basis for Appeal" required>
             <FormSelect name="exam_reason" value={form.exam_reason} onChange={handleChange} required>
               <option value="">-- Select Basis --</option>
               <option value="Illness (with Medical Certificate)">Illness (Attach MC from doctor)</option>
-              <option value="Bereavement (Death in family)">Bereavement — Death in Family (Attach death cert)</option>
+              <option value="Bereavement (Death in family)">Bereavement - Death in Family (Attach death cert)</option>
               <option value="Course Failure">Course Failure (Repeat Exam)</option>
             </FormSelect>
           </FormField>
@@ -365,10 +418,9 @@ export const ExamReplacementForm = () => {
               <FormInput type="date" name="end_date" value={form.end_date} onChange={handleChange} />
             </FormField>
           </FormRow>
-          <FormField label="Course(s) to be Replaced / Repeated" required
-            hint="List the course code(s) and name(s), e.g. PHY1114 — Physics I">
+          <FormField label="Course(s) to be Replaced / Repeated" required hint="List the course code(s) and name(s), e.g. PHY1114 - Physics I">
             <FormTextarea name="reason" value={form.reason} onChange={handleChange}
-              placeholder="e.g. PHY1114 — Physics I (Date: 10 Jan 2025, 9:00AM)…" required />
+              placeholder="e.g. PHY1114 - Physics I (Date: 10 Jan 2025, 9:00AM)..." required />
           </FormField>
           <FileUploadField label="Supporting Document (MC / Death Certificate)" name="file" required
             hint="Attach your Medical Certificate or Death Certificate as supporting evidence."
@@ -391,17 +443,17 @@ export const RoomBookingForm = () => {
     reason: "", start_date: "", end_date: "",
     room_type: "", room_number: "", time_start: "", time_end: "",
   });
-  const [isLoading, setIsLoading]     = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState(null);
-  const [submitError, setSubmitError]     = useState("");
+  const [submitError, setSubmitError] = useState("");
 
-  const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const handleChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const ROOM_NUMBERS = {
     "Lecture Room (BK)": ["BK1", "BK2", "BK3", "BK4"],
-    "Tutorial Room (BT) — PPST Building": ["BT1", "BT2", "BT3", "BT4", "BT5"],
-    "Tutorial Room (BT) — Annex Building": ["BT6", "BT7", "BT8", "BT9"],
+    "Tutorial Room (BT) - PPST Building": ["BT1", "BT2", "BT3", "BT4", "BT5"],
+    "Tutorial Room (BT) - Annex Building": ["BT6", "BT7", "BT8", "BT9"],
     "Other Room": ["Other"],
   };
 
@@ -409,11 +461,12 @@ export const RoomBookingForm = () => {
     e.preventDefault();
     setSubmitError("");
     if (!form.reason || !form.start_date || !form.room_type || !form.room_number) {
-      setSubmitError("Please fill in all required fields."); return;
+      setSubmitError("Please fill in all required fields.");
+      return;
     }
     setIsLoading(true);
     try {
-      const fullReason = `Room: ${form.room_number} (${form.room_type}). Time: ${form.time_start}–${form.time_end}. Purpose: ${form.reason}`;
+      const fullReason = `Room: ${form.room_number} (${form.room_type}). Time: ${form.time_start}-${form.time_end}. Purpose: ${form.reason}`;
       const res = await api.post("/forms/submit/room_booking", {
         reason: fullReason,
         start_date: form.start_date,
@@ -423,7 +476,9 @@ export const RoomBookingForm = () => {
       setIsSubmitted(true);
     } catch (err) {
       setSubmitError(err.response?.data?.message || "Submission failed.");
-    } finally { setIsLoading(false); }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -442,12 +497,12 @@ export const RoomBookingForm = () => {
 
         <FormSection title="Booking Details">
           <div style={{background:"#ecfeff",border:"1px solid #a5f3fc",borderRadius:"8px",padding:"0.75rem 1rem",marginBottom:"0.75rem",fontSize:"0.8rem",color:"#164e63"}}>
-            📅 Completed form must be submitted <strong>7 days before</strong> the booking date.
+            Completed form must be submitted 7 days before the booking date.
           </div>
           <FormRow>
             <FormField label="Room Type" required>
               <FormSelect name="room_type" value={form.room_type} onChange={(e) => {
-                setForm((p) => ({ ...p, room_type: e.target.value, room_number: "" }));
+                setForm((prev) => ({ ...prev, room_type: e.target.value, room_number: "" }));
               }} required>
                 <option value="">-- Select Room Type --</option>
                 {Object.keys(ROOM_NUMBERS).map((rt) => (
@@ -456,8 +511,7 @@ export const RoomBookingForm = () => {
               </FormSelect>
             </FormField>
             <FormField label="Room Number" required>
-              <FormSelect name="room_number" value={form.room_number} onChange={handleChange}
-                disabled={!form.room_type} required>
+              <FormSelect name="room_number" value={form.room_number} onChange={handleChange} disabled={!form.room_type} required>
                 <option value="">-- Select Room --</option>
                 {(ROOM_NUMBERS[form.room_type] || []).map((rn) => (
                   <option key={rn} value={rn}>{rn}</option>
@@ -468,11 +522,10 @@ export const RoomBookingForm = () => {
           <FormRow>
             <FormField label="Booking Date" required>
               <FormInput type="date" name="start_date" value={form.start_date} onChange={handleChange}
-                min={new Date(Date.now() + 7*86400000).toISOString().split("T")[0]} required />
+                min={new Date(Date.now() + 7 * 86400000).toISOString().split("T")[0]} required />
             </FormField>
             <FormField label="End Date (if multi-day)" hint="For single-day bookings, leave blank.">
-              <FormInput type="date" name="end_date" value={form.end_date} onChange={handleChange}
-                min={form.start_date} />
+              <FormInput type="date" name="end_date" value={form.end_date} onChange={handleChange} min={form.start_date} />
             </FormField>
           </FormRow>
           <FormRow>
@@ -485,7 +538,7 @@ export const RoomBookingForm = () => {
           </FormRow>
           <FormField label="Purpose / Tujuan Tempahan" required>
             <FormTextarea name="reason" value={form.reason} onChange={handleChange}
-              placeholder="e.g. Group study session for PHY1114 final exam preparation…" required />
+              placeholder="e.g. Group study session for PHY1114 final exam preparation..." required />
           </FormField>
         </FormSection>
 
@@ -495,3 +548,8 @@ export const RoomBookingForm = () => {
     </FormWrapper>
   );
 };
+
+
+// =============================================================
+// src/forms/RoomBookingForm.jsx — PPST/AKD-05
+// =============================================================

@@ -14,7 +14,7 @@ const SALT_ROUNDS = 12;
 const testUsers = [
   {
     matric_staff_id: "BS2024001",
-    password:  "student123",
+    password:  "Student123!",
     name:      "Ahmad Haziq bin Abdullah",
     role:      "student",
     email:     "haziq@ums.edu.my",
@@ -74,7 +74,7 @@ const seed = async () => {
 
   console.log("\n🎉 Seeding complete!\n");
   console.log("─".repeat(50));
-  console.log("Student  → /login       | BS2024001 / student123");
+  console.log("Student  → /login       | BS2024001 / Student123!");
   console.log("Admin    → /login/staff | ADMIN001  / admin123");
   console.log("Lecturer → /login/staff | LEC001    / lecturer123");
   console.log("Pengarah → /login/staff | PEN001    / pengarah123");
