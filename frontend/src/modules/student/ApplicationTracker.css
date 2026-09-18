@@ -208,6 +208,25 @@
   margin: 0;
 }
 
+.detail-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.print-form-btn {
+  padding: 0.5rem 0.85rem;
+  border: 1px solid #003087;
+  border-radius: 2px;
+  background: #003087;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.print-form-btn:hover { background: #00205b; }
+
 /* Timeline Card */
 .timeline-card,
 .detail-card {

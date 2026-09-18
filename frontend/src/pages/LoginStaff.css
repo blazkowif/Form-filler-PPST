@@ -286,3 +286,24 @@
   .lsf-uni-name { font-size: 1.2rem; }
   .lsf-form-panel { padding: 1.5rem 1rem; }
 }
+
+/* Institutional login treatment: paper, ink, one strong red accent. */
+.lsf-page { background: var(--paper); font-family: var(--font-sans); }
+.lsf-brand { background: #0f172a; padding: 3.5rem 3.25rem; }
+.lsf-brand::before, .lsf-brand::after { display: none; }
+.lsf-crest { border-radius: 2px; background: var(--accent); border: 0; font-family: var(--font-mono); }
+.lsf-uni-name, .lsf-card-title { font-family: var(--font-display); }
+.lsf-divider { background: var(--signal); border-radius: 0; }
+.lsf-portal-tag { border-radius: 2px; background: rgba(99,102,241,0.15); border-color: rgba(99,102,241,0.3); }
+.lsf-portal-dot { border-radius: 0; background: var(--signal); }
+.lsf-role-card { border-radius: 2px; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+.lsf-rc-icon { font-family: var(--font-mono); font-size: 0.72rem; color: var(--signal); }
+.lsf-form-panel { background: var(--paper); }
+.lsf-card { background: var(--surface); border-radius: 2px; border-color: var(--rule); border-top: 4px solid var(--accent); box-shadow: 8px 8px 0 var(--paper-deep); }
+.lsf-icon-wrap { border-radius: 2px; background: var(--accent); box-shadow: none; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; }
+.lsf-input { border-radius: 2px; border-color: var(--rule); background: var(--paper); }
+.lsf-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(158,47,56,0.12); }
+.lsf-submit { border-radius: 2px; background: var(--accent); box-shadow: none; }
+.lsf-submit:hover:not(:disabled) { transform: translate(2px, 2px); box-shadow: none; background: var(--accent-dark); }
+.lsf-info-chip { border-radius: 2px; background: transparent; border-color: var(--rule); }
+.lsf-student-link { color: var(--accent); }

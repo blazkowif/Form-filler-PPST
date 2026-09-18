@@ -2,12 +2,12 @@
 .lecturer-layout {
   display: flex;
   min-height: 100vh;
-  background: #f5f6fa;
-  font-family: "Inter", sans-serif;
+  background: var(--paper);
+  font-family: var(--font-sans);
 }
 .lecturer-main {
   flex: 1;
-  margin-left: 250px;
+  margin-left: 264px;
   min-height: 100vh;
   overflow-x: hidden;
 }

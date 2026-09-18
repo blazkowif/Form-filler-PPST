@@ -9,7 +9,7 @@ const FormApplication = require("../models/FormApplication");
 const { protect, authorizeRoles } = require("../middleware/authMiddleware");
 
 const router = express.Router();
-router.use(protect, authorizeRoles("admin", "pengarah"));
+router.use(protect, authorizeRoles("student", "admin", "pengarah"));
 
 const fmt = (date) => date
   ? new Date(date).toLocaleDateString("en-MY", { day:"2-digit", month:"long", year:"numeric" })
@@ -30,7 +30,10 @@ router.get("/:id", async (req, res) => {
       return res.status(400).send("Invalid application ID.");
     }
 
-    const a = await FormApplication.findById(req.params.id)
+    const query = { _id: req.params.id };
+    if (req.user.role === "student") query.user_id = req.user.id;
+
+    const a = await FormApplication.findOne(query)
       .populate("user_id",     "name matric_staff_id email phone ic_number profile")
       .populate("admin_id",    "name matric_staff_id")
       .populate("pengarah_id", "name matric_staff_id")

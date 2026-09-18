@@ -97,7 +97,7 @@ const LoginStudent = () => {
 
           {/* Card header */}
           <div className="ls-card-head">
-            <div className="ls-icon-wrap">🎓</div>
+            <div className="ls-icon-wrap">ST</div>
             <h3 className="ls-card-title">Student Login</h3>
             <p className="ls-card-sub">Sign in with your UMS Matric Number</p>
           </div>
@@ -202,7 +202,7 @@ const LoginStudent = () => {
 
         {/* Info chip */}
         <div className="ls-info-chip">
-          🔒 This portal is for <strong>registered UMS PPST students</strong> only.
+          Access is limited to <strong>registered UMS PPST students</strong>.
         </div>
 
         <p className="ls-copyright">

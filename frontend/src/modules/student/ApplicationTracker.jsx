@@ -159,6 +159,25 @@ export const ApplicationDetail = () => {
     fetchDetail();
   }, [id]);
 
+  const handlePrint = async () => {
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) {
+      alert("Please allow pop-ups to print the form.");
+      return;
+    }
+
+    printWindow.document.write("<p style='font-family:Arial;padding:2rem'>Preparing printable form…</p>");
+    try {
+      const res = await api.get(`/print/${id}`, { responseType: "blob" });
+      const url = URL.createObjectURL(res.data);
+      printWindow.location.href = url;
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch (err) {
+      printWindow.close();
+      alert(err.response?.data?.message || "Could not prepare the printable form.");
+    }
+  };
+
   useEffect(() => {
     const timer = setInterval(async () => {
       try {
@@ -184,7 +203,12 @@ export const ApplicationDetail = () => {
           <span className="detail-id">Application #{app.id}</span>
           <h1 className="detail-title">{FORM_LABELS[app.form_type]}</h1>
         </div>
-        <StatusBadge status={app.status} />
+        <div className="detail-header-actions">
+          <StatusBadge status={app.status} />
+          <button className="print-form-btn" onClick={handlePrint}>
+            Print Form
+          </button>
+        </div>
       </div>
 
       {/* Approval Timeline */}

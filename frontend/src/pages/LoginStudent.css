@@ -253,3 +253,22 @@
   .ls-uni-name { font-size: 1.2rem; }
   .ls-form-panel { padding: 1.5rem 1rem; }
 }
+
+/* Institutional login treatment: paper, ink, one strong red accent. */
+.ls-page { background: var(--paper); font-family: var(--font-sans); }
+.ls-brand { background: #00205b; padding: 3.5rem 3.25rem; }
+.ls-brand::before, .ls-brand::after { display: none; }
+.ls-crest { border-radius: 2px; background: var(--accent); border: 0; font-family: var(--font-mono); }
+.ls-uni-name, .ls-card-title { font-family: var(--font-display); }
+.ls-divider { background: var(--signal); border-radius: 0; }
+.ls-portal-tag { border-radius: 2px; background: rgba(200,16,46,0.18); border-color: rgba(200,16,46,0.35); }
+.ls-portal-dot, .ls-feat-dot { border-radius: 0; background: var(--signal); }
+.ls-form-panel { background: var(--paper); }
+.ls-card { background: var(--surface); border-radius: 2px; border: 1px solid var(--rule); border-top: 4px solid var(--accent); box-shadow: 8px 8px 0 var(--paper-deep); }
+.ls-icon-wrap { border-radius: 2px; background: var(--accent); box-shadow: none; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600; }
+.ls-input { border-radius: 2px; border-color: var(--rule); background: var(--paper); }
+.ls-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(158,47,56,0.12); }
+.ls-submit { border-radius: 2px; background: var(--accent); box-shadow: none; }
+.ls-submit:hover:not(:disabled) { transform: translate(2px, 2px); box-shadow: none; background: var(--accent-dark); }
+.ls-info-chip { border-radius: 2px; background: transparent; border-color: var(--rule); }
+.ls-staff-link { color: var(--accent); }

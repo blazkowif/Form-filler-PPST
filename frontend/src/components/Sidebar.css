@@ -3,7 +3,7 @@
    ============================================================= */
 
 .sidebar {
-  width: 250px;
+  width: 264px;
   min-height: 100vh;
   background: #ffffff;
   border-right: 1px solid #e8eaf0;
@@ -13,8 +13,8 @@
   top: 0;
   left: 0;
   z-index: 100;
-  box-shadow: 2px 0 12px rgba(0, 32, 91, 0.05);
-  font-family: "Inter", sans-serif;
+  box-shadow: none;
+  font-family: var(--font-sans);
 }
 
 /* Brand */
@@ -22,15 +22,15 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1.25rem 1.25rem 1rem;
+  padding: 1.4rem 1.3rem 1.15rem;
   border-bottom: 1px solid #f0f2f8;
 }
 
 .sidebar-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #003087 0%, #004aad 100%);
+  width: 42px;
+  height: 42px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #003087, #004aad);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,8 @@
 
 .sidebar-logo-text {
   color: white;
-  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.05em;
 }
@@ -48,6 +49,7 @@
   font-size: 0.85rem;
   font-weight: 700;
   color: #1a2340;
+  font-family: var(--font-display);
   line-height: 1.2;
 }
 
@@ -56,7 +58,7 @@
   font-size: 0.65rem;
   font-weight: 600;
   padding: 0.1rem 0.5rem;
-  border-radius: 10px;
+  border-radius: 2px;
   margin-top: 0.2rem;
 }
 
@@ -73,7 +75,7 @@
 .sidebar-avatar {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
+  border-radius: 2px;
   background: linear-gradient(135deg, #003087, #004aad);
   color: white;
   display: flex;
@@ -101,7 +103,7 @@
 .sidebar-user-id {
   font-size: 0.68rem;
   color: #8a93a8;
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-mono);
   margin: 0;
 }
 
@@ -136,12 +138,12 @@
   align-items: center;
   gap: 0.65rem;
   padding: 0.6rem 0.75rem;
-  border-radius: 8px;
+  border-radius: 2px;
   font-size: 0.82rem;
   font-weight: 500;
   color: #4a5578;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .sidebar-nav-link:hover {
@@ -156,7 +158,9 @@
 }
 
 .nav-icon {
-  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: #003087;
   width: 20px;
   text-align: center;
   flex-shrink: 0;
@@ -178,13 +182,13 @@
   width: 100%;
   padding: 0.55rem 0.75rem;
   background: none;
-  border: 1.5px solid #e8eaf0;
-  border-radius: 8px;
+  border: 1px solid #e8eaf0;
+  border-radius: 2px;
   font-size: 0.8rem;
   font-weight: 600;
   color: #c8102e;
   cursor: pointer;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-sans);
   transition: all 0.15s;
 }
 

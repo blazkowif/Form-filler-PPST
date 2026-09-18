@@ -1,10 +1,10 @@
 /* PengarahLayout.css */
 .pengarah-layout {
   display: flex; min-height: 100vh;
-  background: #f5f6fa; font-family: "Inter", sans-serif;
+  background: var(--paper); font-family: var(--font-sans);
 }
 .pengarah-main {
-  flex: 1; margin-left: 250px;
+  flex: 1; margin-left: 264px;
   min-height: 100vh; overflow-x: hidden;
 }
 @media (max-width: 768px) { .pengarah-main { margin-left: 0; } }

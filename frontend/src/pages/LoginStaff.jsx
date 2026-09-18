@@ -13,9 +13,9 @@ const STAFF_ROLES   = ["admin", "lecturer", "pengarah"];
 const ROLE_REDIRECT = { admin: "/admin", lecturer: "/lecturer", pengarah: "/pengarah" };
 
 const ROLE_LABELS = {
-  admin:    { label: "Administrator",  icon: "⚙️",  color: "#92400e" },
-  lecturer: { label: "Lecturer",       icon: "📚",  color: "#065f46" },
-  pengarah: { label: "Pengarah",       icon: "🏛️", color: "#4c1d95" },
+  admin:    { label: "Administrator",  icon: "AD",  color: "#92400e" },
+  lecturer: { label: "Lecturer",       icon: "LE",  color: "#065f46" },
+  pengarah: { label: "Pengarah",       icon: "PD",  color: "#4c1d95" },
 };
 
 const LoginStaff = () => {
@@ -91,9 +91,9 @@ const LoginStaff = () => {
           {/* Staff role cards */}
           <div className="lsf-role-cards">
             {[
-              { role:"admin",    icon:"⚙️",  label:"Administrator",   desc:"Tier 1 approver" },
-              { role:"lecturer", icon:"📚",  label:"Lecturer",         desc:"Class & attendance" },
-              { role:"pengarah", icon:"🏛️", label:"Pengarah",          desc:"Tier 2 approver" },
+              { role:"admin",    icon:"AD",  label:"Administrator",   desc:"Tier 1 approver" },
+              { role:"lecturer", icon:"LE",  label:"Lecturer",         desc:"Class & attendance" },
+              { role:"pengarah", icon:"PD", label:"Pengarah",          desc:"Tier 2 approver" },
             ].map((r) => (
               <div key={r.role} className="lsf-role-card">
                 <span className="lsf-rc-icon">{r.icon}</span>
@@ -118,7 +118,7 @@ const LoginStaff = () => {
 
           {/* Card header */}
           <div className="lsf-card-head">
-            <div className="lsf-icon-wrap">🔐</div>
+            <div className="lsf-icon-wrap">SF</div>
             <h3 className="lsf-card-title">Staff Login</h3>
             <p className="lsf-card-sub">
               Your role is automatically detected from your Staff ID
@@ -245,7 +245,7 @@ const LoginStaff = () => {
 
         {/* Info chip */}
         <div className="lsf-info-chip">
-          🔒 Restricted to <strong>PPST staff</strong> — Admin, Lecturer &amp; Pengarah only.
+          Access is limited to <strong>PPST staff</strong>: Admin, Lecturer &amp; Pengarah.
           <br />Your role is detected automatically from your Staff ID.
         </div>
 

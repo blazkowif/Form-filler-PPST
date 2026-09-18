@@ -53,8 +53,23 @@ const AdminReviewPage = () => {
     }
   };
 
-  const handlePrint = () => {
-    window.open(`/api/print/${id}`, "_blank");
+  const handlePrint = async () => {
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) {
+      alert("Please allow pop-ups to print the form.");
+      return;
+    }
+
+    printWindow.document.write("<p style='font-family:Arial;padding:2rem'>Preparing printable form…</p>");
+    try {
+      const res = await api.get(`/print/${id}`, { responseType: "blob" });
+      const url = URL.createObjectURL(res.data);
+      printWindow.location.href = url;
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } catch (err) {
+      printWindow.close();
+      alert(err.response?.data?.message || "Could not prepare the printable form.");
+    }
   };
 
   const handleDownloadPDF = () => {
