@@ -11,7 +11,9 @@ const path = require("path");
 const fs = require("fs");
 const { PDFDocument, rgb, StandardFonts } = require("pdf-lib");
 
-const FORMS_DIR = path.join(__dirname, "assets", "forms");
+// Use the supplied PPST PDFs as immutable templates. The coordinate map
+// selects the matching source file for each form type.
+const FORMS_DIR = path.join(__dirname, "..", "assets", "BorangPPST");
 const formCoordinates = require("./config/formCoordinates");
 
 // Map form_type strings → coordinate form_key
@@ -33,6 +35,14 @@ const FONT_SIZE_NORMAL = 10;
 const FONT_SIZE_SMALL  = 8.5;
 const FONT_TICK        = 12;
 
+const IMAGE_FIELD_PATTERN = /signature|stamp/i;
+
+const resolveAssetPath = (value) => {
+  if (!value || typeof value !== "string") return null;
+  if (path.isAbsolute(value)) return value;
+  return path.join(__dirname, value.replace(/^\/+/, ""));
+};
+
 async function fillPdf(formKey, data) {
   const config = formCoordinates.FORM_MAP[formKey];
   if (!config) throw new Error(`Unknown form: ${formKey}`);
@@ -53,8 +63,10 @@ async function fillPdf(formKey, data) {
       if (data[field.conditional] !== field.matchValue) continue;
     }
 
-    // Resolve text value
-    const text = data[field.key];
+    // Conditional checkbox fields draw their own check mark when matched.
+    const text = field.key && field.key.startsWith("tick_")
+      ? "X"
+      : data[field.key];
     if (!text && text !== 0) continue;
     const textStr = String(text);
     if (!textStr.trim()) continue;
@@ -74,14 +86,29 @@ async function fillPdf(formKey, data) {
     const isTick = field.key && field.key.includes("tick_");
     const finalSize = isTick ? FONT_TICK : fontSize;
 
-    // Draw text at exact coordinates
-    page.drawText(textStr, {
-      x: field.x,
-      y: field.y,
-      size: finalSize,
-      font: helv,
-      color: color,
-    });
+    const imagePath = IMAGE_FIELD_PATTERN.test(field.key) ? resolveAssetPath(textStr) : null;
+    if (imagePath && fs.existsSync(imagePath)) {
+      const image = /\.(jpe?g)$/i.test(imagePath)
+        ? await pdfDoc.embedJpg(fs.readFileSync(imagePath))
+        : await pdfDoc.embedPng(fs.readFileSync(imagePath));
+      const maxWidth = field.width || 110;
+      const maxHeight = field.height || 35;
+      const scale = Math.min(maxWidth / image.width, maxHeight / image.height);
+      page.drawImage(image, {
+        x: field.x,
+        y: field.y,
+        width: image.width * scale,
+        height: image.height * scale,
+      });
+    } else {
+      page.drawText(textStr, {
+        x: field.x,
+        y: field.y,
+        size: finalSize,
+        font: helv,
+        color: color,
+      });
+    }
   }
 
   return await pdfDoc.save();

@@ -14,7 +14,16 @@ const { protect, authorizeRoles } = require("../middleware/authMiddleware");
 const router = express.Router();
 router.use(protect, authorizeRoles("admin", "pengarah"));
 
-const FORMS_DIR = path.join(__dirname, "..", "assets", "forms");
+const FORMS_DIR = path.join(__dirname, "..", "..", "assets", "BorangPPST");
+
+const TEMPLATE_FILES = {
+  "AKD-01": "PPST_AKD_01 BORANG PERMOHONAN BERHENTI  PENGAJIAN.pdf",
+  "AKD-02": "PPST_AKD_02 BORANG PERMOHONAN PEPERIKSAAN GANTIAN_ULANGAN KHAS.pdf",
+  "AKD-03": "PPST_ AKD_03 BORANG RAYUAN SEMAKAN SEMULA.pdf",
+  "AKD-04": "PPST_AKD_04_2025 BORANG TUJUK SEBAB TIDAK HADIR.pdf",
+  "AKD-05": "PPST_AKD_05_2025 BORANG TEMPAHAN BILI KULIAH_TUTORIAL_AMALI.pdf",
+  "AKD-06": "PPST_AKD_06_2025 BORANG PERMOHONAN CUTI SAKIT .pdf",
+};
 
 const FORM_KEYS = ["AKD-01", "AKD-02", "AKD-03", "AKD-04", "AKD-05", "AKD-06"];
 
@@ -31,7 +40,7 @@ const FORM_LABELS = {
 router.get("/", (req, res) => {
   const files = FORM_KEYS.map((key) => {
     const calibPath   = path.join(FORMS_DIR, `${key}_calibrate.pdf`);
-    const templatePath= path.join(FORMS_DIR, `${key}.pdf`);
+    const templatePath= path.join(FORMS_DIR, TEMPLATE_FILES[key]);
     return {
       key,
       label:             FORM_LABELS[key],

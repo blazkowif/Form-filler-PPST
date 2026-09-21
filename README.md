@@ -209,5 +209,5 @@ ppst-eportal/
 ### Official PDF templates
 
 PDF output is created by overlaying submitted data onto the original supplied forms in
-`backend/assets/forms/AKD-01.pdf` through `AKD-06.pdf`. The application does not generate
+`assets/BorangPPST/`. The application does not generate
 replacement blank forms. The `_calibrate.pdf` files are retained only for coordinate tuning.

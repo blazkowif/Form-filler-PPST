@@ -5,8 +5,6 @@
 // stream the filled PDF back to the browser.
 // =============================================================
 const express = require("express");
-const path = require("path");
-const fs = require("fs");
 const FormApplication = require("../models/FormApplication");
 const { protect } = require("../middleware/authMiddleware");
 const { fillPdf } = require("../pdf_filler");
@@ -21,62 +19,66 @@ const buildPayload = (app, user) => {
   const fmt = (d) =>
     d ? new Date(d).toLocaleDateString("en-MY", { day: "2-digit", month: "2-digit", year: "numeric" }) : "";
 
+  const profile = user?.profile || {};
+  const appeal = app.appeal_review_data || {};
+  const room = app.room_booking_data || {};
+  const studentDate = fmt(app.createdAt);
+  const adminDate = fmt(app.admin_approved_at);
+  const directorDate = fmt(app.pengarah_approved_at);
+  const courseCode = appeal.course_code || app.course_code || "";
+  const courseName = appeal.course_name || app.course_name || "";
+
   return {
-    // ── Common student profile ────────────────────────────────
-    student_name:  user?.name             || "",
-    student_no:    user?.matric_staff_id  || "",
-    matric_no:     user?.matric_staff_id  || "",
-    programme:     user?.profile?.program || "",
-    phone_no:      user?.phone            || user?.profile?.phone || "",
-    ic_number:     user?.ic_number        || "",
-    centre:        "PPST",
-    faculty:       user?.profile?.faculty || "PPST",
-    address:       user?.profile?.address || "",
-    student_date:  fmt(app.createdAt),
-
-    // ── AKD-01 Withdrawal ────────────────────────────────────
+    student_name: user?.name || "",
+    student_no: user?.matric_staff_id || "",
+    matric_no: user?.matric_staff_id || "",
+    programme: profile.program || "",
+    phone_no: user?.phone || profile.phone || "",
+    ic_number: user?.ic_number || "",
+    centre: "PPST",
+    faculty: profile.faculty || "PPST",
+    address: profile.address || "",
     withdrawal_reason: app.withdrawal_reason || "",
-    institution_name:  app.institution_name  || "",
-
-    // ── AKD-02 Exam Replacement ──────────────────────────────
-    semester:          app.appeal_review_data?.semester || app.semester || "",
-    session:           app.appeal_review_data?.session  || "",
-    exam_reason:       app.exam_reason || "",
-    course_row_1_code: app.appeal_review_data?.course_code || app.course_code || "",
-    course_row_1_name: app.appeal_review_data?.course_name || app.course_name || "",
-    course_row_1_exam_dt: fmt(app.exam_date),
-
-    // ── AKD-03 Result Review ─────────────────────────────────
-    receipt_no:          app.appeal_review_data?.receipt_no    || "",
-    receipt_date:        fmt(app.appeal_review_data?.payment_date),
-    amount_paid:         app.appeal_review_data?.amount_paid
-                           ? `RM ${Number(app.appeal_review_data.amount_paid).toFixed(2)}`
-                           : "",
-    course_row_1_grade:           app.appeal_review_data?.grade         || "",
-    course_row_1_lecturer:        app.appeal_review_data?.lecturer_name || "",
-    course_row_1_offering_centre: app.appeal_review_data?.faculty       || "PPST",
-
-    // ── AKD-04 Absence Justification ─────────────────────────
-    reason_text:              app.reason    || "",
-    date_of_absence:          fmt(app.start_date),
-    course_row_1_code:        app.course_code || "",
-    course_row_1_name:        app.course_name || "",
-
-    // ── AKD-05 Room Booking ───────────────────────────────────
+    institution_name: app.institution_name || "",
+    semester: appeal.semester || app.semester || "",
+    session: appeal.session || app.session || "",
+    exam_reason: app.exam_reason || "",
+    course_row_1_code: courseCode,
+    course_row_1_name: courseName,
+    course_row_1_exam_dt: fmt(app.exam_date || app.start_date),
+    receipt_no: appeal.receipt_no || "",
+    receipt_date: fmt(appeal.payment_date),
+    amount_paid: appeal.amount_paid !== undefined && appeal.amount_paid !== null
+      ? `RM ${Number(appeal.amount_paid).toFixed(2)}` : "",
+    course_row_1_grade: appeal.grade || app.grade || "",
+    course_row_1_lecturer: appeal.lecturer_name || app.lecturer_name || "",
+    course_row_1_offering_centre: appeal.faculty || profile.faculty || "PPST",
+    reason_text: app.reason || "",
+    date_of_absence: fmt(app.start_date),
     applicant_name: user?.name || "",
-    position:       app.applicant_position || "Pelajar",
-    room_choice:    app.room_choice  || "",
-    purpose:        app.reason       || "",
-    booking_date:   fmt(app.start_date),
-
-    // ── AKD-06 Sick Leave ─────────────────────────────────────
-    class_group:   app.class_type    || "",
+    position: app.applicant_position || "Pelajar",
+    room_choice: app.room_choice || "",
+    purpose: app.reason || "",
+    booking_date: fmt(app.start_date),
+    Others_rooms: room.room_type === "Other" ? (room.other_room || room.other_rooms || "Other") : "",
+    bil: courseCode ? "1" : "",
+    class_group: profile.lecture_group || app.class_type || "",
     hospital_type: app.sick_leave_data?.hospital_type || "",
-
-    // ── Official use (filled post-decision) ───────────────────
-    approval_status:    app.status           || "",
-    director_comments:  app.pengarah_comment || app.admin_comment || "",
-    director_date:      fmt(app.pengarah_approved_at || app.admin_approved_at),
+    student_date: studentDate,
+    student_signature_date: studentDate,
+    student_signature: user?.name || "",
+    approval_status: app.status || "",
+    director_comments: app.pengarah_comment || app.admin_comment || "",
+    director_date: directorDate || adminDate,
+    director_signature: app.signature_path || app.pengarah_id?.name || "",
+    Director_stamp: app.signature_path || app.pengarah_id?.name || "",
+    staff_name: app.admin_id?.name || "",
+    staff_received_name: app.admin_id?.name || "",
+    form_date_received: adminDate,
+    Form_date_received: adminDate,
+    TPA_signature: app.tpa_signature_path || app.tpa_id?.name || "",
+    TPA_comment: app.tpa_comment || "",
+    TPA_date: fmt(app.tpa_date),
   };
 };
 
@@ -92,6 +94,9 @@ router.get("/:appId", async (req, res) => {
 
     const app = await FormApplication.findById(req.params.appId)
       .populate("user_id", "name matric_staff_id phone ic_number profile")
+      .populate("admin_id", "name")
+      .populate("pengarah_id", "name")
+      .populate("tpa_id", "name")
       .lean();
 
     if (!app) {

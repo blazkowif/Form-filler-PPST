@@ -62,7 +62,7 @@ const AdminReviewPage = () => {
 
     printWindow.document.write("<p style='font-family:Arial;padding:2rem'>Preparing printable form…</p>");
     try {
-      const res = await api.get(`/print/${id}`, { responseType: "blob" });
+      const res = await api.get(`/pdf/${id}`, { responseType: "blob" });
       const url = URL.createObjectURL(res.data);
       printWindow.location.href = url;
       setTimeout(() => URL.revokeObjectURL(url), 60000);

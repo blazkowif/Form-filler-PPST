@@ -76,6 +76,12 @@ const formApplicationSchema = new mongoose.Schema({
   pengarah_approved_at: Date,
   signature_path:       String,
 
+  // Optional TPA review data for forms that include a TPA section.
+  tpa_id:              { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  tpa_comment:         String,
+  tpa_date:            Date,
+  tpa_signature_path:  String,
+
   // Form-specific embedded data
   withdrawal_data:   mongoose.Schema.Types.Mixed,
   room_booking_data: mongoose.Schema.Types.Mixed,

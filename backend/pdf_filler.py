@@ -46,7 +46,7 @@ import pypdf
 # ─────────────────────────────────────────────────────────────────────────────
 # Path config
 # ─────────────────────────────────────────────────────────────────────────────
-FORMS_DIR = os.path.join(os.path.dirname(__file__), "assets", "forms")
+FORMS_DIR = os.path.join(os.path.dirname(__file__), "..", "assets", "BorangPPST")
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Colour presets
@@ -89,7 +89,7 @@ COORDS = {
     # Page 1 of 1
     # ─────────────────────────────────────────────────────────────────────
     "AKD-01": {
-        "pdf_file": "AKD-01.pdf",
+        "pdf_file": "PPST_AKD_01 BORANG PERMOHONAN BERHENTI  PENGAJIAN.pdf",
         "pages": 1,
         "fields": [
             # ── BAHAGIAN A: MAKLUMAT PEMOHON ──────────────────────────
@@ -152,7 +152,7 @@ COORDS = {
     # Page 1 → student section  |  Page 2 → official use
     # ─────────────────────────────────────────────────────────────────────
     "AKD-02": {
-        "pdf_file": "AKD-02.pdf",
+        "pdf_file": "PPST_AKD_02 BORANG PERMOHONAN PEPERIKSAAN GANTIAN_ULANGAN KHAS.pdf",
         "pages": 2,
         "fields": [
             # ── PAGE 1 — Student section ──────────────────────────────
@@ -212,7 +212,7 @@ COORDS = {
     # Page 1 → student section  |  Page 2 → academic unit official use
     # ─────────────────────────────────────────────────────────────────────
     "AKD-03": {
-        "pdf_file": "AKD-03.pdf",
+        "pdf_file": "PPST_ AKD_03 BORANG RAYUAN SEMAKAN SEMULA.pdf",
         "pages": 2,
         "fields": [
             # ── PAGE 1 ────────────────────────────────────────────────
@@ -251,7 +251,7 @@ COORDS = {
     # Page 1 of 1
     # ─────────────────────────────────────────────────────────────────────
     "AKD-04": {
-        "pdf_file": "AKD-04.pdf",
+        "pdf_file": "PPST_AKD_04_2025 BORANG TUJUK SEBAB TIDAK HADIR.pdf",
         "pages": 1,
         "fields": [
             # ── BAHAGIAN A ────────────────────────────────────────────
@@ -310,7 +310,7 @@ COORDS = {
     # Page 1 of 1
     # ─────────────────────────────────────────────────────────────────────
     "AKD-05": {
-        "pdf_file": "AKD-05.pdf",
+        "pdf_file": "PPST_AKD_05_2025 BORANG TEMPAHAN BILI KULIAH_TUTORIAL_AMALI.pdf",
         "pages": 1,
         "fields": [
             # ── BAHAGIAN A ────────────────────────────────────────────
@@ -385,7 +385,7 @@ COORDS = {
     # Page 1 of 1
     # ─────────────────────────────────────────────────────────────────────
     "AKD-06": {
-        "pdf_file": "AKD-06.pdf",
+        "pdf_file": "PPST_AKD_06_2025 BORANG PERMOHONAN CUTI SAKIT .pdf",
         "pages": 1,
         "fields": [
             # ── BAHAGIAN A ────────────────────────────────────────────
