@@ -16,11 +16,8 @@ const SickLeaveForm = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    reason: "",
-    start_date: "",
-    end_date: "",
+    class_group: "",
     hospital_type: "",
-    hospital_name: "",
   });
   const [mcFile,       setMcFile]       = useState(null);
   const [isLoading,    setIsLoading]    = useState(false);
@@ -86,7 +83,7 @@ const SickLeaveForm = () => {
     e.preventDefault();
     setSubmitError("");
 
-    if (!form.reason || !form.start_date || !form.hospital_type || !form.hospital_name) {
+    if (!form.class_group || !form.hospital_type) {
       setSubmitError("Please fill in all required fields.");
       return;
     }
@@ -97,7 +94,6 @@ const SickLeaveForm = () => {
       // Use FormData because we may have a file attachment
       const payload = new FormData();
       Object.entries(form).forEach(([k, v]) => payload.append(k, v));
-      if (mcFile) payload.append("mc_file", mcFile);
 
       const res = await api.post("/forms/submit/sick_leave", payload, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -137,24 +133,15 @@ const SickLeaveForm = () => {
         {/* Leave Details */}
         <FormSection title="Leave Details">
           <FormRow>
-            <FormField label="Start Date" required>
-              <FormInput type="date" name="start_date" value={form.start_date} onChange={handleChange} required />
-            </FormField>
-            <FormField label="End Date">
-              <FormInput type="date" name="end_date" value={form.end_date} onChange={handleChange}
-                min={form.start_date} />
+            <FormField label="Class Group" required>
+              <FormSelect name="class_group" value={form.class_group} onChange={handleChange} required>
+                <option value="">-- Select Group --</option>
+                <option value="kuliah">Kuliah</option>
+                <option value="tutorial">Tutorial</option>
+                <option value="amali">Amali</option>
+              </FormSelect>
             </FormField>
           </FormRow>
-
-          <FormField label="Reason for Sick Leave" required>
-            <FormTextarea
-              name="reason"
-              value={form.reason}
-              onChange={handleChange}
-              placeholder="Describe your illness or medical condition…"
-              required
-            />
-          </FormField>
         </FormSection>
 
         {/* Hospital/Clinic Info */}
@@ -167,25 +154,6 @@ const SickLeaveForm = () => {
             </FormSelect>
           </FormField>
 
-          <FormField label="Hospital / Clinic Name" required>
-            <FormInput
-              type="text"
-              name="hospital_name"
-              value={form.hospital_name}
-              onChange={handleChange}
-              placeholder="e.g. Hospital Queen Elizabeth, Klinik Kesihatan KK"
-              required
-            />
-          </FormField>
-
-          <FileUploadField
-            label="Medical Certificate / Doctor's Note"
-            name="mc_file"
-            required
-            hint="Please attach the original MC from the doctor concerned (PDF, JPG, or PNG, max 10MB)."
-            onChange={(e) => setMcFile(e.target.files[0] || null)}
-            currentFile={mcFile}
-          />
         </FormSection>
 
         <SubmitSection

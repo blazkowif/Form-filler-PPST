@@ -1,0 +1,199 @@
+// =============================================================
+// config/formCoordinates.js
+// (X, Y) coordinate maps for each PPST AKD form.
+// Origin is bottom-left of A4 page (595 x 842 pts).
+// All measurements are in PDF points (1 pt ≈ 0.352 mm).
+// The original templates are kept in assets/BorangPPST. Fine-tune the
+// coordinates below with a PDF ruler tool when a field needs adjustment.
+// =============================================================
+
+const FONT_SIZE_NORMAL = 10;
+const FONT_SIZE_SMALL  = 8.5;
+const TICK_SIZE        = 11;   // checkbox tick font size
+
+// ───────────────────────────────────────────────────────────────
+// AKD-01 — Withdrawal (Penarikan Diri)
+// ───────────────────────────────────────────────────────────────
+const AKD01 = {
+  pdfFile: "PPST_AKD_01 BORANG PERMOHONAN BERHENTI  PENGAJIAN.pdf",
+  fields: [
+    { key: "student_name", x: 201.5, y: 647.4, fontSize: FONT_SIZE_NORMAL },
+    { key: "matric_no", x: 470, y: 648.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "programme", x: 193.1, y: 628.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "phone_no", x: 484.6, y: 630.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "address", x: 150, y: 608.9, fontSize: FONT_SIZE_SMALL },
+    { key: "tick_job_offer", x: 96.9, y: 533.5, fontSize: TICK_SIZE, conditional: "withdrawal_reason", matchValue: "job_offer" },
+    { key: "tick_transfer", x: 97.7, y: 516.6, fontSize: TICK_SIZE, conditional: "withdrawal_reason", matchValue: "transfer" },
+    { key: "tick_personal", x: 97.7, y: 488.9, fontSize: TICK_SIZE, conditional: "withdrawal_reason", matchValue: "personal" },
+    { key: "institution_name", x: 327.7, y: 517.4, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_signature_date", x: 414.6, y: 265.1, fontSize: FONT_SIZE_NORMAL },
+    { key: "director_comments", x: 150, y: 310, fontSize: FONT_SIZE_SMALL },
+    { key: "director_approved_tick", x: 146.2, y: 142, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "fully_approved" },
+    { key: "director_not_approved_tick", x: 146.9, y: 119.7, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "rejected" },
+    { key: "director_date", x: 401.5, y: 73.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_signature", x: 152.3, y: 262, fontSize: FONT_SIZE_NORMAL },
+    { key: "director_signature", x: 75.4, y: 78.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "staff_name", x: 227.7, y: 202.8, fontSize: FONT_SIZE_NORMAL },
+    { key: "form_date_received", x: 506.9, y: 202.8, fontSize: FONT_SIZE_NORMAL },
+  ],
+};
+
+// ───────────────────────────────────────────────────────────────
+// AKD-02 — Exam Replacement (Peperiksaan Gantian/Ulangan)
+// ───────────────────────────────────────────────────────────────
+const AKD02 = {
+  pdfFile: "PPST_AKD_02 BORANG PERMOHONAN PEPERIKSAAN GANTIAN_ULANGAN KHAS.pdf",
+  fields: [
+    { key: "student_no", x: 232.3, y: 579.7, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_name", x: 233.8, y: 562.8, fontSize: FONT_SIZE_NORMAL },
+    { key: "phone_no", x: 233.8, y: 544.3, fontSize: FONT_SIZE_NORMAL },
+    { key: "centre", x: 234.6, y: 523.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "programme", x: 235.4, y: 502, fontSize: FONT_SIZE_NORMAL },
+    { key: "semester", x: 447.7, y: 448.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "session", x: 497.7, y: 448.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "tick_illness", x: 103.1, y: 415.1, fontSize: TICK_SIZE, conditional: "exam_reason", matchValue: "illness" },
+    { key: "tick_death", x: 103.1, y: 388.9, fontSize: TICK_SIZE, conditional: "exam_reason", matchValue: "death" },
+    { key: "tick_failed", x: 110, y: 363.5, fontSize: TICK_SIZE, conditional: "exam_reason", matchValue: "failed" },
+    { key: "course_row_1_code", x: 145.4, y: 251.2, fontSize: FONT_SIZE_SMALL },
+    { key: "course_row_1_name", x: 242.3, y: 249.7, fontSize: FONT_SIZE_SMALL },
+    { key: "course_row_1_exam_dt", x: 423.1, y: 258.9, fontSize: FONT_SIZE_SMALL },
+    { key: "student_date", x: 464.6, y: 86.6, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_signature", x: 86.9, y: 97.4, fontSize: FONT_SIZE_NORMAL },
+    { key: "bil", x: 87.7, y: 251.2, fontSize: FONT_SIZE_NORMAL },
+  ],
+};
+
+// ───────────────────────────────────────────────────────────────
+// AKD-03 — Appeal Review (Rayuan Semakan Semula Keputusan)
+// ───────────────────────────────────────────────────────────────
+const AKD03 = {
+  pdfFile: "PPST_ AKD_03 BORANG RAYUAN SEMAKAN SEMULA.pdf",
+  fields: [
+    { key: "student_no", x: 143.1, y: 603.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "programme", x: 426.2, y: 607.4, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_name", x: 144.6, y: 578.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "receipt_no", x: 206.2, y: 554.3, fontSize: FONT_SIZE_NORMAL },
+    { key: "receipt_date", x: 165.4, y: 530.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "amount_paid", x: 432.3, y: 532.8, fontSize: FONT_SIZE_NORMAL },
+    { key: "faculty", x: 163.1, y: 520.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "phone_no", x: 436.2, y: 510.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "semester", x: 373.8, y: 485.8, fontSize: FONT_SIZE_NORMAL },
+    { key: "session", x: 484.6, y: 477.4, fontSize: FONT_SIZE_NORMAL },
+    { key: "course_row_1_code", x: 96.9, y: 401.2, fontSize: FONT_SIZE_SMALL },
+    { key: "course_row_1_name", x: 186.2, y: 402, fontSize: FONT_SIZE_SMALL },
+    { key: "course_row_1_grade", x: 346.2, y: 402, fontSize: FONT_SIZE_SMALL },
+    { key: "course_row_1_lecturer", x: 384.6, y: 399.7, fontSize: FONT_SIZE_SMALL },
+    { key: "course_row_1_offering_centre", x: 512.3, y: 400.5, fontSize: FONT_SIZE_SMALL },
+    { key: "student_date", x: 458.5, y: 321.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "director_approved_tick", x: 68, y: 270, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "fully_approved" },
+    { key: "director_not_approved_tick", x: 168, y: 270, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "rejected" },
+    { key: "director_signature", x: 483.8, y: 105.1, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_signature", x: 75.4, y: 328.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "form_date_received", x: 455.4, y: 258.2, fontSize: FONT_SIZE_NORMAL },
+  ],
+};
+
+// ───────────────────────────────────────────────────────────────
+// AKD-04 — Absence Justification (Tunjuk Sebab Tidak Hadir)
+// ───────────────────────────────────────────────────────────────
+const AKD04 = {
+  pdfFile: "PPST_AKD_04_2025 BORANG TUJUK SEBAB TIDAK HADIR.pdf",
+  fields: [
+    { key: "student_name", x: 198.5, y: 647.4, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_no", x: 469.2, y: 648.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "programme", x: 191.5, y: 628.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "phone_no", x: 492.3, y: 628.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "address", x: 150, y: 610.5, fontSize: FONT_SIZE_SMALL },
+    { key: "reason_text", x: 81.5, y: 530.5, fontSize: FONT_SIZE_SMALL },
+    { key: "date_of_absence", x: 380, y: 640, fontSize: FONT_SIZE_NORMAL },
+    { key: "course_row_1_code", x: 73.8, y: 400.5, fontSize: FONT_SIZE_SMALL },
+    { key: "course_row_1_name", x: 136.9, y: 400.5, fontSize: FONT_SIZE_SMALL },
+    { key: "student_date", x: 410.8, y: 267.4, fontSize: FONT_SIZE_NORMAL },
+    { key: "director_comments", x: 150, y: 310, fontSize: FONT_SIZE_SMALL },
+    { key: "director_approved_tick", x: 150.8, y: 108.2, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "fully_approved" },
+    { key: "director_not_approved_tick", x: 148.5, y: 84.3, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "rejected" },
+    { key: "director_date", x: 500.8, y: 78.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_signature", x: 158.5, y: 265.1, fontSize: FONT_SIZE_NORMAL },
+    { key: "TPA_signature", x: 362.3, y: 191.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "TPA_comment", x: 237.7, y: 215.1, fontSize: FONT_SIZE_NORMAL },
+    { key: "Director_stamp", x: 362.3, y: 82, fontSize: FONT_SIZE_NORMAL },
+    { key: "TPA_date", x: 496.9, y: 182, fontSize: FONT_SIZE_NORMAL },
+  ],
+};
+
+// ───────────────────────────────────────────────────────────────
+// AKD-05 — Room Booking (Tempahan Bilik)
+// ───────────────────────────────────────────────────────────────
+const AKD05 = {
+  pdfFile: "PPST_AKD_05_2025 BORANG TEMPAHAN BILI KULIAH_TUTORIAL_AMALI.pdf",
+  fields: [
+    { key: "applicant_name", x: 233.8, y: 650.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "position", x: 153.8, y: 630.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "phone_no", x: 194.6, y: 609.7, fontSize: FONT_SIZE_NORMAL },
+    { key: "tick_bk_1", x: 451.8, y: 549.1, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BK1" },
+    { key: "tick_bk_2", x: 472.4, y: 548.5, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BK2" },
+    { key: "tick_bk_3", x: 503.5, y: 547.3, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BK3" },
+    { key: "tick_bk_4", x: 528.8, y: 547.3, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BK4" },
+    { key: "tick_bt_1", x: 445.9, y: 516.1, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BT1" },
+    { key: "tick_bt_2", x: 470, y: 514.4, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BT2" },
+    { key: "tick_bt_3", x: 489.4, y: 516.7, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BT3" },
+    { key: "tick_bt_4", x: 511.8, y: 517.3, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BT4" },
+    { key: "tick_bt_5", x: 531.2, y: 516.7, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BT5" },
+    { key: "tick_bta_6", x: 444.7, y: 486.7, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BTA6" },
+    { key: "tick_bta_7", x: 474.1, y: 487.3, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BTA7" },
+    { key: "tick_bta_8", x: 502.9, y: 486.7, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BTA8" },
+    { key: "tick_bta_9", x: 527.1, y: 485.5, fontSize: TICK_SIZE, conditional: "room_choice", matchValue: "BTA9" },
+    { key: "purpose", x: 143.5, y: 369.1, fontSize: FONT_SIZE_NORMAL },
+    { key: "booking_date", x: 165.3, y: 344.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_date", x: 410, y: 314.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "director_comments", x: 327.6, y: 128.5, fontSize: FONT_SIZE_SMALL },
+    { key: "director_approved_tick", x: 157.1, y: 109.1, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "fully_approved" },
+    { key: "director_not_approved_tick", x: 155.3, y: 86.1, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "rejected" },
+    { key: "director_date", x: 513.5, y: 87.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_signature", x: 176.5, y: 313.2, fontSize: FONT_SIZE_NORMAL },
+    { key: "TPA_signature", x: 355.3, y: 185.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "TPA_date", x: 507.6, y: 187.9, fontSize: FONT_SIZE_NORMAL },
+    { key: "Others_rooms", x: 451.2, y: 449.1, fontSize: FONT_SIZE_NORMAL },
+    { key: "director_signature", x: 365.9, y: 77.3, fontSize: FONT_SIZE_NORMAL },
+  ],
+};
+
+// ───────────────────────────────────────────────────────────────
+// AKD-06 — Sick Leave (Cuti Sakit)
+// ───────────────────────────────────────────────────────────────
+const AKD06 = {
+  pdfFile: "PPST_AKD_06_2025 BORANG PERMOHONAN CUTI SAKIT .pdf",
+  fields: [
+    { key: "student_name", x: 204.7, y: 652, fontSize: FONT_SIZE_NORMAL },
+    { key: "ic_number", x: 458.2, y: 650.8, fontSize: FONT_SIZE_NORMAL },
+    { key: "matric_no", x: 206.5, y: 627.3, fontSize: FONT_SIZE_NORMAL },
+    { key: "phone_no", x: 456.5, y: 627.3, fontSize: FONT_SIZE_NORMAL },
+    { key: "tick_kuliah", x: 162.9, y: 584.9, fontSize: TICK_SIZE, conditional: "class_group", matchValue: "kuliah" },
+    { key: "tick_tutorial", x: 162.9, y: 569.6, fontSize: TICK_SIZE, conditional: "class_group", matchValue: "tutorial" },
+    { key: "tick_amali", x: 164.7, y: 554.9, fontSize: TICK_SIZE, conditional: "class_group", matchValue: "amali" },
+    { key: "tick_kerajaan", x: 544.1, y: 586.1, fontSize: TICK_SIZE, conditional: "hospital_type", matchValue: "government" },
+    { key: "tick_swasta", x: 546.5, y: 571.4, fontSize: TICK_SIZE, conditional: "hospital_type", matchValue: "private" },
+    { key: "student_date", x: 418.2, y: 237.3, fontSize: FONT_SIZE_NORMAL },
+    { key: "director_comments", x: 326.5, y: 124.4, fontSize: FONT_SIZE_SMALL },
+    { key: "director_approved_tick", x: 154.7, y: 107.9, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "fully_approved" },
+    { key: "director_not_approved_tick", x: 155.9, y: 84.4, fontSize: TICK_SIZE, conditional: "approval_status", matchValue: "rejected" },
+    { key: "director_date", x: 497.1, y: 75.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "Form_date_received", x: 418.8, y: 168.5, fontSize: FONT_SIZE_NORMAL },
+    { key: "staff_received_name", x: 183.5, y: 163.8, fontSize: FONT_SIZE_NORMAL },
+    { key: "student_signature", x: 164.1, y: 234.4, fontSize: FONT_SIZE_NORMAL },
+  ],
+};
+
+// ───────────────────────────────────────────────────────────────
+// Map form_type strings → coordinate config
+// ───────────────────────────────────────────────────────────────
+const FORM_MAP = {
+  withdrawal: AKD01,
+  exam_replacement: AKD02,
+  appeal_review: AKD03,
+  non_sick_leave: AKD04,
+  room_booking: AKD05,
+  sick_leave: AKD06,
+};
+
+module.exports = { FORM_MAP };

@@ -13,9 +13,9 @@ const SALT_ROUNDS = 12;
 // ── Passwords (case-sensitive — what users will type to log in) ──
 const PASSWORDS = {
   student:  "Student123!",
-  admin:     "Admin123",
-  lecturer:  "Lecturer123",
-  pengarah:  "Pengarah123",
+  admin:     "123",
+  lecturer:  "123",
+  pengarah:  "123",
 };
 
 // ── Student 4-course pools ────────────────────────────────────────────
@@ -153,9 +153,9 @@ async function seed() {
   console.log("─".repeat(65));
   console.log(`✅ ${total} users seeded!\n📋 Credentials (case-sensitive):`);
   console.log("  Students  → /login        | BS2024001…BS2024010  | Student123!");
-  console.log("  Admin     → /login/staff  | ADMIN001…ADMIN010    | Admin123");
-  console.log("  Lecturer  → /login/staff  | LEC001…LEC010        | Lecturer123");
-  console.log("  Pengarah  → /login/staff  | PEN001…PEN010        | Pengarah123");
+  console.log("  Admin     → /login/staff  | ADMIN001…ADMIN010    | 123");
+  console.log("  Lecturer  → /login/staff  | LEC001…LEC010        | 123");
+  console.log("  Pengarah  → /login/staff  | PEN001…PEN010        | 123");
   console.log("─".repeat(65));
   await mongoose.disconnect();
 }

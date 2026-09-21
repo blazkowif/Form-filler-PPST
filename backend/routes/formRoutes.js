@@ -16,10 +16,10 @@ const buildPath = (file, sub) =>
 // ── 1. Sick Leave (PPST/AKD-06) ──────────────────────────────
 router.post("/submit/sick_leave", uploadMC, async (req, res) => {
   try {
-    const { reason, start_date, end_date, hospital_type, hospital_name } = req.body;
+    const { class_group, hospital_type } = req.body;
 
-    if (!reason || !start_date || !hospital_type || !hospital_name) {
-      return res.status(400).json({ success: false, message: "Missing required fields: reason, start_date, hospital_type, hospital_name." });
+    if (!class_group || !hospital_type) {
+      return res.status(400).json({ success: false, message: "Missing required fields: class_group, hospital_type." });
     }
     if (!["government","private"].includes(hospital_type)) {
       return res.status(400).json({ success: false, message: "Invalid hospital type." });
@@ -28,14 +28,12 @@ router.post("/submit/sick_leave", uploadMC, async (req, res) => {
     const app = await FormApplication.create({
       user_id:   req.user.id,
       form_type: "sick_leave",
-      reason,
-      start_date: new Date(start_date),
-      end_date:   end_date ? new Date(end_date) : null,
+      reason: "",
       sick_leave_data: {
         hospital_type,
-        hospital_name,
         mc_file_path: buildPath(req.file, "medical_certs"),
       },
+      class_group,
     });
 
     return res.status(201).json({
@@ -52,18 +50,19 @@ router.post("/submit/sick_leave", uploadMC, async (req, res) => {
 // ── 2. Non-Sick Leave (PPST/AKD-07) ──────────────────────────
 router.post("/submit/non_sick_leave", uploadSingle, async (req, res) => {
   try {
-    const { reason, start_date, end_date } = req.body;
+    const { reason_text, date_of_absence, course_row_1_code, course_row_1_name } = req.body;
 
-    if (!reason || !start_date) {
-      return res.status(400).json({ success: false, message: "Missing required fields: reason, start_date." });
+    if (!reason_text || !date_of_absence || !course_row_1_code || !course_row_1_name) {
+      return res.status(400).json({ success: false, message: "Missing required fields: reason_text, date_of_absence, course_row_1_code, course_row_1_name." });
     }
 
     const app = await FormApplication.create({
       user_id:    req.user.id,
       form_type:  "non_sick_leave",
-      reason,
-      start_date: new Date(start_date),
-      end_date:   end_date ? new Date(end_date) : null,
+      reason: reason_text,
+      start_date: new Date(date_of_absence),
+      course_code: course_row_1_code,
+      course_name: course_row_1_name,
       file_path:  buildPath(req.file, "attachments"),
     });
 
@@ -82,11 +81,12 @@ router.post("/submit/non_sick_leave", uploadSingle, async (req, res) => {
 router.post("/submit/appeal_review", uploadSingle, async (req, res) => {
   try {
     const {
-      reason, semester, session, course_code, course_name,
-      grade, lecturer_name, receipt_no, amount_paid,
+      semester, session, course_row_1_code, course_row_1_name,
+      course_row_1_grade, course_row_1_lecturer, course_row_1_offering_centre,
+      receipt_no, receipt_date, amount_paid,
     } = req.body;
 
-    const required = { reason, semester, session, course_code, course_name, grade, lecturer_name, receipt_no, amount_paid };
+    const required = { semester, session, course_row_1_code, course_row_1_name, course_row_1_grade, course_row_1_lecturer, course_row_1_offering_centre, receipt_no, receipt_date, amount_paid };
     const missing  = Object.keys(required).filter(k => !req.body[k]);
     if (missing.length) {
       return res.status(400).json({ success: false, message: `Missing fields: ${missing.join(", ")}` });
@@ -95,17 +95,19 @@ router.post("/submit/appeal_review", uploadSingle, async (req, res) => {
     const app = await FormApplication.create({
       user_id:   req.user.id,
       form_type: "appeal_review",
-      reason,
+      reason: "",
       file_path: buildPath(req.file, "attachments"),
       appeal_review_data: {
         receipt_no,
+        receipt_date,
         amount_paid:  parseFloat(amount_paid),
         semester:     parseInt(semester),
         session,
-        course_code,
-        course_name,
-        grade,
-        lecturer_name,
+        course_code: course_row_1_code,
+        course_name: course_row_1_name,
+        grade: course_row_1_grade,
+        lecturer_name: course_row_1_lecturer,
+        faculty: course_row_1_offering_centre,
       },
     });
 
@@ -124,7 +126,6 @@ router.post("/submit/appeal_review", uploadSingle, async (req, res) => {
 router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
   try {
     const {
-      reason,
       withdrawal_reason,
       institution_name,
       confirm_hostel_key,
@@ -133,8 +134,8 @@ router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
       confirm_library_books,
     } = req.body;
 
-    if (!reason || !reason.trim()) {
-      return res.status(400).json({ success: false, message: "Reason for withdrawal is required." });
+    if (!withdrawal_reason) {
+      return res.status(400).json({ success: false, message: "Withdrawal reason is required." });
     }
 
     const resolvedReason = withdrawal_reason || "personal";
@@ -142,7 +143,7 @@ router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
     const app = await FormApplication.create({
       user_id:   req.user.id,
       form_type: "withdrawal",
-      reason:    reason.trim(),
+      reason:    "",
       withdrawal_reason: resolvedReason,
       institution_name: institution_name?.trim() || "",
       withdrawal_data: {
@@ -168,18 +169,22 @@ router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
 // ── 5. Replacement / Repeat Exam (PPST/AKD-02) ───────────────
 router.post("/submit/exam_replacement", uploadSingle, async (req, res) => {
   try {
-    const { reason, start_date, end_date } = req.body;
+    const { semester, session, exam_reason, course_row_1_code, course_row_1_name, course_row_1_exam_dt } = req.body;
 
-    if (!reason || !start_date) {
-      return res.status(400).json({ success: false, message: "Missing required fields: reason, start_date." });
+    if (!semester || !session || !exam_reason || !course_row_1_code || !course_row_1_name || !course_row_1_exam_dt) {
+      return res.status(400).json({ success: false, message: "Missing required exam replacement fields." });
     }
 
     const app = await FormApplication.create({
       user_id:    req.user.id,
       form_type:  "exam_replacement",
-      reason:     reason.trim(),
-      start_date: new Date(start_date),
-      end_date:   end_date ? new Date(end_date) : null,
+      reason:     "",
+      exam_reason,
+      exam_date: new Date(course_row_1_exam_dt),
+      course_code: course_row_1_code,
+      course_name: course_row_1_name,
+      semester,
+      session,
       file_path:  buildPath(req.file, "attachments"),
     });
 
@@ -197,21 +202,22 @@ router.post("/submit/exam_replacement", uploadSingle, async (req, res) => {
 // ── 6. Room Booking (PPST/AKD-05) ────────────────────────────
 router.post("/submit/room_booking", async (req, res) => {
   try {
-    const { reason, start_date, room_choice, room_type } = req.body;
+    const { purpose, booking_date, room_choice, Others_rooms } = req.body;
 
-    if (!reason || !start_date) {
-      return res.status(400).json({ success: false, message: "Missing required fields: reason (purpose), start_date (booking date)." });
+    if (!purpose || !booking_date || !room_choice) {
+      return res.status(400).json({ success: false, message: "Missing required fields: purpose, booking_date, room_choice." });
     }
 
     const app = await FormApplication.create({
       user_id:           req.user.id,
       form_type:         "room_booking",
-      reason:            reason.trim(),
-      room_choice:       room_choice || "",
+      reason:            purpose.trim(),
+      room_choice,
       applicant_position: "Pelajar",
-      start_date:        new Date(start_date),
+      start_date:        new Date(booking_date),
       room_booking_data: {
-        room_type: room_type || "",
+        room_type: "",
+        other_room: Others_rooms || "",
       },
     });
 

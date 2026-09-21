@@ -234,7 +234,7 @@ router.get("/analytics", async (req, res) => {
   try {
     const sixMonthsAgo = new Date(Date.now() - 180 * 24 * 60 * 60 * 1000);
 
-    const [byType, byStatus, monthly] = await Promise.all([
+    const [byType, byStatus, monthly, studentCount, applicationCount, studentsByProgram, roomDemand] = await Promise.all([
       FormApplication.aggregate([
         { $group: { _id: "$form_type", count: { $sum: 1 } } },
         { $project: { form_type: "$_id", count: 1, _id: 0 } },
@@ -252,9 +252,39 @@ router.get("/analytics", async (req, res) => {
         { $sort: { _id: 1 } },
         { $project: { month: "$_id", count: 1, _id: 0 } },
       ]),
+      User.countDocuments({ role: "student" }),
+      FormApplication.countDocuments(),
+      User.aggregate([
+        { $match: { role: "student" } },
+        { $group: { _id: "$profile.program", count: { $sum: 1 } } },
+        { $project: { program: "$_id", count: 1, _id: 0 } },
+        { $sort: { count: -1, program: 1 } },
+      ]),
+      FormApplication.aggregate([
+        { $match: { form_type: "room_booking", room_choice: { $nin: [null, ""] } } },
+        { $group: { _id: "$room_choice", count: { $sum: 1 } } },
+        { $project: { room: "$_id", count: 1, _id: 0 } },
+        { $sort: { count: -1, room: 1 } },
+        { $limit: 10 },
+      ]),
     ]);
 
-    return res.json({ success: true, data: { byType, byStatus, monthly } });
+    const approved = byStatus.find((item) => item.status === "fully_approved")?.count || 0;
+
+    return res.json({
+      success: true,
+      data: {
+        byType,
+        byStatus,
+        monthly,
+        studentCount,
+        applicationCount,
+        roomBookings: byType.find((item) => item.form_type === "room_booking")?.count || 0,
+        approvalRate: applicationCount ? Math.round((approved / applicationCount) * 100) : 0,
+        studentsByProgram,
+        roomDemand,
+      },
+    });
   } catch (err) {
     console.error("❌ admin/analytics:", err);
     return res.status(500).json({ success: false, message: err.message });

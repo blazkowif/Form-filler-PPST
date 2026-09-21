@@ -10,24 +10,27 @@ const NAV_ITEMS = {
   student: [
     { to: "/student",             label: "Dashboard",        icon: "01", end: true },
     { to: "/student/track",       label: "Track Applications",icon: "02" },
+    { to: "/student/schedule",    label: "Class Schedule",    icon: "03" },
   ],
   admin: [
     { to: "/admin",               label: "Dashboard",         icon: "01", end: true },
     { to: "/admin/applications",  label: "All Applications",  icon: "02" },
     { to: "/admin/applications?status=pending_admin", label: "Pending Review", icon: "03" },
     { to: "/admin/analytics",     label: "Analytics",         icon: "04" },
-    { to: "/admin/pdf-tools",     label: "PDF Tools",         icon: "05" },
+    { to: "/admin/schedule",      label: "Class Schedule",    icon: "05" },
   ],
   lecturer: [
     { to: "/lecturer",            label: "Dashboard",        icon: "01", end: true },
     { to: "/lecturer/roster",     label: "Class Roster",     icon: "02" },
     { to: "/lecturer/attendance", label: "Attendance Records",icon: "03" },
+    { to: "/lecturer/schedule",   label: "Class Schedule",    icon: "04" },
   ],
   pengarah: [
     { to: "/pengarah",            label: "Dashboard",         icon: "01", end: true },
     { to: "/pengarah/approvals",  label: "Approval Queue",    icon: "02" },
     { to: "/pengarah/approvals?status=fully_approved", label: "Approved", icon: "03" },
     { to: "/pengarah/approvals?status=rejected",       label: "Rejected", icon: "04" },
+    { to: "/pengarah/schedule",   label: "Class Schedule",    icon: "05" },
   ],
 };
 

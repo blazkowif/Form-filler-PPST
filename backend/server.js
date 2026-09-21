@@ -21,6 +21,7 @@ const pengarahRoutes  = require("./routes/pengarahRoutes");
 const printRoutes     = require("./routes/printRoutes");
 const pdfFillRoutes     = require("./routes/pdfFillRoutes");
 const calibrateRoutes   = require("./routes/calibrateRoutes");
+const scheduleRoutes    = require("./routes/scheduleRoutes");
 
 const app  = express();
 const PORT = process.env.PORT || 5000;
@@ -75,6 +76,7 @@ app.use("/api/pengarah", pengarahRoutes);
 app.use("/api/print",   printRoutes);
 app.use("/api/pdf",       pdfFillRoutes);
 app.use("/api/calibrate", calibrateRoutes);
+app.use("/api/schedule", scheduleRoutes);
 
 // Health check
 app.get("/api/health", (req, res) =>

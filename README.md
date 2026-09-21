@@ -49,9 +49,9 @@ npm run seed:users
 | Role      | ID           | Password      |
 |-----------|--------------|---------------|
 | Student   | BS2024001    | Student123!   |
-| Admin     | ADMIN001     | admin123      |
-| Lecturer  | LEC001       | lecturer123   |
-| Pengarah  | PEN001       | pengarah123   |
+| Admin     | ADMIN001      | 123           |
+| Lecturer  | LEC001        | 123           |
+| Pengarah  | PEN001        | 123           |
 
 ### 3. Run Development Servers
 

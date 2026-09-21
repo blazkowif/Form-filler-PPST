@@ -34,7 +34,8 @@ import AdminLayout          from "./modules/admin/AdminLayout";
 import AdminDashboard       from "./modules/admin/AdminDashboard";
 import AdminApplicationList from "./modules/admin/AdminApplicationList";
 import AdminReviewPage      from "./modules/admin/AdminReviewPage";
-import PdfTools             from "./modules/admin/PdfTools";
+import AdminAnalytics       from "./modules/admin/AdminAnalytics";
+import SchedulePage         from "./modules/shared/SchedulePage";
 
 // Lecturer module
 import LecturerLayout    from "./modules/lecturer/LecturerLayout";
@@ -98,6 +99,7 @@ const AppRoutes = () => (
       <Route path="apply/:form_type" element={<ApplyForm />} />
       <Route path="track"           element={<ApplicationList />} />
       <Route path="track/:id"       element={<ApplicationDetail />} />
+      <Route path="schedule"        element={<SchedulePage />} />
     </Route>
 
     {/* ── Admin ── */}
@@ -106,7 +108,8 @@ const AppRoutes = () => (
       <Route index                  element={<AdminDashboard />} />
       <Route path="applications"    element={<AdminApplicationList />} />
       <Route path="applications/:id" element={<AdminReviewPage />} />
-      <Route path="pdf-tools"       element={<PdfTools />} />
+      <Route path="analytics"       element={<AdminAnalytics />} />
+      <Route path="schedule"        element={<SchedulePage />} />
     </Route>
 
     {/* ── Lecturer ── */}
@@ -115,6 +118,7 @@ const AppRoutes = () => (
       <Route index           element={<LecturerDashboard />} />
       <Route path="roster"   element={<ClassRoster />} />
       <Route path="attendance" element={<AttendanceRecords />} />
+      <Route path="schedule"   element={<SchedulePage />} />
     </Route>
 
     {/* ── Pengarah ── */}
@@ -123,6 +127,7 @@ const AppRoutes = () => (
       <Route index                  element={<PengarahDashboard />} />
       <Route path="approvals"       element={<PengarahApprovalList />} />
       <Route path="approvals/:id"   element={<PengarahReviewPage />} />
+      <Route path="schedule"        element={<SchedulePage />} />
     </Route>
 
     {/* ── 404 ── */}

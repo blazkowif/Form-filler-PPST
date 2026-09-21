@@ -1,0 +1,22 @@
+.schedule-page { max-width: 1180px; margin: 0 auto; padding: 2rem 2.5rem 3rem; color: #172033; }
+.schedule-header { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1.5rem; }
+.schedule-kicker { color: #0f766e; font: 700 .7rem var(--font-mono); text-transform: uppercase; letter-spacing: .1em; margin: 0 0 .4rem; }
+.schedule-header h1 { margin: 0; font: 700 clamp(1.5rem, 3vw, 2.2rem) var(--font-display); }
+.schedule-header p:not(.schedule-kicker) { color: #68738a; margin: .45rem 0 0; }
+.schedule-book-link { background: #0f766e; color: white; padding: .7rem 1rem; text-decoration: none; border-radius: 3px; font-weight: 700; white-space: nowrap; }
+.schedule-warning { border-left: 4px solid #d97706; background: #fffbeb; color: #854d0e; padding: .9rem 1rem; margin-bottom: 1.2rem; line-height: 1.5; }
+.schedule-filters { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; margin-bottom: 1rem; }
+.schedule-days { display: flex; gap: .3rem; flex-wrap: wrap; }
+.schedule-days button, .schedule-filters select { border: 1px solid #d8deea; background: white; color: #34405a; padding: .55rem .75rem; border-radius: 3px; font: inherit; }
+.schedule-days button { cursor: pointer; }
+.schedule-days button.active { background: #172033; color: white; border-color: #172033; }
+.schedule-table-wrap { overflow-x: auto; background: white; border: 1px solid #e1e6ef; }
+.schedule-table { width: 100%; border-collapse: collapse; min-width: 680px; }
+.schedule-table th { background: #172033; color: white; text-align: left; padding: .75rem; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; }
+.schedule-table td { padding: .75rem; border-bottom: 1px solid #edf0f5; vertical-align: top; }
+.schedule-table tr:nth-child(even) td { background: #fafbfd; }
+.schedule-table small { display: block; color: #7b8497; margin-top: .2rem; }
+.schedule-type { display: inline-block; border: 2px solid; padding: .2rem .45rem; font-size: .75rem; border-radius: 12px; }
+.schedule-empty, .schedule-state { padding: 2rem; text-align: center; color: #7b8497; }
+.schedule-state.error { color: #b42318; }
+@media (max-width: 700px) { .schedule-page { padding: 1.25rem 1rem 2rem; } .schedule-header { display: block; } .schedule-book-link { display: inline-block; margin-top: 1rem; } }

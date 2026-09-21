@@ -30,7 +30,7 @@ const testUsers = [
   },
   {
     matric_staff_id: "ADMIN001",
-    password:  "admin123",
+    password:  "123",
     name:      "Siti Noraza binti Mohd Noor",
     role:      "admin",
     email:     "noraza@ums.edu.my",
@@ -39,7 +39,7 @@ const testUsers = [
   },
   {
     matric_staff_id: "LEC001",
-    password:  "lecturer123",
+    password:  "123",
     name:      "Dr. Mohd Azri bin Hassan",
     role:      "lecturer",
     email:     "azri@ums.edu.my",
@@ -48,7 +48,7 @@ const testUsers = [
   },
   {
     matric_staff_id: "PEN001",
-    password:  "pengarah123",
+    password:  "123",
     name:      "Prof. Madya Dr. Faridah binti Osman",
     role:      "pengarah",
     email:     "faridah@ums.edu.my",
@@ -75,9 +75,9 @@ const seed = async () => {
   console.log("\n🎉 Seeding complete!\n");
   console.log("─".repeat(50));
   console.log("Student  → /login       | BS2024001 / Student123!");
-  console.log("Admin    → /login/staff | ADMIN001  / admin123");
-  console.log("Lecturer → /login/staff | LEC001    / lecturer123");
-  console.log("Pengarah → /login/staff | PEN001    / pengarah123");
+  console.log("Admin    → /login/staff | ADMIN001  / 123");
+  console.log("Lecturer → /login/staff | LEC001    / 123");
+  console.log("Pengarah → /login/staff | PEN001    / 123");
   console.log("─".repeat(50));
   await mongoose.disconnect();
   process.exit(0);

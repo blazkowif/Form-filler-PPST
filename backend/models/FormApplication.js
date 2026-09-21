@@ -18,6 +18,7 @@ const sickLeaveSchema = new mongoose.Schema({
 // ── Appeal Review sub-doc (PPST/AKD-03) ──
 const appealReviewSchema = new mongoose.Schema({
   receipt_no:    String,
+  receipt_date:  String,
   amount_paid:   Number,
   semester:      Number,
   session:       String,
@@ -25,6 +26,7 @@ const appealReviewSchema = new mongoose.Schema({
   course_name:   String,
   grade:         String,
   lecturer_name: String,
+  faculty:       String,
 }, { _id: false });
 
 // ── Main Application Schema ──
@@ -64,6 +66,17 @@ const formApplicationSchema = new mongoose.Schema({
   institution_name:   String,
   room_choice:        String,
   applicant_position: String,
+  exam_reason:        String,
+  exam_date:          Date,
+  class_group:        String,
+  course_code:        String,
+  course_name:        String,
+  grade:              String,
+  lecturer_name:      String,
+  faculty:            String,
+  centre:             String,
+  semester:           String,
+  session:            String,
 
   // Tier 1 — Admin
   admin_id:          { type: mongoose.Schema.Types.ObjectId, ref: "User" },

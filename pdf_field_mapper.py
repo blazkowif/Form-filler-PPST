@@ -249,6 +249,7 @@ class FieldMapperApp(tk.Tk):
         self.page_w_pt = 595.0
         self.page_h_pt = 842.0
         self.tk_img = None
+        self.tk_page_images = []
 
         self.pending_mode = None          # None | "add" | "reposition"
         self.pending_field_meta = None
@@ -436,15 +437,29 @@ class FieldMapperApp(tk.Tk):
         self.render_page()
 
     def render_page(self):
-        if not self.pdf_page:
+        if not self.pdf_doc:
             return
-        mat = fitz.Matrix(self.zoom, self.zoom)
-        pix = self.pdf_page.get_pixmap(matrix=mat)
-        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-        self.tk_img = ImageTk.PhotoImage(img)
         self.canvas.delete("all")
-        self.canvas.config(scrollregion=(0, 0, pix.width, pix.height))
-        self.canvas.create_image(0, 0, anchor="nw", image=self.tk_img, tags=("page",))
+        self.tk_page_images = []
+
+        mat = fitz.Matrix(self.zoom, self.zoom)
+        y_offset = 0
+        max_width = 0
+        page_gap = 24
+        for page_number, page in enumerate(self.pdf_doc):
+            pix = page.get_pixmap(matrix=mat)
+            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+            tk_img = ImageTk.PhotoImage(img)
+            self.tk_page_images.append(tk_img)
+            self.canvas.create_image(0, y_offset, anchor="nw", image=tk_img, tags=("page", f"page-{page_number + 1}"))
+            self.canvas.create_text(
+                8, y_offset + 8, anchor="nw", text=f"Page {page_number + 1}",
+                fill="#555555", font=("TkDefaultFont", 9, "bold"), tags=("page-label",),
+            )
+            y_offset += pix.height + page_gap
+            max_width = max(max_width, pix.width)
+
+        self.canvas.config(scrollregion=(0, 0, max_width, max(0, y_offset - page_gap)))
         self._draw_overlays()
 
     # ------------------------------------------------------------------
