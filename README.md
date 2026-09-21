@@ -9,9 +9,9 @@
 |------|--------|--------|
 | ✅ Step 1 | Backend Auth (`server.js`, JWT, `/api/auth/login`) | **Done** |
 | ✅ Step 2 | Student Module (Dashboard, 6 Forms, Tracker) | **Done** |
-| 🔲 Step 3 | Admin Module (Review, Analytics, PDF Generation) | Pending |
-| 🔲 Step 4 | Lecturer Module (Attendance, Class Roster) | Pending |
-| 🔲 Step 5 | Pengarah Module (Digital Signature Approval) | Pending |
+| ✅ Step 3 | Admin Module (Review, Analytics, PDF Generation) | **Done** |
+| ✅ Step 4 | Lecturer Module (Attendance, Class Roster) | **Done** |
+| ✅ Step 5 | Pengarah Module (Digital Signature Approval) | **Done** |
 
 ---
 
@@ -108,9 +108,9 @@ ppst-eportal/
     │   │   │   ├── StudentDashboard.jsx← Stats + form cards + recent activity
     │   │   │   ├── ApplyForm.jsx       ← Form selector / form router
     │   │   │   └── ApplicationTracker.jsx ← List + detail views
-    │   │   ├── admin/              ← (Step 3)
-    │   │   ├── lecturer/           ← (Step 4)
-    │   │   └── pengarah/           ← (Step 5)
+    │   │   ├── admin/              ← Review queue, analytics, PDF tools
+    │   │   ├── lecturer/           ← Attendance records and class roster
+    │   │   └── pengarah/           ← Approval queue and digital signatures
     │   ├── pages/
     │   │   ├── Login.jsx + Login.css
     │   │   └── dashboards/         ← Role placeholder dashboards
@@ -166,7 +166,7 @@ ppst-eportal/
 | `/lecturer`                 | LecturerDashboard*   | lecturer |
 | `/pengarah`                 | PengarahDashboard*   | pengarah |
 
-*Placeholder — full implementation in Steps 3–5.
+*Protected role modules are implemented.
 
 ---
 
@@ -182,13 +182,32 @@ ppst-eportal/
 
 ---
 
-## Next Steps (Step 3 — Admin Module)
+## Completed Workflows (Steps 3–5)
 
-The following will be built next:
+### Step 3 — Admin
 
-1. `GET /api/admin/applications` — paginated list with filters (form_type, status, course)
-2. `PATCH /api/admin/applications/:id/approve` — move to `pending_pengarah`
-3. `PATCH /api/admin/applications/:id/reject`  — move to `rejected`
-4. `GET /api/admin/analytics` — aggregate counts by form_type and status
-5. React `AdminDashboard`, `AdminApplicationList`, `AdminReviewModal`
-6. PDF generation using `pdf-lib` to populate official PPST forms
+- `GET /api/admin/applications` — paginated list with form type, status, and student filters
+- `PATCH /api/admin/applications/:id/approve` — move an application to `pending_pengarah`
+- `PATCH /api/admin/applications/:id/reject` — reject with a required reason
+- `GET /api/admin/analytics` — aggregate counts by form type, status, and month
+- Admin dashboard, application review, PDF tools, and protected routes
+
+### Step 4 — Lecturer
+
+- `GET /api/lecturer/dashboard` — leave statistics and group summaries
+- `GET /api/lecturer/roster` — searchable student class roster with absence counts
+- `GET /api/lecturer/attendance` — paginated sick and non-sick leave records
+- Lecturer dashboard, roster, attendance pages, and protected routes
+
+### Step 5 — Pengarah
+
+- `GET /api/pengarah/applications` — approval queue with filters and search
+- `PATCH /api/pengarah/applications/:id/approve` — final approval with optional digital signature
+- `PATCH /api/pengarah/applications/:id/reject` — reject with a required reason
+- Pengarah dashboard, review queue, signature capture, analytics, and protected routes
+
+### Official PDF templates
+
+PDF output is created by overlaying submitted data onto the original supplied forms in
+`backend/assets/forms/AKD-01.pdf` through `AKD-06.pdf`. The application does not generate
+replacement blank forms. The `_calibrate.pdf` files are retained only for coordinate tuning.
