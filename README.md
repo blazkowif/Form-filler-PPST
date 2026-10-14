@@ -28,7 +28,6 @@ cp .env.example .env        # Fill in your DB credentials + JWT secret
 # Frontend
 cd ../frontend
 npm install
-cp .env.example .env        # Set VITE_API_URL if needed
 ```
 
 ### 2. Database Setup
@@ -59,11 +58,25 @@ npm run seed:users
 # Terminal 1 — Backend (port 5000)
 cd backend && npm run dev
 
-# Terminal 2 — Frontend (port 5173)
-cd frontend && npm run dev
+# Terminal 2 — Frontend connected to the local backend
+cd frontend && npm run dev:local
+
+# Or connect the frontend to the deployed Render backend
+cd frontend && npm run dev:online
 ```
 
 Open: http://localhost:5173
+
+The frontend connection is selected by the Vite mode:
+
+| Command | API |
+|---|---|
+| `npm run dev:local` | `http://localhost:3001` |
+| `npm run dev:online` | `https://form-filler-ppst.onrender.com` |
+
+Use the same modes for production builds with `npm run build:local` or
+`npm run build:online`. The local backend can still use MongoDB Atlas; choosing
+`dev:local` only changes which HTTP API server the browser calls.
 
 ---
 
@@ -211,3 +224,16 @@ ppst-eportal/
 PDF output is created by overlaying submitted data onto the original supplied forms in
 `assets/BorangPPST/`. The application does not generate
 replacement blank forms. The `_calibrate.pdf` files are retained only for coordinate tuning.
+
+### Reference numbers and public status QR codes
+
+Every new application receives a unique yearly reference number such as
+`PPST/AKD-01/2026/0001`. The number is printed on the generated form and is included
+in the downloaded filename. Each generated PDF also includes a QR code that opens the
+login-free public status page at `/status/<reference>`. The public page exposes only
+the form type and workflow stages (submitted, Admin review, Pengarah approval, and
+completion), not the student's personal information.
+
+Set `PUBLIC_APP_URL` in the backend environment to the deployed frontend URL so QR
+codes point to the production site. If it is not set, the backend falls back to
+`FRONTEND_URL`, then the incoming request host.

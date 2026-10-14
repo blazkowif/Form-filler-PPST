@@ -42,7 +42,7 @@ router.post("/submit/sick_leave", uploadMC, async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Sick Leave application submitted successfully.",
-      data: { application_id: app._id.toString() },
+      data: { application_id: app._id.toString(), reference_no: app.reference_no },
     });
   } catch (err) {
     console.error("❌ submit/sick_leave:", err);
@@ -72,7 +72,7 @@ router.post("/submit/non_sick_leave", uploadSingle, async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Non-Sick Leave application submitted successfully.",
-      data: { application_id: app._id.toString() },
+      data: { application_id: app._id.toString(), reference_no: app.reference_no },
     });
   } catch (err) {
     console.error("❌ submit/non_sick_leave:", err);
@@ -117,7 +117,7 @@ router.post("/submit/appeal_review", uploadSingle, async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Appeal for Exam Review submitted successfully.",
-      data: { application_id: app._id.toString() },
+      data: { application_id: app._id.toString(), reference_no: app.reference_no },
     });
   } catch (err) {
     console.error("❌ submit/appeal_review:", err);
@@ -162,7 +162,7 @@ router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Withdrawal application submitted. The Admin will review your request.",
-      data: { application_id: app._id.toString() },
+      data: { application_id: app._id.toString(), reference_no: app.reference_no },
     });
   } catch (err) {
     console.error("❌ submit/withdrawal:", err);
@@ -195,7 +195,7 @@ router.post("/submit/exam_replacement", uploadSingle, async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Replacement / Repeat Exam application submitted successfully.",
-      data: { application_id: app._id.toString() },
+      data: { application_id: app._id.toString(), reference_no: app.reference_no },
     });
   } catch (err) {
     console.error("❌ submit/exam_replacement:", err);
@@ -229,7 +229,7 @@ router.post("/submit/room_booking", async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Room Booking request submitted successfully.",
-      data: { application_id: app._id.toString() },
+      data: { application_id: app._id.toString(), reference_no: app.reference_no },
     });
   } catch (err) {
     console.error("❌ submit/room_booking:", err);

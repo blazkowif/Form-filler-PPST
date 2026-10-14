@@ -196,4 +196,13 @@ const FORM_MAP = {
   sick_leave: AKD06,
 };
 
+// Shared footer printed on every form. The reference is human-readable;
+// the QR code points to the public, login-free status page.
+Object.values(FORM_MAP).forEach((form) => {
+  form.fields.push(
+    { key: "reference_no", x: 36, y: 20, fontSize: 8.5 },
+    { key: "qr_code", x: 505, y: 12, width: 78, height: 78 },
+  );
+});
+
 module.exports = { FORM_MAP };

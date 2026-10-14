@@ -36,6 +36,7 @@ const FONT_SIZE_SMALL  = 8.5;
 const FONT_TICK        = 12;
 
 const IMAGE_FIELD_PATTERN = /signature|stamp/i;
+const DATA_IMAGE_FIELD_PATTERN = /qr_code/i;
 
 const resolveAssetPath = (value) => {
   if (!value || typeof value !== "string") return null;
@@ -95,10 +96,14 @@ async function fillPdf(formKey, data) {
     const finalSize = isTick ? FONT_TICK : fontSize;
 
     const imagePath = IMAGE_FIELD_PATTERN.test(field.key) ? resolveAssetPath(textStr) : null;
-    if (imagePath && fs.existsSync(imagePath)) {
-      const image = /\.(jpe?g)$/i.test(imagePath)
-        ? await pdfDoc.embedJpg(fs.readFileSync(imagePath))
-        : await pdfDoc.embedPng(fs.readFileSync(imagePath));
+    const isDataImage = DATA_IMAGE_FIELD_PATTERN.test(field.key) && textStr.startsWith("data:image/");
+    if (isDataImage || (imagePath && fs.existsSync(imagePath))) {
+      const imageBytes = isDataImage
+        ? Buffer.from(textStr.split(",")[1], "base64")
+        : fs.readFileSync(imagePath);
+      const image = /\.(jpe?g)$/i.test(imagePath || "")
+        ? await pdfDoc.embedJpg(imageBytes)
+        : await pdfDoc.embedPng(imageBytes);
       const maxWidth = field.width || 110;
       const maxHeight = field.height || 35;
       const scale = Math.min(maxWidth / image.width, maxHeight / image.height);

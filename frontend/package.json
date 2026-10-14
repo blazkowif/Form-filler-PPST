@@ -4,8 +4,12 @@
   "description": "PPST E-Portal React Frontend — Universiti Malaysia Sabah",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode local",
+    "dev:local": "vite --mode local",
+    "dev:online": "vite --mode online",
     "build": "vite build",
+    "build:local": "vite build --mode local",
+    "build:online": "vite build --mode online",
     "preview": "vite preview",
     "lint": "eslint . --ext js,jsx"
   },

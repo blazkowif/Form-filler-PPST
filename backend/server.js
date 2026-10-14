@@ -22,6 +22,7 @@ const printRoutes     = require("./routes/printRoutes");
 const pdfFillRoutes     = require("./routes/pdfFillRoutes");
 const calibrateRoutes   = require("./routes/calibrateRoutes");
 const scheduleRoutes    = require("./routes/scheduleRoutes");
+const publicRoutes      = require("./routes/publicRoutes");
 
 const app  = express();
 const PORT = process.env.PORT || 5000;
@@ -68,6 +69,7 @@ app.use("/api/forms/templates", express.static(path.join(__dirname, "assets", "f
 
 // Routes
 app.use("/api/auth",     authRoutes);
+app.use("/api/public",   publicRoutes);
 app.use("/api/student",  studentRoutes);
 app.use("/api/forms",    formRoutes);
 app.use("/api/admin",    adminRoutes);

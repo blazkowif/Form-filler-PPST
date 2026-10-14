@@ -2,18 +2,37 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 5173,
-    host: true,
-    allowedHosts: true,
-    proxy: {
-      "/api": "http://localhost:3001",
-      "/uploads": "http://localhost:3001",
+const API_TARGETS = {
+  local: "http://localhost:3001/api",
+  online: "https://form-filler-ppst.onrender.com/api",
+};
+
+export default defineConfig(({ mode }) => {
+  const apiUrl = API_TARGETS[mode] || API_TARGETS.local;
+  const apiOrigin = apiUrl.replace(/\/api\/?$/, "");
+
+  return {
+    plugins: [react()],
+    define: {
+      "import.meta.env.VITE_API_URL": JSON.stringify(apiUrl),
     },
-  },
-  build: {
-    outDir: "dist",
-  },
+    server: {
+      port: 5173,
+      host: true,
+      allowedHosts: true,
+      proxy: {
+        "/api": {
+          target: apiOrigin,
+          changeOrigin: true,
+        },
+        "/uploads": {
+          target: apiOrigin,
+          changeOrigin: true,
+        },
+      },
+    },
+    build: {
+      outDir: "dist",
+    },
+  };
 });

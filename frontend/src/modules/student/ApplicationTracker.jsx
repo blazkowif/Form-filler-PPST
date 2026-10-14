@@ -98,6 +98,7 @@ export const ApplicationList = () => {
                 <th>Form Type</th>
                 <th>Details</th>
                 <th>Submitted</th>
+                <th>Reference</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -119,6 +120,7 @@ export const ApplicationList = () => {
                       day: "2-digit", month: "short", year: "numeric",
                     })}
                   </td>
+                  <td className="reference-cell">{app.reference_no || "—"}</td>
                   <td><StatusBadge status={app.status} /></td>
                   <td>
                     <button
@@ -202,6 +204,7 @@ export const ApplicationDetail = () => {
       <div className="detail-header">
         <div>
           <span className="detail-id">Application #{app.id}</span>
+          <span className="detail-reference">Reference: {app.reference_no || "Assigned when form is generated"}</span>
           <h1 className="detail-title">{FORM_LABELS[app.form_type]}</h1>
         </div>
         <div className="detail-header-actions">

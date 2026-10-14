@@ -7,6 +7,16 @@
 // This replaces the 5 separate MySQL tables.
 // =============================================================
 const mongoose = require("mongoose");
+const SequenceCounter = require("./SequenceCounter");
+
+const FORM_REFERENCE_CODES = {
+  withdrawal: "AKD-01",
+  exam_replacement: "AKD-02",
+  appeal_review: "AKD-03",
+  non_sick_leave: "AKD-04",
+  room_booking: "AKD-05",
+  sick_leave: "AKD-06",
+};
 
 // ── Sick Leave sub-doc (PPST/AKD-06) ──
 const sickLeaveSchema = new mongoose.Schema({
@@ -46,6 +56,12 @@ const formApplicationSchema = new mongoose.Schema({
       "withdrawal", "exam_replacement", "room_booking",
     ],
     required: true,
+  },
+  reference_no: {
+    type: String,
+    unique: true,
+    sparse: true,
+    index: true,
   },
 
   // Status
@@ -107,5 +123,21 @@ const formApplicationSchema = new mongoose.Schema({
 // Index for fast filtering
 formApplicationSchema.index({ user_id: 1, status: 1 });
 formApplicationSchema.index({ status: 1, form_type: 1 });
+
+formApplicationSchema.pre("save", async function assignReferenceNumber(next) {
+  if (!this.isNew || this.reference_no) return next();
+
+  const year = (this.createdAt || new Date()).getFullYear();
+  const formCode = FORM_REFERENCE_CODES[this.form_type];
+  if (!formCode) return next(new Error(`Cannot assign reference number for form type "${this.form_type}".`));
+
+  const counter = await SequenceCounter.findOneAndUpdate(
+    { key: `${year}:${formCode}` },
+    { $inc: { value: 1 } },
+    { new: true, upsert: true, setDefaultsOnInsert: true }
+  );
+  this.reference_no = `PPST/${formCode}/${year}/${String(counter.value).padStart(4, "0")}`;
+  next();
+});
 
 module.exports = mongoose.model("FormApplication", formApplicationSchema);

@@ -22,6 +22,7 @@ import ProtectedRoute             from "./components/ProtectedRoute";
 // Login pages
 import LoginStudent from "./pages/LoginStudent";
 import LoginStaff   from "./pages/LoginStaff";
+import PublicStatus from "./pages/PublicStatus";
 
 // Student module
 import StudentLayout    from "./modules/student/StudentLayout";
@@ -90,6 +91,8 @@ const AppRoutes = () => (
     {/* ── Public ── */}
     <Route path="/login"        element={<LoginStudent />} />
     <Route path="/login/staff"  element={<LoginStaff />} />
+    <Route path="/status"       element={<PublicStatus />} />
+    <Route path="/status/:reference" element={<PublicStatus />} />
     <Route path="/"             element={<RootRedirect />} />
 
     {/* ── Student ── */}

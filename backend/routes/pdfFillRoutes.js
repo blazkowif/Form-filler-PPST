@@ -8,6 +8,7 @@ const express = require("express");
 const FormApplication = require("../models/FormApplication");
 const { protect } = require("../middleware/authMiddleware");
 const { fillPdf } = require("../pdf_filler");
+const QRCode = require("qrcode");
 
 const router = express.Router();
 router.use(protect);
@@ -81,6 +82,7 @@ const buildPayload = (app, user) => {
     TPA_signature: app.tpa_signature_path || app.tpa_id?.name || "",
     TPA_comment: app.tpa_comment || "",
     TPA_date: fmt(app.tpa_date),
+    reference_no: app.reference_no || "",
   };
 };
 
@@ -105,6 +107,16 @@ router.get("/:appId", async (req, res) => {
       return res.status(404).json({ success: false, message: "Application not found." });
     }
 
+    // Backfill references for applications created before reference numbering
+    // was introduced, so every printed form receives a trackable QR code.
+    if (!app.reference_no) {
+      const legacyApp = await FormApplication.findById(app._id);
+      if (legacyApp) {
+        await legacyApp.save();
+        app.reference_no = legacyApp.reference_no;
+      }
+    }
+
     // Authorisation: student sees own doc; staff sees all
     const isOwner = app.user_id?._id?.toString() === req.user.id;
     const isStaff = ["admin", "pengarah", "lecturer"].includes(req.user.role);
@@ -112,16 +124,32 @@ router.get("/:appId", async (req, res) => {
       return res.status(403).json({ success: false, message: "Forbidden." });
     }
 
-    const payload = buildPayload(app, app.user_id);
+    const publicBaseUrl = process.env.PUBLIC_APP_URL || process.env.FRONTEND_URL || `${req.protocol}://${req.get("host")}`;
+    const statusUrl = `${publicBaseUrl.replace(/\/+$/, "")}/status/${encodeURIComponent(app.reference_no)}`;
+    const qrCode = await QRCode.toDataURL(statusUrl, {
+      errorCorrectionLevel: "M",
+      margin: 1,
+      width: 240,
+    });
+    const payload = {
+      ...buildPayload(app, app.user_id),
+      qr_code: qrCode,
+    };
     const formType = app.form_type;
-    const filename = `PPST_${formType}_${app.user_id?.matric_staff_id || "form"}.pdf`;
+    const studentName = (app.user_id?.name || "student")
+      .normalize("NFKD")
+      .replace(/[^\w\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "_");
+    const safeReference = (app.reference_no || `PPST_${formType}`).replace(/[^\w-]+/g, "-");
+    const filename = `${studentName}_${safeReference}.pdf`;
 
     const pdfBytes = await fillPdf(formType, payload);
 
     res.setHeader("Content-Type", "application/pdf");
     // Allow authenticated blob URLs to render in the browser's PDF viewer.
     // The frontend still provides explicit download and print actions.
-    res.setHeader("Content-Disposition", `inline; filename="${filename}"`);
+    res.setHeader("Content-Disposition", `inline; filename="${filename}"; filename*=UTF-8''${encodeURIComponent(filename)}`);
     res.setHeader("Content-Length", pdfBytes.length);
     res.end(pdfBytes);
 

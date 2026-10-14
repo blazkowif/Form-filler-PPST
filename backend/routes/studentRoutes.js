@@ -72,6 +72,7 @@ router.get("/applications", async (req, res) => {
 
     const mapped = applications.map(a => ({
       id:                  a._id?.toString(),
+      reference_no:        a.reference_no,
       form_type:           a.form_type,
       status:              a.status,
       reason:              a.reason,
@@ -129,6 +130,7 @@ router.get("/applications/:id", async (req, res) => {
       success: true,
       data: {
         id:                   a._id?.toString(),
+        reference_no:         a.reference_no,
         form_type:            a.form_type,
         status:               a.status,
         reason:               a.reason,

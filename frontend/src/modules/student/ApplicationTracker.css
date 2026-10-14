@@ -134,6 +134,13 @@
   white-space: nowrap;
 }
 
+.reference-cell {
+  color: #287c73;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
 .ft-label {
   font-size: 0.8rem;
   font-weight: 500;
@@ -199,6 +206,14 @@
   font-family: "JetBrains Mono", monospace;
   color: #8a93a8;
   margin-bottom: 0.2rem;
+}
+
+.detail-reference {
+  display: block;
+  margin-top: .35rem;
+  color: #287c73;
+  font-family: "JetBrains Mono", monospace;
+  font-size: .75rem;
 }
 
 .detail-title {
