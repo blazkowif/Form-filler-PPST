@@ -78,6 +78,11 @@ Use the same modes for production builds with `npm run build:local` or
 `npm run build:online`. The local backend can still use MongoDB Atlas; choosing
 `dev:local` only changes which HTTP API server the browser calls.
 
+For Vercel, set the environment variable `VITE_API_URL` to the deployed backend,
+for example `https://form-filler-ppst.onrender.com/api`, and redeploy. Production
+builds default to the online backend when that variable is not present; local
+development commands remain explicit and are not affected.
+
 ---
 
 ## Folder Structure
