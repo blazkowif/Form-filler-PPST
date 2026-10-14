@@ -31,7 +31,7 @@ const PdfTools = () => {
   const download = async (url, filename, key) => {
     setDlStatus((s) => ({ ...s, [key]: "loading" }));
     try {
-      const token = localStorage.getItem("ppst_token");
+      const token = sessionStorage.getItem("ppst_token");
       const res   = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
       if (!res.ok) throw new Error("Download failed");
       const blob  = await res.blob();

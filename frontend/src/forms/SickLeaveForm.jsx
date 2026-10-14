@@ -83,7 +83,7 @@ const SickLeaveForm = () => {
     e.preventDefault();
     setSubmitError("");
 
-    if (!form.class_group || !form.hospital_type) {
+    if (!form.class_group || !form.hospital_type || !mcFile) {
       setSubmitError("Please fill in all required fields.");
       return;
     }
@@ -94,6 +94,7 @@ const SickLeaveForm = () => {
       // Use FormData because we may have a file attachment
       const payload = new FormData();
       Object.entries(form).forEach(([k, v]) => payload.append(k, v));
+      payload.append("mc_file", mcFile);
 
       const res = await api.post("/forms/submit/sick_leave", payload, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -153,7 +154,15 @@ const SickLeaveForm = () => {
               <option value="private">Private Hospital / Clinic (Swasta)</option>
             </FormSelect>
           </FormField>
-
+          <FileUploadField
+            label="Medical Certificate"
+            name="mc_file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            required
+            hint="Upload the actual Medical Certificate. Please submit the original certificate to the PPST office as well."
+            onChange={(e) => setMcFile(e.target.files[0] || null)}
+            currentFile={mcFile}
+          />
         </FormSection>
 
         <SubmitSection

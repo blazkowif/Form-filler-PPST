@@ -21,6 +21,9 @@ router.post("/submit/sick_leave", uploadMC, async (req, res) => {
     if (!class_group || !hospital_type) {
       return res.status(400).json({ success: false, message: "Missing required fields: class_group, hospital_type." });
     }
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "Medical Certificate file is required." });
+    }
     if (!["government","private"].includes(hospital_type)) {
       return res.status(400).json({ success: false, message: "Invalid hospital type." });
     }
@@ -127,7 +130,7 @@ router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
   try {
     const {
       withdrawal_reason,
-      institution_name,
+      follow_up_detail,
       confirm_hostel_key,
       confirm_fees,
       confirm_ppst_items,
@@ -145,7 +148,8 @@ router.post("/submit/withdrawal", uploadSingle, async (req, res) => {
       form_type: "withdrawal",
       reason:    "",
       withdrawal_reason: resolvedReason,
-      institution_name: institution_name?.trim() || "",
+      institution_name: resolvedReason === "transfer" ? follow_up_detail?.trim() || "" : "",
+      withdrawal_detail: follow_up_detail?.trim() || "",
       withdrawal_data: {
         confirm_hostel_key: confirm_hostel_key === "true" || confirm_hostel_key === true,
         confirm_fees: confirm_fees === "true" || confirm_fees === true,
@@ -202,10 +206,10 @@ router.post("/submit/exam_replacement", uploadSingle, async (req, res) => {
 // ── 6. Room Booking (PPST/AKD-05) ────────────────────────────
 router.post("/submit/room_booking", async (req, res) => {
   try {
-    const { purpose, booking_date, room_choice, Others_rooms } = req.body;
+    const { purpose, room_booking_date, room_choice, Others_rooms } = req.body;
 
-    if (!purpose || !booking_date || !room_choice) {
-      return res.status(400).json({ success: false, message: "Missing required fields: purpose, booking_date, room_choice." });
+    if (!purpose || !room_booking_date || !room_choice) {
+      return res.status(400).json({ success: false, message: "Missing required fields: purpose, room_booking_date, room_choice." });
     }
 
     const app = await FormApplication.create({
@@ -214,10 +218,11 @@ router.post("/submit/room_booking", async (req, res) => {
       reason:            purpose.trim(),
       room_choice,
       applicant_position: "Pelajar",
-      start_date:        new Date(booking_date),
+      start_date:        new Date(room_booking_date),
       room_booking_data: {
         room_type: "",
         other_room: Others_rooms || "",
+        room_booking_date,
       },
     });
 

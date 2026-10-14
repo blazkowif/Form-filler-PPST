@@ -5,6 +5,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import { assetUrl } from "../../services/api";
 import StatusBadge, { FORM_LABELS } from "../../components/StatusBadge";
 import "./AdminReviewPage.css";
 
@@ -73,7 +74,7 @@ const AdminReviewPage = () => {
   };
 
   const handleDownloadPDF = () => {
-    const token = localStorage.getItem("ppst_token");
+    const token = sessionStorage.getItem("ppst_token");
     fetch(`/api/pdf/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       .then(async (res) => {
         if (!res.ok) {
@@ -98,7 +99,7 @@ const AdminReviewPage = () => {
 
   const isPendingAdmin = app.status === "pending_admin";
   const fileUrl = (app.file_path || app.mc_file_path)
-    ? `${app.file_path || app.mc_file_path}`
+    ? assetUrl(app.file_path || app.mc_file_path)
     : null;
 
   return (

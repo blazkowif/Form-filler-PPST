@@ -18,6 +18,8 @@ router.use(protect);
 const buildPayload = (app, user) => {
   const fmt = (d) =>
     d ? new Date(d).toLocaleDateString("en-MY", { day: "2-digit", month: "2-digit", year: "numeric" }) : "";
+  const fmtDateTime = (d) =>
+    d ? new Date(d).toLocaleString("en-MY", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }) : "";
 
   const profile = user?.profile || {};
   const appeal = app.appeal_review_data || {};
@@ -39,7 +41,7 @@ const buildPayload = (app, user) => {
     faculty: profile.faculty || "PPST",
     address: profile.address || "",
     withdrawal_reason: app.withdrawal_reason || "",
-    institution_name: app.institution_name || "",
+    institution_name: app.withdrawal_detail || app.institution_name || "",
     semester: appeal.semester || app.semester || "",
     session: appeal.session || app.session || "",
     exam_reason: app.exam_reason || "",
@@ -59,7 +61,7 @@ const buildPayload = (app, user) => {
     position: app.applicant_position || "Pelajar",
     room_choice: app.room_choice || "",
     purpose: app.reason || "",
-    booking_date: fmt(app.start_date),
+    booking_date: fmtDateTime(room.room_booking_date || app.start_date),
     Others_rooms: room.room_type === "Other" ? (room.other_room || room.other_rooms || "Other") : "",
     bil: courseCode ? "1" : "",
     class_group: app.class_group || profile.lecture_group || "",
@@ -117,7 +119,9 @@ router.get("/:appId", async (req, res) => {
     const pdfBytes = await fillPdf(formType, payload);
 
     res.setHeader("Content-Type", "application/pdf");
-    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    // Allow authenticated blob URLs to render in the browser's PDF viewer.
+    // The frontend still provides explicit download and print actions.
+    res.setHeader("Content-Disposition", `inline; filename="${filename}"`);
     res.setHeader("Content-Length", pdfBytes.length);
     res.end(pdfBytes);
 

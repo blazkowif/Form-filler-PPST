@@ -26,6 +26,7 @@ import LoginStaff   from "./pages/LoginStaff";
 // Student module
 import StudentLayout    from "./modules/student/StudentLayout";
 import StudentDashboard from "./modules/student/StudentDashboard";
+import StudentProfile  from "./modules/student/StudentProfile";
 import ApplyForm        from "./modules/student/ApplyForm";
 import { ApplicationList, ApplicationDetail } from "./modules/student/ApplicationTracker";
 
@@ -95,6 +96,7 @@ const AppRoutes = () => (
     <Route path="/student"
       element={<ProtectedRoute roles={["student"]}><StudentLayout /></ProtectedRoute>}>
       <Route index                  element={<StudentDashboard />} />
+      <Route path="profile"           element={<StudentProfile />} />
       <Route path="apply"           element={<ApplyForm />} />
       <Route path="apply/:form_type" element={<ApplyForm />} />
       <Route path="track"           element={<ApplicationList />} />

@@ -8,6 +8,18 @@
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+export const API_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, "") || window.location.origin;
+
+export const assetUrl = (assetPath) => {
+  if (!assetPath) return null;
+  if (/^https?:\/\//i.test(assetPath)) return assetPath;
+  return `${API_ORIGIN}${assetPath.startsWith("/") ? assetPath : `/${assetPath}`}`;
+};
+
+export const authHeaders = () => {
+  const token = sessionStorage.getItem("ppst_token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -39,7 +51,7 @@ api.interceptors.response.use(
 );
 
 export const authAPI = {
-  login:  (matric_staff_id, password) =>
+  login: (matric_staff_id, password) =>
     api.post("/auth/login", { matric_staff_id, password }),
   getMe: () => api.get("/auth/me"),
   updateMe: (payload) => api.patch("/auth/me", payload),

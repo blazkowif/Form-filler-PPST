@@ -58,13 +58,22 @@ async function fillPdf(formKey, data) {
   for (let i = 0; i < config.fields.length; i++) {
     const field = config.fields[i];
 
+    // Coordinate conditions use compact values while forms may submit labels.
+    const conditionValue = field.conditional === "exam_reason"
+      ? String(data[field.conditional] || "").toLowerCase()
+          .replace(/\s*\(.*\)/, "")
+          .replace("bereavement", "death")
+          .replace("course failure", "failed")
+      : data[field.conditional];
+
     // Conditional check
     if (field.conditional) {
-      if (data[field.conditional] !== field.matchValue) continue;
+      if (conditionValue !== field.matchValue) continue;
     }
 
-    // Conditional checkbox fields draw their own check mark when matched.
-    const text = field.key && field.key.startsWith("tick_")
+    // Any coordinate variable containing "tick" is a checkbox marker.
+    const isTick = field.key && /tick/i.test(field.key);
+    const text = isTick
       ? "X"
       : data[field.key];
     if (!text && text !== 0) continue;
@@ -78,12 +87,11 @@ async function fillPdf(formKey, data) {
 
     // Determine font size and color
     const fontSize = field.fontSize || FONT_SIZE_NORMAL;
-    let color = INK_BLUE;
+    let color = isTick ? INK_TICK : INK_BLUE;
     if (field.color === "red") color = INK_RED;
     else if (field.color === "tick") color = INK_TICK;
 
     // Scale font if it's a tick type (check for tick-related keys)
-    const isTick = field.key && field.key.includes("tick_");
     const finalSize = isTick ? FONT_TICK : fontSize;
 
     const imagePath = IMAGE_FIELD_PATTERN.test(field.key) ? resolveAssetPath(textStr) : null;

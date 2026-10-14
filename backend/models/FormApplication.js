@@ -64,6 +64,7 @@ const formApplicationSchema = new mongoose.Schema({
   // Form-specific top-level fields used by the PDF filler
   withdrawal_reason: String,
   institution_name:   String,
+  withdrawal_detail:  String,
   room_choice:        String,
   applicant_position: String,
   exam_reason:        String,

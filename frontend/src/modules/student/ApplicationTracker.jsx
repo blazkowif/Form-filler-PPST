@@ -5,6 +5,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
+import { assetUrl } from "../../services/api";
 import StatusBadge, { FORM_LABELS } from "../../components/StatusBadge";
 import "./ApplicationTracker.css";
 
@@ -259,7 +260,7 @@ export const ApplicationDetail = () => {
         {(app.file_path || app.mc_file_path) && (
           <div className="attachment-section">
             <a
-              href={`http://localhost:5000${app.file_path || app.mc_file_path}`}
+              href={assetUrl(app.file_path || app.mc_file_path)}
               target="_blank"
               rel="noreferrer"
               className="attachment-link"

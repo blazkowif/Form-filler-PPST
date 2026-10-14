@@ -202,8 +202,8 @@ export const AppealReviewForm = () => {
   };
 
   return (
-    <FormWrapper code="PPST/AKD-02" title="Replacement / Repeat Exam"
-      subtitle="Peperiksaan Gantian / Ulangan"
+    <FormWrapper code="PPST/AKD-03" title="Appeal for Examination Result Review"
+      subtitle="Rayuan Semakan Semula Keputusan Peperiksaan"
       icon="📝" color="#2563eb" bg="#eff6ff"
       isSubmitted={isSubmitted} applicationId={applicationId}>
       <form onSubmit={handleSubmit}>
@@ -258,7 +258,7 @@ export const AppealReviewForm = () => {
 export const WithdrawalForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ withdrawal_reason: "", institution_name: "" });
+  const [form, setForm] = useState({ withdrawal_reason: "", follow_up_detail: "" });
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -270,7 +270,7 @@ export const WithdrawalForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError("");
-    if (!form.withdrawal_reason) {
+    if (!form.withdrawal_reason || !form.follow_up_detail.trim()) {
       setSubmitError("Please fill in all required fields.");
       return;
     }
@@ -323,10 +323,24 @@ export const WithdrawalForm = () => {
               <option value="personal">Personal Problems</option>
             </FormSelect>
           </FormField>
-          <FormField label="Institution Name">
-            <FormInput name="institution_name" value={form.institution_name} onChange={handleChange}
-              placeholder="Required when transferring" />
-          </FormField>
+          {form.withdrawal_reason === "job_offer" && (
+            <FormField label="Type of Job" required>
+              <FormInput name="follow_up_detail" value={form.follow_up_detail} onChange={handleChange}
+                placeholder="e.g. Full-time laboratory assistant" required />
+            </FormField>
+          )}
+          {form.withdrawal_reason === "transfer" && (
+            <FormField label="Type of School / Institution" required>
+              <FormInput name="follow_up_detail" value={form.follow_up_detail} onChange={handleChange}
+                placeholder="e.g. Public university" required />
+            </FormField>
+          )}
+          {form.withdrawal_reason === "personal" && (
+            <FormField label="Please describe your personal problem" required>
+              <FormTextarea name="follow_up_detail" value={form.follow_up_detail} onChange={handleChange}
+                placeholder="Briefly explain the reason for your withdrawal" required />
+            </FormField>
+          )}
           <FileUploadField label="Supporting Document" name="file"
             hint="Attach supporting document (e.g. job offer letter, letter from new institution)."
             onChange={(e) => setFile(e.target.files[0] || null)} currentFile={file} />
@@ -444,7 +458,7 @@ export const ExamReplacementForm = () => {
 export const RoomBookingForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ room_choice: "", purpose: "", booking_date: "", Others_rooms: "" });
+  const [form, setForm] = useState({ room_choice: "", purpose: "", room_booking_date: "", Others_rooms: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [applicationId, setApplicationId] = useState(null);
@@ -460,7 +474,7 @@ export const RoomBookingForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError("");
-    if (!form.room_choice || !form.purpose || !form.booking_date) {
+    if (!form.room_choice || !form.purpose || !form.room_booking_date) {
       setSubmitError("Please fill in all required fields.");
       return;
     }
@@ -521,8 +535,8 @@ export const RoomBookingForm = () => {
             <FormTextarea name="purpose" value={form.purpose} onChange={handleChange}
               placeholder="e.g. Group study session for PHY1114 final exam preparation..." required />
             </FormField>
-            <FormField label="Booking Date" required>
-              <FormInput type="date" name="booking_date" value={form.booking_date} onChange={handleChange} required />
+            <FormField label="Booking Date and Time" required>
+              <FormInput type="datetime-local" name="room_booking_date" value={form.room_booking_date} onChange={handleChange} required />
             </FormField>
           </FormRow>
         </FormSection>

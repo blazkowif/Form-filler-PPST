@@ -11,6 +11,7 @@ const NAV_ITEMS = {
     { to: "/student",             label: "Dashboard",        icon: "01", end: true },
     { to: "/student/track",       label: "Track Applications",icon: "02" },
     { to: "/student/schedule",    label: "Class Schedule",    icon: "03" },
+    { to: "/student/profile",     label: "My Profile",         icon: "04" },
   ],
   admin: [
     { to: "/admin",               label: "Dashboard",         icon: "01", end: true },

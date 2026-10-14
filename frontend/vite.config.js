@@ -8,6 +8,10 @@ export default defineConfig({
     port: 5173,
     host: true,
     allowedHosts: true,
+    proxy: {
+      "/api": "http://localhost:3001",
+      "/uploads": "http://localhost:3001",
+    },
   },
   build: {
     outDir: "dist",
